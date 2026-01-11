@@ -1,0 +1,242 @@
+{
+  "tool_page": {
+    "json-to-openapi": {
+      "primary_keywords": [
+        "json to openapi",
+        "json to openapi converter",
+        "convert json to openapi",
+        "json to swagger converter",
+        "openapi generator from json"
+      ],
+      "secondary_keywords": [
+        "openapi spec generator",
+        "swagger spec from json",
+        "api specification generator",
+        "rest api documentation generator",
+        "openapi 3.0 generator",
+        "json schema to openapi",
+        "generate swagger from json",
+        "api doc generator",
+        "openapi yaml generator",
+        "swagger json generator"
+      ],
+      "long_tail_keywords": [
+        "how to convert json to openapi spec",
+        "generate openapi specification from json example",
+        "create swagger documentation from json",
+        "json to openapi 3.0 free tool",
+        "convert json response to openapi schema",
+        "generate api documentation from json",
+        "json to rest api documentation",
+        "free openapi generator online",
+        "convert json sample to swagger",
+        "automatic openapi spec generation",
+        "json to openapi yaml converter",
+        "generate openapi schema from json data",
+        "create api spec from json example",
+        "json payload to openapi converter",
+        "build openapi spec from json response"
+      ],
+      "search_intent": "transactional",
+      "estimated_monthly_searches": {
+        "json to openapi": "1,200-2,400",
+        "json to openapi converter": "800-1,600",
+        "convert json to openapi": "600-1,200",
+        "json to swagger converter": "2,000-3,500",
+        "openapi generator from json": "500-1,000",
+        "openapi spec generator": "1,500-2,500",
+        "swagger spec from json": "400-800",
+        "how to convert json to openapi spec": "200-500",
+        "free openapi generator online": "300-600"
+      },
+      "keyword_difficulty": {
+        "json to openapi": "25/100 (medium-low)",
+        "json to openapi converter": "28/100 (medium-low)",
+        "json to swagger converter": "35/100 (medium)",
+        "openapi generator from json": "22/100 (low)",
+        "swagger spec generator": "38/100 (medium)"
+      },
+      "priority_classification": {
+        "critical": [
+          "json to openapi",
+          "json to openapi converter",
+          "json to swagger converter",
+          "openapi spec generator"
+        ],
+        "high": [
+          "convert json to openapi",
+          "openapi generator from json",
+          "swagger spec from json",
+          "generate openapi specification from json example"
+        ],
+        "medium": [
+          "json schema to openapi",
+          "openapi 3.0 generator",
+          "free openapi generator online",
+          "json to openapi yaml converter"
+        ],
+        "low": [
+          "json payload to openapi converter",
+          "rest api documentation generator"
+        ]
+      },
+      "target_url": "/json-to-openapi/",
+      "recommended_h1": "JSON to OpenAPI Converter - Generate API Specs Instantly",
+      "recommended_meta_title": "JSON to OpenAPI Converter - Free Online Generator Tool",
+      "recommended_meta_description": "Convert JSON examples to OpenAPI 3.0 specifications instantly. Free online tool with smart type detection, multi-endpoint support, and YAML/JSON output. No signup required.",
+      "content_focus": "Tool functionality, instant conversion, type detection, multi-endpoint support, privacy (client-side)",
+      "serp_features": {
+        "featured_snippet_opportunity": "high",
+        "people_also_ask": [
+          "What is OpenAPI specification?",
+          "How do I convert JSON to Swagger?",
+          "What's the difference between OpenAPI and Swagger?",
+          "How to generate OpenAPI spec from JSON example?",
+          "Is OpenAPI 3.0 the same as Swagger?",
+          "Can I convert JSON schema to OpenAPI?",
+          "What is the best OpenAPI generator?",
+          "How to create API documentation from JSON?"
+        ],
+        "related_searches": [
+          "swagger editor",
+          "openapi validator",
+          "json schema generator",
+          "api documentation tools",
+          "postman to openapi converter"
+        ]
+      },
+      "competitors": [
+        {
+          "url": "apidog.com",
+          "rank": 1,
+          "title": "API Documentation Tools",
+          "strengths": ["Brand authority", "Feature-rich platform", "Strong backlink profile"]
+        },
+        {
+          "url": "swagger.io/tools/swagger-editor",
+          "rank": 2,
+          "title": "Swagger Editor - Official Tool",
+          "strengths": ["Official tool", "Brand recognition", "Developer trust"]
+        },
+        {
+          "url": "editor.swagger.io",
+          "rank": 3,
+          "title": "Swagger Editor Online",
+          "strengths": ["Direct tool access", "Simple URL", "Official backing"]
+        },
+        {
+          "url": "jsonschema.net",
+          "rank": 4,
+          "title": "JSON Schema Generator",
+          "strengths": ["Simple interface", "Fast tool", "Good UX"]
+        },
+        {
+          "url": "transform.tools",
+          "rank": 5,
+          "title": "Transform Tools - Multiple Converters",
+          "strengths": ["Multiple tools", "Good SEO", "Fast performance"]
+        }
+      ],
+      "content_gaps_to_fill": [
+        "Emphasis on instant, client-side processing (privacy angle)",
+        "Smart type detection (email, UUID, date-time formats)",
+        "Multi-endpoint management in single spec",
+        "Both OpenAPI 3.0 and Swagger 2.0 support",
+        "Visual Swagger UI preview",
+        "Detailed how-to guide for beginners",
+        "Use cases for different developer roles",
+        "Comparison with manual spec writing"
+      ],
+      "unique_selling_propositions": [
+        "100% client-side (data never leaves browser)",
+        "Instant conversion (no loading, no server delay)",
+        "Smart format detection (auto-detects email, UUID, dates)",
+        "Multi-endpoint support",
+        "Both JSON and YAML output",
+        "Free with no signup required",
+        "Swagger UI preview built-in"
+      ]
+    }
+  },
+  "blog_content": {
+    "educational": [
+      {
+        "keyword": "what is openapi specification",
+        "estimated_volume": "3,500-5,000/month",
+        "difficulty": "20/100",
+        "priority": "high",
+        "target_url": "/blog/what-is-openapi-specification/",
+        "content_type": "educational_guide",
+        "notes": "High volume informational query - good for blog post + on-page section"
+      },
+      {
+        "keyword": "openapi vs swagger difference",
+        "estimated_volume": "1,200-2,000/month",
+        "difficulty": "25/100",
+        "priority": "high",
+        "target_url": "/blog/openapi-vs-swagger/",
+        "content_type": "comparison_article"
+      },
+      {
+        "keyword": "how to write openapi spec",
+        "estimated_volume": "800-1,500/month",
+        "difficulty": "22/100",
+        "priority": "medium",
+        "target_url": "/blog/how-to-write-openapi-spec/",
+        "content_type": "tutorial"
+      }
+    ],
+    "how_to": [
+      {
+        "keyword": "how to generate openapi from json",
+        "estimated_volume": "400-800/month",
+        "difficulty": "18/100",
+        "priority": "high",
+        "target_url": "/blog/generate-openapi-from-json/",
+        "content_type": "tutorial"
+      },
+      {
+        "keyword": "how to convert swagger 2.0 to openapi 3.0",
+        "estimated_volume": "300-600/month",
+        "difficulty": "20/100",
+        "priority": "medium",
+        "target_url": "/blog/convert-swagger-to-openapi/",
+        "content_type": "tutorial"
+      }
+    ]
+  },
+  "comparison_queries": [
+    {
+      "keyword": "best openapi generator tools 2026",
+      "estimated_volume": "500-900/month",
+      "difficulty": "35/100",
+      "priority": "medium",
+      "target_url": "/blog/best-openapi-generators/",
+      "content_type": "comparison_roundup"
+    },
+    {
+      "keyword": "swagger editor alternatives",
+      "estimated_volume": "600-1,000/month",
+      "difficulty": "30/100",
+      "priority": "medium",
+      "target_url": "/blog/swagger-editor-alternatives/",
+      "content_type": "alternatives_list"
+    }
+  ],
+  "metadata": {
+    "research_date": "2026-01-11",
+    "tools_used": [
+      "Industry knowledge",
+      "AI analysis (Claude)",
+      "Web search",
+      "SERP analysis",
+      "Competitor review"
+    ],
+    "total_keywords_identified": 45,
+    "high_priority_count": 15,
+    "critical_priority_count": 4,
+    "notes": "Focus on 'free', 'online', and 'instant' modifiers - lower competition, good conversion intent. Emphasize client-side processing and privacy as unique differentiators. Target developer audience (backend, API, full-stack).",
+    "recommended_primary_keyword": "json to openapi converter",
+    "reasoning_for_primary": "Good balance of volume (800-1,600/month), manageable difficulty (28/100), perfect transactional intent, and includes both 'json' and 'openapi' for semantic relevance."
+  }
+}

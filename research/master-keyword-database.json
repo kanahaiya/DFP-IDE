@@ -1,0 +1,180 @@
+{
+  "metadata": {
+    "last_updated": "2026-01-11",
+    "total_keywords": 45,
+    "pages_tracked": 1,
+    "tools_used": ["Industry knowledge", "AI analysis", "Web search", "SERP analysis"]
+  },
+  "keywords": {
+    "json to openapi converter": {
+      "search_volume": 1200,
+      "difficulty": 28,
+      "target_page": "/json-to-openapi/",
+      "current_rank": null,
+      "status": "published",
+      "priority": "critical",
+      "type": "primary",
+      "related_keywords": [
+        "convert json to openapi",
+        "json to openapi",
+        "openapi generator from json"
+      ]
+    },
+    "json to openapi": {
+      "search_volume": 1800,
+      "difficulty": 25,
+      "target_page": "/json-to-openapi/",
+      "current_rank": null,
+      "status": "published",
+      "priority": "critical",
+      "type": "primary"
+    },
+    "json to swagger converter": {
+      "search_volume": 2800,
+      "difficulty": 35,
+      "target_page": "/json-to-openapi/",
+      "current_rank": null,
+      "status": "published",
+      "priority": "critical",
+      "type": "primary"
+    },
+    "openapi spec generator": {
+      "search_volume": 2000,
+      "difficulty": 38,
+      "target_page": "/json-to-openapi/",
+      "current_rank": null,
+      "status": "published",
+      "priority": "critical",
+      "type": "secondary"
+    },
+    "convert json to openapi": {
+      "search_volume": 900,
+      "difficulty": 25,
+      "target_page": "/json-to-openapi/",
+      "current_rank": null,
+      "status": "published",
+      "priority": "high",
+      "type": "primary"
+    },
+    "how to convert json to openapi spec": {
+      "search_volume": 350,
+      "difficulty": 18,
+      "target_page": "/json-to-openapi/",
+      "current_rank": null,
+      "status": "published",
+      "priority": "high",
+      "type": "long-tail"
+    },
+    "what is openapi specification": {
+      "search_volume": 4200,
+      "difficulty": 20,
+      "target_page": "/json-to-openapi/",
+      "current_rank": null,
+      "status": "published",
+      "priority": "high",
+      "type": "informational",
+      "notes": "High volume informational query - covered in educational section"
+    },
+    "openapi vs swagger difference": {
+      "search_volume": 1600,
+      "difficulty": 25,
+      "target_page": "/json-to-openapi/",
+      "current_rank": null,
+      "status": "published",
+      "priority": "high",
+      "type": "informational",
+      "future_blog": "/blog/openapi-vs-swagger/"
+    },
+    "free openapi generator online": {
+      "search_volume": 450,
+      "difficulty": 22,
+      "target_page": "/json-to-openapi/",
+      "current_rank": null,
+      "status": "published",
+      "priority": "medium",
+      "type": "secondary"
+    },
+    "generate openapi specification from json example": {
+      "search_volume": 300,
+      "difficulty": 20,
+      "target_page": "/json-to-openapi/",
+      "current_rank": null,
+      "status": "published",
+      "priority": "high",
+      "type": "long-tail"
+    }
+  },
+  "content_calendar": {
+    "completed": [
+      {
+        "title": "JSON to OpenAPI Converter - Tool Page",
+        "url": "/json-to-openapi/",
+        "publish_date": "2026-01-11",
+        "primary_keyword": "json to openapi converter",
+        "word_count": 4357,
+        "status": "live"
+      }
+    ],
+    "planned": [
+      {
+        "title": "OpenAPI vs Swagger: What's the Difference?",
+        "url": "/blog/openapi-vs-swagger/",
+        "target_date": "2026-02",
+        "primary_keyword": "openapi vs swagger difference",
+        "estimated_volume": 1600,
+        "content_type": "comparison_article"
+      },
+      {
+        "title": "How to Write OpenAPI Specifications: Complete Guide",
+        "url": "/blog/how-to-write-openapi-spec/",
+        "target_date": "2026-02",
+        "primary_keyword": "how to write openapi spec",
+        "estimated_volume": 1200,
+        "content_type": "tutorial"
+      },
+      {
+        "title": "Best OpenAPI Generator Tools in 2026",
+        "url": "/blog/best-openapi-generators/",
+        "target_date": "2026-03",
+        "primary_keyword": "best openapi generator tools 2026",
+        "estimated_volume": 700,
+        "content_type": "comparison_roundup"
+      }
+    ]
+  },
+  "optimization_notes": {
+    "json-to-openapi": {
+      "optimization_date": "2026-01-11",
+      "changes_made": [
+        "Updated H1 with primary keyword: 'JSON to OpenAPI Converter - Generate API Specs Instantly'",
+        "Updated meta title and description with optimized keywords",
+        "Added 7 new FAQ questions from PAA research (total: 19 FAQs)",
+        "Enhanced educational content with keyword variations",
+        "Updated H2 headings with keyword-rich titles",
+        "Added contextual internal links to related tools",
+        "Optimized OpenGraph and Twitter card metadata"
+      ],
+      "keyword_density": "1.01% (44 uses of 'openapi' in 4,357 words)",
+      "total_faqs": 19,
+      "total_content_words": 4357,
+      "next_review": "2026-04-11"
+    }
+  },
+  "tracking": {
+    "baseline_date": "2026-01-11",
+    "metrics_to_track": [
+      "Google Search Console impressions",
+      "Click-through rate (CTR)",
+      "Average ranking position",
+      "Featured snippet appearances",
+      "People Also Ask appearances",
+      "Organic traffic from target keywords"
+    ],
+    "target_metrics_3_months": {
+      "primary_keyword_rank": "Top 10",
+      "secondary_keyword_ranks": "Top 20",
+      "monthly_organic_traffic": "500+ visits",
+      "featured_snippets": "2-3 queries"
+    }
+  }
+}
