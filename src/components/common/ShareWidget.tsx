@@ -44,13 +44,18 @@ export function ShareWidget() {
 
   const handleShare = (network: string) => {
     try {
+      // Track share event in Google Analytics
       if (typeof window !== 'undefined') {
         interface WindowWithAnalytics extends Window {
           gtag?: (command: string, eventName: string, params: Record<string, string>) => void;
         }
         const win = window as WindowWithAnalytics;
         if (typeof win.gtag === 'function') {
-          win.gtag('event', 'share', { network });
+          win.gtag('event', 'share', { 
+            event_category: 'engagement',
+            event_label: network,
+            network: network 
+          });
         }
       }
     } catch (error) {

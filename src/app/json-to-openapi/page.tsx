@@ -18,6 +18,7 @@ import { generateOpenAPISpec } from '@/lib/openapi/generator';
 import { readFileAsText, downloadTextFile, getTimestamp } from '@/lib/fileUtils';
 import { copyToClipboard } from '@/lib/clipboardUtils';
 import { createShareUrl, getUrlParam, safeDecodeParam } from '@/lib/urlUtils';
+import { trackCopy, trackDownload } from '@/lib/analytics';
 import { useLayout } from '@/hooks/useLayout';
 import { useResizer } from '@/hooks/useResizer';
 import { ShareWidget } from '@/components/common/ShareWidget';
@@ -442,6 +443,8 @@ export default function JSONToOpenAPIPage() {
     try {
       await copyToClipboard(outputSpec);
       showMessage('Copied to clipboard', 'success');
+      // Track copy action
+      trackCopy('openapi-spec');
     } catch {
       showMessage('Failed to copy', 'error');
     }
@@ -454,6 +457,8 @@ export default function JSONToOpenAPIPage() {
       const mimeType = outputFormat === 'yaml' ? 'text/yaml' : 'application/json';
       downloadTextFile(outputSpec, filename, mimeType);
       showMessage('Downloaded successfully', 'success');
+      // Track download action
+      trackDownload(`openapi-${ext}`);
     } catch {
       showMessage('Failed to download', 'error');
     }
