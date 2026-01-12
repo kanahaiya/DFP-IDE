@@ -41,20 +41,6 @@ export type OpenAPIVersion = '3.0' | '2.0';
 export type OutputFormat = 'yaml' | 'json';
 
 /**
- * Tool configuration interface
- */
-export interface ToolConfig {
-  id: string;
-  name: string;
-  path: string;
-  category: ToolCategory;
-  inputLang: EditorLanguage;
-  outputLang: EditorLanguage;
-  description?: string;
-  convertFn?: (input: string, options?: Record<string, unknown>) => Promise<string>;
-}
-
-/**
  * Editor stats interface
  */
 export interface EditorStats {

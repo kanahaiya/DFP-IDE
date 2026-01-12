@@ -44,7 +44,7 @@ export function MonacoEditorPanel({
   const { theme, mounted } = useTheme();
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
-  
+
   // Derive showPlaceholder from value instead of using state
   const showPlaceholder = useMemo(() => !value || value.trim() === '', [value]);
 

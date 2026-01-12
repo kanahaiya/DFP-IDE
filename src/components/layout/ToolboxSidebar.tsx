@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { getEnabledTools, type ToolConfig } from '@/config/tools';
+import { getEnabledTools, type ToolMetadata } from '@/config/tools';
 
 interface ToolboxSidebarProps {
   isOpen: boolean;
@@ -20,7 +20,7 @@ export function ToolboxSidebar({ isOpen }: ToolboxSidebarProps) {
     }
     acc[categoryName].push(tool);
     return acc;
-  }, {} as Record<string, ToolConfig[]>);
+  }, {} as Record<string, ToolMetadata[]>);
 
   return (
     <aside className={`toolbox-sidebar ${!isOpen ? 'collapsed' : ''}`} id="toolboxSidebar">

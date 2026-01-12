@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { copyToClipboard } from '@/lib/clipboardUtils';
 
 /**
@@ -9,17 +9,27 @@ import { copyToClipboard } from '@/lib/clipboardUtils';
 export function ShareWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [pageUrl] = useState(() => 
-    typeof window !== 'undefined' ? window.location.href : ''
-  );
-  const [pageTitle] = useState(() => 
-    typeof window !== 'undefined' ? document.title : 'Data Formatter Pro'
-  );
+  const [mounted, setMounted] = useState(false);
+  const [pageUrl, setPageUrl] = useState('');
+  const [pageTitle, setPageTitle] = useState('');
 
-  const encodeUrl = encodeURIComponent(pageUrl);
-  const encodeTitle = encodeURIComponent(`Check out ${pageTitle}`);
-  const encodeWhatsAppText = encodeURIComponent(`${pageTitle} ${pageUrl}`);
-  const encodeTitleOnly = encodeURIComponent(pageTitle);
+  // Only render after mount to avoid hydration mismatch with dynamic URLs
+  useEffect(() => {
+      setPageUrl(window.location.href);
+      setPageTitle(document.title);
+    setMounted(true);
+  }, []);
+
+  // Memoize encoded values to avoid recomputation
+  const encodeUrl = useMemo(() => encodeURIComponent(pageUrl), [pageUrl]);
+  const encodeTitle = useMemo(() => encodeURIComponent(`Check out ${pageTitle}`), [pageTitle]);
+  const encodeWhatsAppText = useMemo(() => encodeURIComponent(`${pageTitle} ${pageUrl}`), [pageTitle, pageUrl]);
+  const encodeTitleOnly = useMemo(() => encodeURIComponent(pageTitle), [pageTitle]);
+
+  // Don't render until mounted to ensure we have correct URL values
+  if (!mounted) {
+    return null;
+  }
 
   const handleCopyLink = async (e: React.MouseEvent) => {
     e.preventDefault();

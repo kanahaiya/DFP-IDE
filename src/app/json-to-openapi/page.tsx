@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { IDELayout } from '@/components/layout/IDELayout';
 import { MonacoEditorPanel } from '@/components/common/MonacoEditorPanel';
 import { EditorToolbar } from '@/components/common/EditorToolbar';
@@ -64,6 +64,12 @@ export default function JSONToOpenAPIPage() {
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   
+  // Ref to track if we're currently syncing from endpoint switch (prevents saving during sync)
+  const isSyncingRef = useRef(false);
+  
+  // Ref to track if we're currently syncing from tab switch (prevents saving during sync)
+  const isTabSyncingRef = useRef(false);
+  
   // JSON validation with debouncing
   const inputValidation = useJSONValidation(inputJSON, 500);
   const validationErrors = useMemo(() => 
@@ -83,7 +89,7 @@ export default function JSONToOpenAPIPage() {
     }
   }, [inputValidation.isValid, type, message, clearMessage]);
 
-  // Convert to OpenAPI spec
+  // Convert to OpenAPI spec - callable function that always uses current values
   const convertToOpenAPI = useCallback(() => {
     try {
       // Check if any endpoint has JSON
@@ -98,6 +104,7 @@ export default function JSONToOpenAPIPage() {
       // Check for JSON validation errors in input
       if (!inputValidation.isValid && inputJSON.trim().length > 0) {
         setOutputSpec('');
+        showMessage(`Please fix ${inputValidation.errors.length} JSON error${inputValidation.errors.length > 1 ? 's' : ''} before converting`, 'error');
         return;
       }
 
@@ -109,28 +116,45 @@ export default function JSONToOpenAPIPage() {
       });
       
       setOutputSpec(output);
+      clearMessage(); // Clear any previous error messages on success
     } catch (error) {
       console.error('Conversion error:', error);
       showMessage(`Conversion failed: ${error instanceof Error ? error.message : 'Unknown error'}`, 'error');
       setOutputSpec('');
     }
-  }, [endpoints, settings, outputFormat, inputJSON, inputValidation.isValid, clearMessage, showMessage]);
+  }, [endpoints, settings, outputFormat, inputJSON, inputValidation.isValid, inputValidation.errors.length, clearMessage, showMessage]);
 
-  // Debounced conversion - reduced delay for faster response
+  // Debounced conversion - batches rapid changes with 150ms delay
+  // Note: convertToOpenAPI is NOT in deps to avoid circular dependency
+  // All actual data dependencies are listed directly, ensuring proper timer resets
   useEffect(() => {
     const timer = setTimeout(() => {
       convertToOpenAPI();
     }, 150);
+    
     return () => clearTimeout(timer);
-  }, [convertToOpenAPI]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [endpoints, settings, outputFormat, inputJSON, inputValidation.isValid, inputValidation.errors.length]);
 
   // Sync input with active endpoint
   useEffect(() => {
+    isSyncingRef.current = true;
     setInputJSON(activeEndpoint.json);
+    // Reset sync flag after state update completes
+    const timer = setTimeout(() => {
+      isSyncingRef.current = false;
+    }, 0);
+    return () => clearTimeout(timer);
   }, [activeEndpointIndex, activeEndpoint.json]);
 
-  // Save input to store
+  // Save input to store when user types (skip during endpoint sync to prevent race conditions)
   useEffect(() => {
+    // Don't save if we're currently syncing from an endpoint switch
+    if (isSyncingRef.current) {
+      return;
+    }
+    
+    // Only save if content actually differs
     if (inputJSON !== activeEndpoint.json) {
       loadEndpointJSON(activeEndpointIndex, inputJSON);
     }
@@ -150,23 +174,36 @@ export default function JSONToOpenAPIPage() {
         }
       }
     }
-  }, [showMessage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // Save current tab state when input changes
+  // Load tab data when switching to a different tab
   useEffect(() => {
-    if (activeTab && activeTabId) {
+    if (activeTab) {
+      isTabSyncingRef.current = true;
+      setInputJSON(activeTab.inputJSON);
+      // Reset sync flag after state update completes
+      const timer = setTimeout(() => {
+        isTabSyncingRef.current = false;
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [activeTabId, activeTab]);
+
+  // Save current tab state when input changes (skip during tab sync to prevent race conditions)
+  useEffect(() => {
+    // Don't save if we're currently syncing from a tab switch
+    if (isTabSyncingRef.current) {
+        return;
+      }
+
+    // Only save if the input actually differs from what's stored in the tab
+    if (activeTab && activeTabId && activeTab.inputJSON !== inputJSON) {
       updateTab(activeTabId, {
         inputJSON,
       });
     }
   }, [inputJSON, activeTabId, activeTab, updateTab]);
-
-  // Load tab data when switching to a different tab
-  useEffect(() => {
-    if (activeTab) {
-      setInputJSON(activeTab.inputJSON);
-    }
-  }, [activeTabId, activeTab]);
 
   const handleUpload = async (file: File) => {
     try {
@@ -389,16 +426,16 @@ export default function JSONToOpenAPIPage() {
     if (sampleTemplates.length > 0) {
       setInputJSON(sampleTemplates[0].content);
       showMessage('Sample JSON loaded', 'success');
-      // Trigger immediate conversion for samples (skip debounce)
-      setTimeout(() => convertToOpenAPI(), 0);
+      // Note: Conversion will be triggered automatically by the debounced effect
+      // when inputJSON updates, ensuring the save effect runs first
     }
   };
 
   const handleLoadTemplate = (template: { name: string; description: string; content: string }) => {
     setInputJSON(template.content);
     showMessage(`Loaded: ${template.name}`, 'success');
-    // Trigger immediate conversion for samples (skip debounce)
-    setTimeout(() => convertToOpenAPI(), 0);
+    // Note: Conversion will be triggered automatically by the debounced effect
+    // when inputJSON updates, ensuring the save effect runs first
   };
 
   const handleCopy = useCallback(async () => {

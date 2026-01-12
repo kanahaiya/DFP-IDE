@@ -3,7 +3,7 @@
  * Defines all tools available in the application
  */
 
-export interface ToolConfig {
+export interface ToolMetadata {
   id: string;
   name: string;
   route: string;
@@ -14,7 +14,7 @@ export interface ToolConfig {
   enabled: boolean;
 }
 
-export const TOOLS: ToolConfig[] = [
+export const TOOLS: ToolMetadata[] = [
   {
     id: 'json-to-openapi',
     name: 'JSON to OpenAPI',
@@ -30,27 +30,27 @@ export const TOOLS: ToolConfig[] = [
 /**
  * Get tool configuration by ID
  */
-export function getToolById(id: string): ToolConfig | undefined {
+export function getToolById(id: string): ToolMetadata | undefined {
   return TOOLS.find(tool => tool.id === id);
 }
 
 /**
  * Get tool configuration by route
  */
-export function getToolByRoute(route: string): ToolConfig | undefined {
+export function getToolByRoute(route: string): ToolMetadata | undefined {
   return TOOLS.find(tool => tool.route === route);
 }
 
 /**
  * Get all enabled tools
  */
-export function getEnabledTools(): ToolConfig[] {
+export function getEnabledTools(): ToolMetadata[] {
   return TOOLS.filter(tool => tool.enabled);
 }
 
 /**
  * Get tools by category
  */
-export function getToolsByCategory(category: ToolConfig['category']): ToolConfig[] {
+export function getToolsByCategory(category: ToolMetadata['category']): ToolMetadata[] {
   return TOOLS.filter(tool => tool.category === category && tool.enabled);
 }

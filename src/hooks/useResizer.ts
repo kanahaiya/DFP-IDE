@@ -17,25 +17,27 @@ export function useResizer({
 }: UseResizerProps = {}) {
   // Initialize size with defaultSize, will reset when direction changes
   const [size, setSize] = useState(defaultSize);
-  const [lastDirection, setLastDirection] = useState(direction);
   const isResizing = useRef(false);
   const resizerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const prevDirectionRef = useRef(direction);
+  const prevDefaultSizeRef = useRef(defaultSize);
 
-  // Reset size when direction changes
-  if (lastDirection !== direction) {
-    setLastDirection(direction);
-    if (size !== defaultSize) {
-      // Use queueMicrotask to schedule the update
-      queueMicrotask(() => {
-        setSize(defaultSize);
-        // Trigger resize event for Monaco Editor after CSS transition completes
-        setTimeout(() => {
-          window.dispatchEvent(new Event('resize'));
-        }, 350);
-      });
+  // Reset size when direction or defaultSize changes
+  useEffect(() => {
+    if (prevDirectionRef.current !== direction || prevDefaultSizeRef.current !== defaultSize) {
+      prevDirectionRef.current = direction;
+      prevDefaultSizeRef.current = defaultSize;
+    setSize(defaultSize);
+      
+    // Trigger resize event for Monaco Editor after CSS transition completes
+      const timer = setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+      }, 350);
+      
+      return () => clearTimeout(timer);
     }
-  }
+  }, [direction, defaultSize]);
 
   useEffect(() => {
     const resizer = resizerRef.current;

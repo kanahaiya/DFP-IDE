@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import type { Endpoint, OpenAPISettings } from '@/types';
 
 export interface Tab {
@@ -14,57 +14,47 @@ const MAX_TABS = 10;
 const STORAGE_KEY = 'openapi-tabs';
 
 export function useTabs() {
-  // Load tabs from localStorage on mount - using lazy initialization
-  const [tabs, setTabs] = useState<Tab[]>(() => {
-    if (typeof window === 'undefined') return [];
-    
+  // Initialize with empty state to avoid hydration mismatch
+  const [tabs, setTabs] = useState<Tab[]>([]);
+  const [activeTabId, setActiveTabId] = useState<string | null>(null);
+
+  // Load tabs from localStorage only on client after mount
+  useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
-        const { tabs: savedTabs } = JSON.parse(stored);
+        const { tabs: savedTabs, activeTabId: savedActiveId } = JSON.parse(stored);
         if (savedTabs && savedTabs.length > 0) {
-          return savedTabs;
+          setTabs(savedTabs);
+          setActiveTabId(savedActiveId || savedTabs[0].id);
+          return;
         }
       } catch (error) {
         console.error('Failed to load tabs from localStorage:', error);
       }
     }
-    
+
     // Create default tab if none exist
     const timestamp = Date.now();
-    return [{
+    const defaultTab: Tab = {
       id: `tab-${timestamp}`,
       name: 'JSON to OpenAPI',
       inputJSON: '',
       endpoints: [],
       settings: {},
       createdAt: timestamp,
-    }];
-  });
-
-  const [activeTabId, setActiveTabId] = useState<string | null>(() => {
-    if (typeof window === 'undefined') return null;
-    
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const { tabs: savedTabs, activeTabId: savedActiveId } = JSON.parse(stored);
-        if (savedTabs && savedTabs.length > 0) {
-          return savedActiveId || savedTabs[0].id;
-        }
-      } catch {
-        // Ignore errors
-      }
-    }
-    return tabs[0]?.id || null;
-  });
+    };
+    setTabs([defaultTab]);
+    setActiveTabId(defaultTab.id);
+  }, []);
 
   // Helper function to create a new tab
   const createNewTab = useCallback((name?: string, currentTabs: Tab[] = tabs): Tab => {
     const timestamp = Date.now();
-    // Calculate next untitled number (skip the first tab which is "JSON to OpenAPI")
+    // Calculate next untitled number: count existing untitled tabs and add 2
+    // (First untitled is "Untitled 2" after the default "JSON to OpenAPI" tab)
     const untitledCount = currentTabs.filter(t => t.name.startsWith('Untitled')).length;
-    const nextUntitled = untitledCount > 0 ? untitledCount + 1 : (currentTabs.length > 0 ? currentTabs.length + 1 : 2);
+    const nextUntitled = untitledCount + 2;
     
     return {
       id: `tab-${timestamp}`,
@@ -129,7 +119,8 @@ export function useTabs() {
     ));
   }, []);
 
-  const getActiveTab = useCallback(() => {
+  // Memoize activeTab to preserve referential equality when tab data doesn't change
+  const activeTab = useMemo(() => {
     return tabs.find(tab => tab.id === activeTabId) || null;
   }, [tabs, activeTabId]);
 
@@ -182,7 +173,7 @@ export function useTabs() {
   return {
     tabs,
     activeTabId,
-    activeTab: getActiveTab(),
+    activeTab,
     addTab,
     closeTab,
     renameTab,

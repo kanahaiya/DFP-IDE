@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import type { MessageType } from '@/types';
 
 interface MessageBoxProps {
@@ -55,14 +55,14 @@ export function useMessage() {
   const [message, setMessage] = useState('');
   const [type, setType] = useState<MessageType>('success');
 
-  const showMessage = (text: string, messageType: MessageType = 'success') => {
+  const showMessage = useCallback((text: string, messageType: MessageType = 'success') => {
     setMessage(text);
     setType(messageType);
-  };
+  }, []);
 
-  const clearMessage = () => {
+  const clearMessage = useCallback(() => {
     setMessage('');
-  };
+  }, []);
 
   return { message, type, showMessage, clearMessage };
 }
