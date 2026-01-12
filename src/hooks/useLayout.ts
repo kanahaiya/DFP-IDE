@@ -12,11 +12,15 @@ export function useLayout() {
   const [layout, setLayout] = useLocalStorage<LayoutMode>('dfp_layout', 'horizontal');
 
   useEffect(() => {
-    // Mobile-first: default to vertical on small screens
+    // Mobile-first: default to vertical on small screens (only if no preference is saved)
     if (typeof window !== 'undefined') {
       const isMobile = window.matchMedia('(max-width: 768px)').matches;
-      if (isMobile && !localStorage.getItem('dfp_layout')) {
-        setLayout('vertical');
+      const savedLayout = localStorage.getItem('dfp_layout');
+      if (isMobile && !savedLayout) {
+        // Use setTimeout to ensure this runs after the localStorage load effect
+        setTimeout(() => {
+          setLayout('vertical');
+        }, 0);
       }
     }
   }, [setLayout]);

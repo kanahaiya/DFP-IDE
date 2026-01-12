@@ -10,19 +10,20 @@ export function useLocalStorage<T>(
   key: string,
   initialValue: T
 ): [T, (value: T | ((val: T) => T)) => void] {
-  // State to store our value
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    if (typeof window === 'undefined') {
-      return initialValue;
-    }
+  // State to store our value - always initialize with the default value to avoid hydration mismatch
+  const [storedValue, setStoredValue] = useState<T>(initialValue);
+
+  // Load from localStorage after mount to avoid hydration mismatch
+  useEffect(() => {
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+      if (item) {
+        setStoredValue(JSON.parse(item));
+      }
     } catch (error) {
       console.warn(`Error reading localStorage key "${key}":`, error);
-      return initialValue;
     }
-  });
+  }, [key]);
 
   // Listen for storage changes (from other components or tabs)
   useEffect(() => {
