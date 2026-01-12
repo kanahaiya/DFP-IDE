@@ -7,12 +7,6 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
-  // Turbopack configuration for Monaco Editor
-  turbopack: {
-    resolveAlias: {
-      // Monaco Editor compatibility
-    },
-  },
 };
 
 export default nextConfig;

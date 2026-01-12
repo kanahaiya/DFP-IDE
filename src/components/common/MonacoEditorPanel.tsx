@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import Editor, { OnMount } from '@monaco-editor/react';
 import { useTheme } from '@/hooks/useTheme';
 import type { EditorLanguage, ValidationError } from '@/types';
 import type { editor } from 'monaco-editor';
+import type { Monaco } from '@monaco-editor/react';
 
 interface MonacoEditorPanelProps {
   value: string;
@@ -42,12 +43,10 @@ export function MonacoEditorPanel({
 }: MonacoEditorPanelProps) {
   const { theme, mounted } = useTheme();
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
-  const monacoRef = useRef<any>(null);
-  const [showPlaceholder, setShowPlaceholder] = useState(!value);
-
-  useEffect(() => {
-    setShowPlaceholder(!value || value.trim() === '');
-  }, [value]);
+  const monacoRef = useRef<Monaco | null>(null);
+  
+  // Derive showPlaceholder from value instead of using state
+  const showPlaceholder = useMemo(() => !value || value.trim() === '', [value]);
 
   // Update Monaco Editor theme when app theme changes
   useEffect(() => {
@@ -163,7 +162,6 @@ export function MonacoEditorPanel({
 
   const handleChange = (value: string | undefined) => {
     const newValue = value || '';
-    setShowPlaceholder(!newValue.trim());
     if (onChange) {
       onChange(newValue);
     }

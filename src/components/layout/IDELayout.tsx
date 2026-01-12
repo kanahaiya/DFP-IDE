@@ -1,7 +1,6 @@
 'use client';
 
 import React, { ReactNode, useEffect, useState } from 'react';
-import { useLayout } from '@/hooks/useLayout';
 import { useTheme } from '@/hooks/useTheme';
 import { IDEHeader } from './IDEHeader';
 import { ActivityBar, type ActivityView } from './ActivityBar';
@@ -19,7 +18,6 @@ interface IDELayoutProps {
  * Includes activity bar, toolbox sidebar, settings sidebar, and main editor area
  */
 export function IDELayout({ toolName, children, settingsSidebar, onHelpClick }: IDELayoutProps) {
-  const { layout } = useLayout();
   const { theme } = useTheme();
   
   const [activeView, setActiveView] = useState<ActivityView>('explorer');

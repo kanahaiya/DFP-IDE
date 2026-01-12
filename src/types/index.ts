@@ -51,7 +51,7 @@ export interface ToolConfig {
   inputLang: EditorLanguage;
   outputLang: EditorLanguage;
   description?: string;
-  convertFn?: (input: string, options?: any) => Promise<string>;
+  convertFn?: (input: string, options?: Record<string, unknown>) => Promise<string>;
 }
 
 /**
@@ -158,7 +158,7 @@ export interface OpenAPIConversionOptions extends OpenAPISettings {
 export interface SampleTemplate {
   name: string;
   description: string;
-  data: any;
+  data: Record<string, unknown>;
 }
 
 /**
@@ -256,7 +256,7 @@ export interface SEOMetadata {
 export interface StructuredData {
   '@context': string;
   '@type': string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**

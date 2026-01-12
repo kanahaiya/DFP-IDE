@@ -6,15 +6,10 @@ import { useOpenAPIStore } from '@/store/openapi';
  * Settings panel for OpenAPI configuration with all options
  */
 export function SettingsPanel() {
-  const { settings, endpoints, activeEndpointIndex, updateSettings, updateEndpoint } = useOpenAPIStore();
-  const activeEndpoint = endpoints[activeEndpointIndex];
+  const { settings, updateSettings } = useOpenAPIStore();
 
-  const handleSettingChange = (key: keyof typeof settings, value: any) => {
-    updateSettings({ [key]: value } as any);
-  };
-
-  const handleEndpointChange = (key: string, value: string) => {
-    updateEndpoint(activeEndpointIndex, { [key]: value } as any);
+  const handleSettingChange = (key: keyof typeof settings, value: string | boolean) => {
+    updateSettings({ [key]: value });
   };
 
   return (
@@ -67,7 +62,7 @@ export function SettingsPanel() {
           <select
             id="openapi-version"
             value={settings.openAPIVersion}
-            onChange={(e) => handleSettingChange('openAPIVersion', e.target.value as any)}
+            onChange={(e) => handleSettingChange('openAPIVersion', e.target.value)}
           >
             <option value="3.0">OpenAPI 3.0</option>
             <option value="2.0">Swagger 2.0</option>

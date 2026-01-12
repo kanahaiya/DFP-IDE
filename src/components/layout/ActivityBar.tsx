@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 export type ActivityView = 'explorer' | 'search' | null;
 
 interface ActivityBarProps {

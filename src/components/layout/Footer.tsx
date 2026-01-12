@@ -25,7 +25,6 @@ export function Footer() {
             <h4 className="footer-heading">Popular JSON Tools</h4>
             <ul className="footer-links">
               <li><Link href="/json-formatter/" className="footer-link">JSON Formatter</Link></li>
-              <li><Link href="/json-compare/" className="footer-link">JSON Compare</Link></li>
               <li><Link href="/json-to-csv/" className="footer-link">JSON to CSV</Link></li>
               <li><Link href="/json-schema-generator/" className="footer-link">JSON Schema Generator</Link></li>
               <li><Link href="/json-minifier/" className="footer-link">JSON Minifier</Link></li>

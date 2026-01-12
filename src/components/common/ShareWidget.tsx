@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { copyToClipboard } from '@/lib/clipboardUtils';
 
 /**
@@ -9,15 +9,12 @@ import { copyToClipboard } from '@/lib/clipboardUtils';
 export function ShareWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [pageUrl, setPageUrl] = useState('');
-  const [pageTitle, setPageTitle] = useState('Data Formatter Pro');
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setPageUrl(window.location.href);
-      setPageTitle(document.title);
-    }
-  }, []);
+  const [pageUrl] = useState(() => 
+    typeof window !== 'undefined' ? window.location.href : ''
+  );
+  const [pageTitle] = useState(() => 
+    typeof window !== 'undefined' ? document.title : 'Data Formatter Pro'
+  );
 
   const encodeUrl = encodeURIComponent(pageUrl);
   const encodeTitle = encodeURIComponent(`Check out ${pageTitle}`);
@@ -37,8 +34,14 @@ export function ShareWidget() {
 
   const handleShare = (network: string) => {
     try {
-      if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
-        (window as any).gtag('event', 'share', { network });
+      if (typeof window !== 'undefined') {
+        interface WindowWithAnalytics extends Window {
+          gtag?: (command: string, eventName: string, params: Record<string, string>) => void;
+        }
+        const win = window as WindowWithAnalytics;
+        if (typeof win.gtag === 'function') {
+          win.gtag('event', 'share', { network });
+        }
       }
     } catch (error) {
       console.error('Analytics error:', error);

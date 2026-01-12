@@ -282,7 +282,7 @@ export async function POST(request: NextRequest) {
 }
 
 // CORS headers for OPTIONS requests (if needed for external calls)
-export async function OPTIONS(request: NextRequest) {
+export async function OPTIONS() {
   return new NextResponse(null, {
     status: 200,
     headers: {

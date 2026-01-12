@@ -23,7 +23,7 @@ export default function HomePage() {
               <i className="fas fa-tools"></i>
               Browse All Tools
             </Link>
-          </div>
+        </div>
         </div>
       </main>
       <Footer />

@@ -47,7 +47,7 @@ const DEFAULT_SETTINGS: OpenAPISettings = {
   addConstraints: false,
 };
 
-export const useOpenAPIStore = create<OpenAPIState>((set, get) => ({
+export const useOpenAPIStore = create<OpenAPIState>((set) => ({
   endpoints: [{ ...DEFAULT_ENDPOINT, id: uuidv4() }],
   activeEndpointIndex: 0,
   settings: DEFAULT_SETTINGS,

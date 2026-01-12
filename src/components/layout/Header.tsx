@@ -70,7 +70,6 @@ export function Header() {
                   <div className="dropdown-label">Core Tools</div>
                   <Link href="/json-formatter/" onClick={closeMobileMenu}>JSON Formatter</Link>
                   <Link href="/json-validator/" onClick={closeMobileMenu}>JSON Validator</Link>
-                  <Link href="/json-compare/" onClick={closeMobileMenu}>JSON Compare</Link>
                   <Link href="/json-viewer/" onClick={closeMobileMenu}>JSON Viewer</Link>
                 </div>
 

@@ -15,7 +15,7 @@ const URL_REGEX = /^https?:\/\/.+/;
 export interface SchemaObject {
   type?: string;
   format?: string;
-  example?: any;
+  example?: unknown;
   description?: string;
   items?: SchemaObject;
   properties?: Record<string, SchemaObject>;
@@ -24,9 +24,9 @@ export interface SchemaObject {
   maximum?: number;
   minLength?: number;
   maxLength?: number;
-  enum?: any[];
+  enum?: unknown[];
   nullable?: boolean;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface OpenAPISpec {
@@ -41,13 +41,13 @@ export interface OpenAPISpec {
   host?: string;
   basePath?: string;
   schemes?: string[];
-  paths: Record<string, any>;
+  paths: Record<string, unknown>;
   components?: {
     schemas?: Record<string, SchemaObject>;
-    securitySchemes?: Record<string, any>;
+    securitySchemes?: Record<string, unknown>;
   };
   definitions?: Record<string, SchemaObject>;
-  securityDefinitions?: Record<string, any>;
+  securityDefinitions?: Record<string, unknown>;
 }
 
 /**
@@ -66,7 +66,7 @@ function detectFormat(value: string): string | undefined {
  * Infers JSON schema from a value with advanced type detection
  */
 function inferSchema(
-  value: any,
+  value: unknown,
   settings: OpenAPISettings,
   key?: string
 ): SchemaObject {
@@ -82,7 +82,7 @@ function inferSchema(
   const type = typeof value;
 
   // String type with format detection
-  if (type === 'string') {
+  if (type === 'string' && typeof value === 'string') {
     const schema: SchemaObject = { type: 'string' };
     
     if (settings.detectFormats) {
@@ -107,7 +107,7 @@ function inferSchema(
   }
 
   // Number type
-  if (type === 'number') {
+  if (type === 'number' && typeof value === 'number') {
     const schema: SchemaObject = {
       type: Number.isInteger(value) ? 'integer' : 'number',
     };
@@ -177,7 +177,7 @@ function inferSchema(
   }
 
   // Object type
-  if (type === 'object') {
+  if (type === 'object' && value && typeof value === 'object' && !Array.isArray(value)) {
     const schema: SchemaObject = {
       type: 'object',
       properties: {},
@@ -185,7 +185,7 @@ function inferSchema(
     
     const required: string[] = [];
     
-    for (const [k, v] of Object.entries(value)) {
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
       schema.properties![k] = inferSchema(v, settings, k);
       
       if (settings.markRequired && v !== null && v !== undefined) {
@@ -327,7 +327,7 @@ export function generateOpenAPISpec(
   for (const endpoint of endpoints) {
     if (!endpoint.json || !endpoint.json.trim()) continue;
 
-    let jsonData: any;
+    let jsonData: unknown;
     try {
       jsonData = JSON.parse(endpoint.json);
     } catch (error) {
@@ -345,7 +345,10 @@ export function generateOpenAPISpec(
     }
 
     // Build operation
-    const operation: any = {
+    const operation: Record<string, unknown> & {
+      responses: Record<string, unknown>;
+      requestBody?: Record<string, unknown>;
+    } = {
       operationId: endpoint.operationId || `${endpoint.method}${endpoint.path.replace(/\//g, '_').replace(/[{}]/g, '')}`,
       responses: {},
     };
@@ -430,7 +433,9 @@ export function generateOpenAPISpec(
       }
     }
 
-    spec.paths[endpoint.path][endpoint.method.toLowerCase()] = operation;
+    // Store operation in spec
+    const pathObj = spec.paths[endpoint.path] as Record<string, unknown>;
+    pathObj[endpoint.method.toLowerCase()] = operation;
   }
 
   return spec;

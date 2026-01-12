@@ -15,8 +15,12 @@ export function useMonaco() {
     // Monaco is loaded via @monaco-editor/react's loader
     // This hook just tracks the loading state
     const checkMonaco = () => {
-      if (typeof window !== 'undefined' && (window as any).monaco) {
-        setMonaco((window as any).monaco);
+      interface WindowWithMonaco extends Window {
+        monaco?: Monaco;
+      }
+      const win = window as WindowWithMonaco;
+      if (typeof window !== 'undefined' && win.monaco) {
+        setMonaco(win.monaco);
         setIsLoading(false);
       }
     };

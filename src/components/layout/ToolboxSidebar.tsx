@@ -2,38 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-interface Tool {
-  id: string;
-  name: string;
-  path: string;
-  icon: string;
-  category: string;
-}
-
-const tools: Tool[] = [
-  {
-    id: 'json-to-openapi',
-    name: 'JSON to OpenAPI',
-    path: '/json-to-openapi',
-    icon: 'fas fa-file-invoice',
-    category: 'JSON TOOLS',
-  },
-  {
-    id: 'json-formatter',
-    name: 'JSON Formatter',
-    path: '/json-formatter',
-    icon: 'fas fa-align-left',
-    category: 'JSON TOOLS',
-  },
-  {
-    id: 'json-validator',
-    name: 'JSON Validator',
-    path: '/json-validator',
-    icon: 'fas fa-check-double',
-    category: 'JSON TOOLS',
-  },
-];
+import { getEnabledTools, type ToolConfig } from '@/config/tools';
 
 interface ToolboxSidebarProps {
   isOpen: boolean;
@@ -41,14 +10,17 @@ interface ToolboxSidebarProps {
 
 export function ToolboxSidebar({ isOpen }: ToolboxSidebarProps) {
   const pathname = usePathname();
+  const tools = getEnabledTools();
 
+  // Group tools by category
   const groupedTools = tools.reduce((acc, tool) => {
-    if (!acc[tool.category]) {
-      acc[tool.category] = [];
+    const categoryName = tool.category.toUpperCase().replace('-', ' ') + ' TOOLS';
+    if (!acc[categoryName]) {
+      acc[categoryName] = [];
     }
-    acc[tool.category].push(tool);
+    acc[categoryName].push(tool);
     return acc;
-  }, {} as Record<string, Tool[]>);
+  }, {} as Record<string, ToolConfig[]>);
 
   return (
     <aside className={`toolbox-sidebar ${!isOpen ? 'collapsed' : ''}`} id="toolboxSidebar">
@@ -60,8 +32,9 @@ export function ToolboxSidebar({ isOpen }: ToolboxSidebarProps) {
             {categoryTools.map((tool) => (
               <Link
                 key={tool.id}
-                href={tool.path}
-                className={`toolbox-item ${pathname === tool.path ? 'active' : ''}`}
+                href={tool.route}
+                className={`toolbox-item ${pathname === tool.route ? 'active' : ''}`}
+                title={tool.description}
               >
                 <i className={tool.icon}></i>
                 {tool.name}

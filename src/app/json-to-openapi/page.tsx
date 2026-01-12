@@ -1,16 +1,16 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { IDELayout } from '@/components/layout/IDELayout';
-import { MonacoEditorPanel } from '@/components/tools/MonacoEditorPanel';
-import { EditorToolbar } from '@/components/tools/EditorToolbar';
-import { OutputToolbar } from '@/components/tools/OutputToolbar';
-import { StatsBar } from '@/components/tools/StatsBar';
-import { MessageBox, useMessage } from '@/components/tools/MessageBox';
-import { EndpointManager } from '@/components/tools/openapi/EndpointManager';
-import { SettingsPanel } from '@/components/tools/openapi/SettingsPanel';
-import { OutputFormatToggle } from '@/components/tools/openapi/OutputFormatToggle';
-import TabManager from '@/components/tools/openapi/TabManager';
+import { MonacoEditorPanel } from '@/components/common/MonacoEditorPanel';
+import { EditorToolbar } from '@/components/common/EditorToolbar';
+import { OutputToolbar } from '@/components/common/OutputToolbar';
+import { StatsBar } from '@/components/common/StatsBar';
+import { MessageBox, useMessage } from '@/components/common/MessageBox';
+import TabManager from '@/components/common/TabManager';
+import { EndpointManager } from '@/components/tools/json-to-openapi/EndpointManager';
+import { SettingsPanel } from '@/components/tools/json-to-openapi/SettingsPanel';
+import { OutputFormatToggle } from '@/components/tools/json-to-openapi/OutputFormatToggle';
 import { useOpenAPIStore } from '@/store/openapi';
 import { useTabs } from '@/hooks/useTabs';
 import { useJSONValidation } from '@/hooks/useJSONValidation';
@@ -20,18 +20,18 @@ import { copyToClipboard } from '@/lib/clipboardUtils';
 import { createShareUrl, getUrlParam, safeDecodeParam } from '@/lib/urlUtils';
 import { useLayout } from '@/hooks/useLayout';
 import { useResizer } from '@/hooks/useResizer';
-import { ShareWidget } from '@/components/layout/ShareWidget';
+import { ShareWidget } from '@/components/common/ShareWidget';
 import { Footer } from '@/components/layout/Footer';
 import { SEOContent } from '@/components/seo/SEOContent';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { HelpModal } from '@/components/tools/HelpModal';
+import { HelpModal } from '@/components/common/HelpModal';
 import { jsonToOpenAPIContent } from '@/data/json-to-openapi-seo';
 import { jsonToOpenAPIHelpSections } from '@/data/json-to-openapi-help';
 import { generateAllSchemas } from '@/lib/seo/schema-generator';
 import jsYaml from 'js-yaml';
 
 export default function JSONToOpenAPIPage() {
-  const { endpoints, activeEndpointIndex, settings, outputFormat, loadEndpointJSON, updateSettings } = useOpenAPIStore();
+  const { endpoints, activeEndpointIndex, settings, outputFormat, loadEndpointJSON } = useOpenAPIStore();
   const activeEndpoint = endpoints[activeEndpointIndex];
   const { layout } = useLayout();
   const { size, resizerRef, containerRef } = useResizer({
@@ -83,13 +83,46 @@ export default function JSONToOpenAPIPage() {
     }
   }, [inputValidation.isValid, type, message, clearMessage]);
 
+  // Convert to OpenAPI spec
+  const convertToOpenAPI = useCallback(() => {
+    try {
+      // Check if any endpoint has JSON
+      const endpointsWithJson = endpoints.filter(ep => ep.json && ep.json.trim().length > 0);
+      
+      if (endpointsWithJson.length === 0) {
+        setOutputSpec('');
+        clearMessage(); // Clear any previous messages
+        return;
+      }
+
+      // Check for JSON validation errors in input
+      if (!inputValidation.isValid && inputJSON.trim().length > 0) {
+        setOutputSpec('');
+        return;
+      }
+
+      // Generate OpenAPI spec
+      const output = generateOpenAPISpec({
+        endpoints,
+        settings,
+        outputFormat,
+      });
+      
+      setOutputSpec(output);
+    } catch (error) {
+      console.error('Conversion error:', error);
+      showMessage(`Conversion failed: ${error instanceof Error ? error.message : 'Unknown error'}`, 'error');
+      setOutputSpec('');
+    }
+  }, [endpoints, settings, outputFormat, inputJSON, inputValidation.isValid, clearMessage, showMessage]);
+
   // Debounced conversion - reduced delay for faster response
   useEffect(() => {
     const timer = setTimeout(() => {
       convertToOpenAPI();
     }, 150);
     return () => clearTimeout(timer);
-  }, [inputJSON, endpoints, settings, outputFormat]);
+  }, [convertToOpenAPI]);
 
   // Sync input with active endpoint
   useEffect(() => {
@@ -101,7 +134,7 @@ export default function JSONToOpenAPIPage() {
     if (inputJSON !== activeEndpoint.json) {
       loadEndpointJSON(activeEndpointIndex, inputJSON);
     }
-  }, [inputJSON]);
+  }, [inputJSON, activeEndpoint.json, activeEndpointIndex, loadEndpointJSON]);
 
   // Load from share URL on mount
   useEffect(() => {
@@ -117,7 +150,7 @@ export default function JSONToOpenAPIPage() {
         }
       }
     }
-  }, []);
+  }, [showMessage]);
 
   // Save current tab state when input changes
   useEffect(() => {
@@ -126,50 +159,14 @@ export default function JSONToOpenAPIPage() {
         inputJSON,
       });
     }
-  }, [inputJSON, activeTabId]);
+  }, [inputJSON, activeTabId, activeTab, updateTab]);
 
   // Load tab data when switching to a different tab
   useEffect(() => {
     if (activeTab) {
       setInputJSON(activeTab.inputJSON);
     }
-  }, [activeTabId]);
-
-  const convertToOpenAPI = useCallback(() => {
-    try {
-      // Check if any endpoint has JSON
-      const endpointsWithJson = endpoints.filter(ep => ep.json && ep.json.trim().length > 0);
-      
-      if (endpointsWithJson.length === 0) {
-        setOutputSpec('');
-        clearMessage(); // Clear any previous messages
-        return;
-      }
-
-      // Check for JSON validation errors in input
-      if (!inputValidation.isValid && inputJSON.trim().length > 0) {
-        setOutputSpec('');
-        showMessage(`Please fix ${inputValidation.errors.length} JSON error${inputValidation.errors.length > 1 ? 's' : ''} before converting`, 'error');
-        return;
-      }
-
-      // Clear any previous error messages before converting
-      clearMessage();
-
-      const spec = generateOpenAPISpec({
-        endpoints,
-        settings,
-        outputFormat,
-      });
-      
-      setOutputSpec(spec);
-      // Success is indicated by the presence of output - no message needed
-    } catch (error) {
-      console.error('Conversion error:', error);
-      setOutputSpec('');
-      showMessage('Conversion error: ' + (error instanceof Error ? error.message : 'Unknown error'), 'error');
-    }
-  }, [endpoints, settings, outputFormat, showMessage, clearMessage, inputValidation.isValid, inputValidation.errors.length, inputJSON]);
+  }, [activeTabId, activeTab]);
 
   const handleUpload = async (file: File) => {
     try {
@@ -177,7 +174,7 @@ export default function JSONToOpenAPIPage() {
       const sizeMB = (file.size / 1024 / 1024).toFixed(2);
       setInputJSON(text);
       showMessage(`File loaded successfully (${sizeMB} MB)`, 'success');
-    } catch (error) {
+    } catch {
       showMessage('Failed to load file', 'error');
     }
   };
@@ -191,7 +188,7 @@ export default function JSONToOpenAPIPage() {
       }
       setInputJSON(text);
       showMessage('Pasted from clipboard', 'success');
-    } catch (error) {
+    } catch {
       showMessage('Failed to paste from clipboard. Please check browser permissions.', 'error');
     }
   };
@@ -404,33 +401,33 @@ export default function JSONToOpenAPIPage() {
     setTimeout(() => convertToOpenAPI(), 0);
   };
 
-  const handleCopy = async () => {
+  const handleCopy = useCallback(async () => {
     try {
       await copyToClipboard(outputSpec);
       showMessage('Copied to clipboard', 'success');
-    } catch (error) {
+    } catch {
       showMessage('Failed to copy', 'error');
     }
-  };
+  }, [outputSpec, showMessage]);
 
-  const handleDownload = () => {
+  const handleDownload = useCallback(() => {
     try {
       const ext = outputFormat === 'yaml' ? 'yaml' : 'json';
       const filename = `openapi-spec-${getTimestamp()}.${ext}`;
       const mimeType = outputFormat === 'yaml' ? 'text/yaml' : 'application/json';
       downloadTextFile(outputSpec, filename, mimeType);
       showMessage('Downloaded successfully', 'success');
-    } catch (error) {
+    } catch {
       showMessage('Failed to download', 'error');
     }
-  };
+  }, [outputSpec, outputFormat, showMessage]);
 
   const handleShare = async () => {
     try {
       const url = createShareUrl('/json-to-openapi', 'json', inputJSON);
       await copyToClipboard(url);
       showMessage('Share link copied to clipboard', 'success');
-    } catch (error) {
+    } catch {
       showMessage('Failed to create share link', 'error');
     }
   };
@@ -485,7 +482,7 @@ export default function JSONToOpenAPIPage() {
         jsYaml.load(outputSpec);
       }
       setShowPreviewModal(true);
-    } catch (error) {
+    } catch {
       showMessage('Cannot preview: Invalid spec format', 'error');
     }
   };
@@ -542,7 +539,7 @@ export default function JSONToOpenAPIPage() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [outputSpec, inputJSON]);
+  }, [outputSpec, inputJSON, convertToOpenAPI, handleDownload, handleCopy]);
 
   // Settings Sidebar Content
   const settingsSidebar = (
@@ -568,14 +565,6 @@ export default function JSONToOpenAPIPage() {
     </>
   );
 
-  const toolTabs = [
-    {
-      id: 'json-to-openapi',
-      title: 'JSON to OpenAPI',
-      icon: 'fas fa-file-invoice',
-      closeable: false,
-    },
-  ];
 
   return (
     <>
@@ -690,7 +679,7 @@ export default function JSONToOpenAPIPage() {
             // Convert YAML to JSON object
             specObj = jsYaml.load(outputSpec);
           }
-        } catch (error) {
+        } catch {
           specObj = null;
         }
 

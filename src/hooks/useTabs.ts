@@ -14,43 +14,57 @@ const MAX_TABS = 10;
 const STORAGE_KEY = 'openapi-tabs';
 
 export function useTabs() {
-  const [tabs, setTabs] = useState<Tab[]>([]);
-  const [activeTabId, setActiveTabId] = useState<string | null>(null);
-
-  // Load tabs from localStorage on mount
-  useEffect(() => {
+  // Load tabs from localStorage on mount - using lazy initialization
+  const [tabs, setTabs] = useState<Tab[]>(() => {
+    if (typeof window === 'undefined') return [];
+    
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
-        const { tabs: savedTabs, activeTabId: savedActiveId } = JSON.parse(stored);
+        const { tabs: savedTabs } = JSON.parse(stored);
         if (savedTabs && savedTabs.length > 0) {
-          setTabs(savedTabs);
-          setActiveTabId(savedActiveId || savedTabs[0].id);
-          return;
+          return savedTabs;
         }
       } catch (error) {
         console.error('Failed to load tabs from localStorage:', error);
       }
     }
-
+    
     // Create default tab if none exist
-    const defaultTab = createNewTab('JSON to OpenAPI');
-    setTabs([defaultTab]);
-    setActiveTabId(defaultTab.id);
-  }, []);
+    const timestamp = Date.now();
+    return [{
+      id: `tab-${timestamp}`,
+      name: 'JSON to OpenAPI',
+      inputJSON: '',
+      endpoints: [],
+      settings: {},
+      createdAt: timestamp,
+    }];
+  });
 
-  // Save tabs to localStorage whenever they change
-  useEffect(() => {
-    if (tabs.length > 0) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ tabs, activeTabId }));
+  const [activeTabId, setActiveTabId] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
+    
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        const { tabs: savedTabs, activeTabId: savedActiveId } = JSON.parse(stored);
+        if (savedTabs && savedTabs.length > 0) {
+          return savedActiveId || savedTabs[0].id;
+        }
+      } catch {
+        // Ignore errors
+      }
     }
-  }, [tabs, activeTabId]);
+    return tabs[0]?.id || null;
+  });
 
-  const createNewTab = useCallback((name?: string): Tab => {
+  // Helper function to create a new tab
+  const createNewTab = useCallback((name?: string, currentTabs: Tab[] = tabs): Tab => {
     const timestamp = Date.now();
     // Calculate next untitled number (skip the first tab which is "JSON to OpenAPI")
-    const untitledCount = tabs.filter(t => t.name.startsWith('Untitled')).length;
-    const nextUntitled = untitledCount > 0 ? untitledCount + 1 : (tabs.length > 0 ? tabs.length + 1 : 2);
+    const untitledCount = currentTabs.filter(t => t.name.startsWith('Untitled')).length;
+    const nextUntitled = untitledCount > 0 ? untitledCount + 1 : (currentTabs.length > 0 ? currentTabs.length + 1 : 2);
     
     return {
       id: `tab-${timestamp}`,
@@ -60,7 +74,14 @@ export function useTabs() {
       settings: {},
       createdAt: timestamp,
     };
-  }, [tabs.length, tabs]);
+  }, [tabs]);
+
+  // Save tabs to localStorage whenever they change
+  useEffect(() => {
+    if (tabs.length > 0) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ tabs, activeTabId }));
+    }
+  }, [tabs, activeTabId]);
 
   const addTab = useCallback(() => {
     if (tabs.length >= MAX_TABS) {

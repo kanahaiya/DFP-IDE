@@ -7,7 +7,7 @@ export interface InferredType {
   type: string;
   format?: string;
   pattern?: string;
-  enum?: any[];
+  enum?: unknown[];
   items?: InferredType;
   properties?: Record<string, InferredType>;
   required?: string[];
@@ -17,7 +17,7 @@ export interface InferredType {
 /**
  * Infer JSON schema type from a value
  */
-export function inferType(value: any, key?: string): InferredType {
+export function inferType(value: unknown, key?: string): InferredType {
   if (value === null) {
     return { type: 'string', nullable: true };
   }

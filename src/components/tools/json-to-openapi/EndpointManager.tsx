@@ -9,14 +9,12 @@ import { useState } from 'react';
  */
 export function EndpointManager() {
   const { endpoints, activeEndpointIndex, addEndpoint, removeEndpoint, setActiveEndpoint, updateEndpoint, loadEndpointJSON } = useOpenAPIStore();
-  const [openSampleMenu, setOpenSampleMenu] = useState<number | null>(null);
   const [expandedEndpoint, setExpandedEndpoint] = useState<number | null>(activeEndpointIndex);
 
   const handleLoadSample = (index: number, sampleName: SampleTemplateName) => {
     const sample = SampleTemplates[sampleName];
     const jsonStr = JSON.stringify(sample, null, 2);
     loadEndpointJSON(index, jsonStr);
-    setOpenSampleMenu(null);
   };
 
   const toggleExpanded = (index: number) => {
@@ -25,7 +23,7 @@ export function EndpointManager() {
   };
 
   const handleEndpointChange = (index: number, field: string, value: string) => {
-    updateEndpoint(index, { [field]: value } as any);
+    updateEndpoint(index, { [field]: value });
   };
 
   return (

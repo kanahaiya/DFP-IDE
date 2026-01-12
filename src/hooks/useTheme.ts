@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 import type { Theme } from '@/types';
 
@@ -12,7 +12,8 @@ export function useTheme() {
   const [theme, setTheme] = useLocalStorage<Theme>('dfp_theme', 'dark');
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
+  // Use layout effect to avoid hydration mismatch
+  useLayoutEffect(() => {
     setMounted(true);
   }, []);
 
