@@ -5,7 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export const metadata: Metadata = {
   title: "Data Formatter Pro - JSON Tools & Converters",
-  description: "Fast, privacy-first JSON & data utilities for developers",
+  description: "Fast, privacy-first JSON tools and data converters for developers. Convert CSV to JSON, generate OpenAPI specs, validate JSON, and more. 100% free, client-side processing, no signup required.",
 };
 
 const GA_MEASUREMENT_ID = "G-B47GC8FSFT";

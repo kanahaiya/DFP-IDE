@@ -19,6 +19,10 @@ export default function HomePage() {
               <i className="fas fa-file-code"></i>
               JSON to OpenAPI
             </Link>
+            <Link href="/csv-to-json" className="btn btn-primary" style={{ fontSize: '1.1rem', padding: '0.75rem 1.5rem' }}>
+              <i className="fas fa-table"></i>
+              CSV to JSON
+            </Link>
             <Link href="/tools" className="btn btn-secondary" style={{ fontSize: '1.1rem', padding: '0.75rem 1.5rem' }}>
               <i className="fas fa-tools"></i>
               Browse All Tools

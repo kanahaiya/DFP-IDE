@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "last_updated": "2026-01-11",
-    "total_keywords": 45,
-    "pages_tracked": 1,
-    "tools_used": ["Industry knowledge", "AI analysis", "Web search", "SERP analysis"]
+    "last_updated": "2026-01-13",
+    "total_keywords": 80,
+    "pages_tracked": 2,
+    "tools_used": ["Industry knowledge", "AI analysis", "Web search", "SERP analysis", "Google Keyword Planner"]
   },
   "keywords": {
     "json to openapi converter": {
@@ -102,6 +102,103 @@
       "status": "published",
       "priority": "high",
       "type": "long-tail"
+    },
+    "csv to json converter": {
+      "search_volume": 8500,
+      "difficulty": 35,
+      "target_page": "/csv-to-json/",
+      "current_rank": null,
+      "status": "in_progress",
+      "priority": "critical",
+      "type": "primary",
+      "related_keywords": [
+        "convert csv to json",
+        "csv to json online",
+        "csv to json free"
+      ]
+    },
+    "convert csv to json": {
+      "search_volume": 6200,
+      "difficulty": 32,
+      "target_page": "/csv-to-json/",
+      "current_rank": null,
+      "status": "in_progress",
+      "priority": "critical",
+      "type": "primary"
+    },
+    "csv to json online": {
+      "search_volume": 3500,
+      "difficulty": 30,
+      "target_page": "/csv-to-json/",
+      "current_rank": null,
+      "status": "in_progress",
+      "priority": "critical",
+      "type": "primary"
+    },
+    "csv to json free": {
+      "search_volume": 2800,
+      "difficulty": 28,
+      "target_page": "/csv-to-json/",
+      "current_rank": null,
+      "status": "in_progress",
+      "priority": "high",
+      "type": "secondary"
+    },
+    "how to convert csv to json": {
+      "search_volume": 2400,
+      "difficulty": 25,
+      "target_page": "/csv-to-json/",
+      "current_rank": null,
+      "status": "in_progress",
+      "priority": "high",
+      "type": "long-tail",
+      "featured_snippet_opportunity": true
+    },
+    "csv to json converter online free": {
+      "search_volume": 1900,
+      "difficulty": 33,
+      "target_page": "/csv-to-json/",
+      "current_rank": null,
+      "status": "in_progress",
+      "priority": "high",
+      "type": "primary"
+    },
+    "csv json converter": {
+      "search_volume": 1600,
+      "difficulty": 30,
+      "target_page": "/csv-to-json/",
+      "current_rank": null,
+      "status": "in_progress",
+      "priority": "high",
+      "type": "secondary"
+    },
+    "parse csv to json": {
+      "search_volume": 1200,
+      "difficulty": 27,
+      "target_page": "/csv-to-json/",
+      "current_rank": null,
+      "status": "in_progress",
+      "priority": "medium",
+      "type": "secondary"
+    },
+    "csv to json with headers": {
+      "search_volume": 850,
+      "difficulty": 25,
+      "target_page": "/csv-to-json/",
+      "current_rank": null,
+      "status": "in_progress",
+      "priority": "medium",
+      "type": "long-tail"
+    },
+    "csv vs json which is better": {
+      "search_volume": 1200,
+      "difficulty": 20,
+      "target_page": "/csv-to-json/",
+      "current_rank": null,
+      "status": "in_progress",
+      "priority": "high",
+      "type": "informational",
+      "future_blog": "/blog/csv-vs-json/"
     }
   },
   "content_calendar": {
@@ -113,6 +210,17 @@
         "primary_keyword": "json to openapi converter",
         "word_count": 4357,
         "status": "live"
+      }
+    ],
+    "in_progress": [
+      {
+        "title": "CSV to JSON Converter - Tool Page",
+        "url": "/csv-to-json/",
+        "target_date": "2026-01-13",
+        "primary_keyword": "csv to json converter",
+        "estimated_word_count": 3200,
+        "content_type": "tool_page",
+        "status": "content_rewrite"
       }
     ],
     "planned": [
@@ -139,6 +247,30 @@
         "primary_keyword": "best openapi generator tools 2026",
         "estimated_volume": 700,
         "content_type": "comparison_roundup"
+      },
+      {
+        "title": "CSV vs JSON: Complete Comparison Guide",
+        "url": "/blog/csv-vs-json/",
+        "target_date": "2026-02",
+        "primary_keyword": "csv vs json which is better",
+        "estimated_volume": 1200,
+        "content_type": "comparison_article"
+      },
+      {
+        "title": "How to Convert CSV to JSON in JavaScript",
+        "url": "/blog/convert-csv-json-javascript/",
+        "target_date": "2026-02",
+        "primary_keyword": "how to convert csv to json in javascript",
+        "estimated_volume": 1800,
+        "content_type": "tutorial"
+      },
+      {
+        "title": "What is CSV Format? Complete Guide",
+        "url": "/blog/what-is-csv-format/",
+        "target_date": "2026-03",
+        "primary_keyword": "what is csv format",
+        "estimated_volume": 5500,
+        "content_type": "educational_guide"
       }
     ]
   },

@@ -1,0 +1,124 @@
+{
+  "tool_pages": {
+    "csv-to-json": {
+      "primary_keywords": [
+        "csv to json converter",
+        "convert csv to json",
+        "csv to json online",
+        "csv to json free",
+        "csv to json converter online free"
+      ],
+      "secondary_keywords": [
+        "csv json converter",
+        "transform csv to json",
+        "csv file to json",
+        "parse csv to json",
+        "csv to json tool",
+        "csv to json format",
+        "csv data to json",
+        "convert csv file to json online"
+      ],
+      "long_tail_keywords": [
+        "how to convert csv to json",
+        "how to convert csv to json online free",
+        "best csv to json converter",
+        "csv to json converter with delimiter options",
+        "convert csv to json array of objects",
+        "csv to json nested structure",
+        "csv to json with headers",
+        "csv to json without upload",
+        "convert large csv to json",
+        "csv to json type conversion"
+      ],
+      "search_volume": "high",
+      "search_volume_count": "8500/month",
+      "keyword_difficulty": "35/100",
+      "competition": "medium",
+      "priority": "critical",
+      "target_url": "/csv-to-json",
+      "h1_keyword": "CSV to JSON Converter - Free Online Tool",
+      "meta_title": "CSV to JSON Converter Online Free - Convert CSV to JSON Instantly",
+      "meta_description": "Convert CSV to JSON online instantly with our free tool. Smart type detection, multiple output formats, 100% client-side processing. No upload required.",
+      "content_focus": "Tool functionality, instant conversion, privacy features, data type parsing",
+      "serp_features": [
+        "people_also_ask",
+        "how_to"
+      ],
+      "competitors": [
+        "convertcsv.com",
+        "csvjson.com",
+        "codebeautify.org/csv-to-json-converter",
+        "convertcsv.io",
+        "onlinetoolsforjson.com"
+      ],
+      "related_queries": [
+        "csv to json python",
+        "csv to json javascript",
+        "csv to json excel",
+        "json to csv",
+        "csv validator",
+        "json formatter"
+      ]
+    }
+  },
+  "blog_content": {
+    "educational": [
+      {
+        "keyword": "how to convert csv to json",
+        "search_volume": "2400/month",
+        "difficulty": "25/100",
+        "priority": "high",
+        "target_url": "/blog/how-to-convert-csv-to-json/",
+        "content_type": "tutorial"
+      },
+      {
+        "keyword": "csv vs json which is better",
+        "search_volume": "1200/month",
+        "difficulty": "20/100",
+        "priority": "medium",
+        "target_url": "/blog/csv-vs-json/",
+        "content_type": "comparison_article"
+      },
+      {
+        "keyword": "what is csv format",
+        "search_volume": "5500/month",
+        "difficulty": "18/100",
+        "priority": "high",
+        "target_url": "/blog/what-is-csv-format/",
+        "content_type": "educational_guide"
+      }
+    ],
+    "how_to": [
+      {
+        "keyword": "how to convert csv to json in javascript",
+        "search_volume": "1800/month",
+        "difficulty": "28/100",
+        "priority": "high",
+        "target_url": "/blog/convert-csv-json-javascript/",
+        "content_type": "tutorial"
+      },
+      {
+        "keyword": "how to parse csv file",
+        "search_volume": "3200/month",
+        "difficulty": "30/100",
+        "priority": "medium",
+        "target_url": "/blog/parse-csv-files/",
+        "content_type": "tutorial"
+      }
+    ]
+  },
+  "metadata": {
+    "research_date": "2026-01-13",
+    "tools_used": [
+      "Google Keyword Planner",
+      "Google Search Console",
+      "SERP Analysis",
+      "ChatGPT",
+      "Claude",
+      "Google Search Autocomplete"
+    ],
+    "total_keywords": 35,
+    "high_priority_count": 15,
+    "notes": "Focus on 'free' and 'online' modifiers - high search volume, lower difficulty. Privacy-focused keywords ('no upload', 'client-side') have growing search interest. Type conversion features differentiate from competitors."
+  }
+}

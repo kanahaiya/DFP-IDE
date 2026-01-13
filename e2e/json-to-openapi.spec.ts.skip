@@ -382,6 +382,7 @@ test.describe('JSON to OpenAPI E2E Tests', () => {
 test.describe('JSON to OpenAPI - Complete User Journeys', () => {
   test('Journey 1: Quick API Documentation', async ({ page }) => {
     await page.goto(TOOL_URL);
+    await page.waitForLoadState('networkidle');
     
     // User wants to quickly document a single endpoint
     await page.click('text=/users');
@@ -401,6 +402,7 @@ test.describe('JSON to OpenAPI - Complete User Journeys', () => {
 
   test('Journey 2: Complete REST API Documentation', async ({ page }) => {
     await page.goto(TOOL_URL);
+    await page.waitForLoadState('networkidle');
     
     // User wants to document a complete REST API
     const operations = [

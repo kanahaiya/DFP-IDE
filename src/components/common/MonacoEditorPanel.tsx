@@ -3,6 +3,7 @@
 import { useEffect, useRef, useMemo } from 'react';
 import Editor, { OnMount } from '@monaco-editor/react';
 import { useTheme } from '@/hooks/useTheme';
+import { registerCSVLanguage, applyCSVColumnDecorations } from '@/lib/monaco/csv-language';
 import type { EditorLanguage, ValidationError } from '@/types';
 import type { editor } from 'monaco-editor';
 import type { Monaco } from '@monaco-editor/react';
@@ -44,6 +45,7 @@ export function MonacoEditorPanel({
   const { theme, mounted } = useTheme();
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
+  const csvDecorationsRef = useRef<editor.IEditorDecorationsCollection | null>(null);
 
   // Derive showPlaceholder from value instead of using state
   const showPlaceholder = useMemo(() => !value || value.trim() === '', [value]);
@@ -83,6 +85,36 @@ export function MonacoEditorPanel({
   const handleEditorMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
     monacoRef.current = monaco;
+
+    // Register CSV language support and apply column decorations
+    if (language === 'csv') {
+      try {
+        registerCSVLanguage(monaco);
+        
+        // Apply initial column decorations
+        const applyDecorations = () => {
+          if (editorRef.current && monacoRef.current) {
+            csvDecorationsRef.current = applyCSVColumnDecorations(
+              editorRef.current,
+              monacoRef.current,
+              ','
+            );
+          }
+        };
+
+        // Apply decorations on content change
+        editor.onDidChangeModelContent(() => {
+          // Debounce decoration updates
+          const timer = setTimeout(applyDecorations, 150);
+          return () => clearTimeout(timer);
+        });
+
+        // Initial application
+        setTimeout(applyDecorations, 100);
+      } catch (error) {
+        console.warn('Error setting up CSV decorations:', error);
+      }
+    }
 
     // Configure JSON diagnostics for validation
     if (language === 'json') {

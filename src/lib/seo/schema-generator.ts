@@ -4,11 +4,21 @@ import type { FAQItem, HowToStep } from '@/data/json-to-openapi-seo';
  * Generates comprehensive JSON-LD structured data for SEO
  */
 
-export function generateSoftwareApplicationSchema() {
+export interface ToolSchemaConfig {
+  toolName: string; // e.g., "CSV to JSON Converter"
+  toolUrl: string; // e.g., "csv-to-json"
+  description: string; // Short meta description
+  featureList: string[]; // Array of key features
+  howToTitle: string; // e.g., "How to Convert CSV to JSON"
+  howToDescription: string; // Description for HowTo schema
+  screenshot?: string; // Optional screenshot URL
+}
+
+export function generateSoftwareApplicationSchema(config: ToolSchemaConfig) {
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'JSON to OpenAPI Converter',
+    name: config.toolName,
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Web Browser',
     offers: {
@@ -23,18 +33,9 @@ export function generateSoftwareApplicationSchema() {
       bestRating: '5',
       worstRating: '1',
     },
-    description: 'Free online JSON to OpenAPI 3.0 and Swagger 2.0 converter with automatic schema inference, multi-endpoint support, and real-time validation.',
-    featureList: [
-      'Real-time JSON to OpenAPI conversion',
-      'Automatic schema inference',
-      'Multi-endpoint support',
-      'OpenAPI 3.0 and Swagger 2.0 support',
-      'Format detection (email, UUID, date-time)',
-      'Client-side processing for privacy',
-      'Export to JSON and YAML',
-      'Built-in Swagger UI preview',
-    ],
-    screenshot: 'https://dataformatterpro.com/screenshots/json-to-openapi.png',
+    description: config.description,
+    featureList: config.featureList,
+    screenshot: config.screenshot || `https://dataformatterpro.com/screenshots/${config.toolUrl}.png`,
     softwareVersion: '2.0',
     datePublished: '2024-01-01',
     dateModified: new Date().toISOString().split('T')[0],
@@ -66,28 +67,28 @@ export function generateFAQSchema(faqs: FAQItem[]) {
   };
 }
 
-export function generateHowToSchema(steps: HowToStep[]) {
+export function generateHowToSchema(steps: HowToStep[], config: ToolSchemaConfig) {
   return {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'How to Convert JSON to OpenAPI Specification',
-    description: 'Step-by-step guide to converting JSON responses into OpenAPI 3.0 or Swagger 2.0 specifications using our free online tool.',
+    name: config.howToTitle,
+    description: config.howToDescription,
     totalTime: 'PT5M',
     tool: {
       '@type': 'HowToTool',
-      name: 'JSON to OpenAPI Converter',
+      name: config.toolName,
     },
     step: steps.map((step, index) => ({
       '@type': 'HowToStep',
       position: index + 1,
       name: step.title,
       text: step.description,
-      url: `https://dataformatterpro.com/json-to-openapi#step-${step.number}`,
+      url: `https://dataformatterpro.com/${config.toolUrl}#step-${step.number}`,
     })),
   };
 }
 
-export function generateBreadcrumbSchema() {
+export function generateBreadcrumbSchema(config: ToolSchemaConfig) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -107,8 +108,8 @@ export function generateBreadcrumbSchema() {
       {
         '@type': 'ListItem',
         position: 3,
-        name: 'JSON to OpenAPI Converter',
-        item: 'https://dataformatterpro.com/json-to-openapi',
+        name: config.toolName,
+        item: `https://dataformatterpro.com/${config.toolUrl}`,
       },
     ],
   };
@@ -134,13 +135,13 @@ export function generateOrganizationSchema() {
   };
 }
 
-export function generateWebPageSchema() {
+export function generateWebPageSchema(config: ToolSchemaConfig) {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'JSON to OpenAPI Converter - Free Online Tool',
-    description: 'Convert JSON to OpenAPI 3.0 or Swagger 2.0 instantly with automatic schema inference and multi-endpoint support.',
-    url: 'https://dataformatterpro.com/json-to-openapi',
+    name: `${config.toolName} - Free Online Tool`,
+    description: config.description,
+    url: `https://dataformatterpro.com/${config.toolUrl}`,
     datePublished: '2024-01-01',
     dateModified: new Date().toISOString().split('T')[0],
     inLanguage: 'en-US',
@@ -149,17 +150,17 @@ export function generateWebPageSchema() {
       name: 'DataFormatterPro',
       url: 'https://dataformatterpro.com',
     },
-    breadcrumb: generateBreadcrumbSchema(),
+    breadcrumb: generateBreadcrumbSchema(config),
   };
 }
 
-export function generateAllSchemas(faqs: FAQItem[], howToSteps: HowToStep[]) {
+export function generateAllSchemas(faqs: FAQItem[], howToSteps: HowToStep[], config: ToolSchemaConfig) {
   return [
-    generateSoftwareApplicationSchema(),
+    generateSoftwareApplicationSchema(config),
     generateFAQSchema(faqs),
-    generateHowToSchema(howToSteps),
-    generateBreadcrumbSchema(),
+    generateHowToSchema(howToSteps, config),
+    generateBreadcrumbSchema(config),
     generateOrganizationSchema(),
-    generateWebPageSchema(),
+    generateWebPageSchema(config),
   ];
 }

@@ -4,7 +4,15 @@ import { useState } from 'react';
 import type { FAQItem, FeatureItem } from '@/types';
 import type { HowToStep, EducationalSection, TechnicalSpec, WhyChooseItem, UseCase, ComparisonRow, RelatedTool } from '@/data/json-to-openapi-seo';
 
+export interface TrustBadge {
+  icon: string;
+  text: string;
+}
+
 interface SEOContentProps {
+  title?: string;
+  subtitle?: string;
+  trustBadges?: TrustBadge[];
   features?: FeatureItem[];
   howToSteps?: HowToStep[];
   educationalContent?: EducationalSection[];
@@ -14,6 +22,11 @@ interface SEOContentProps {
   whyChoose?: WhyChooseItem[];
   comparison?: ComparisonRow[];
   relatedTools?: RelatedTool[];
+  // Section titles for H2 headings
+  howToSectionTitle?: string;
+  featuresSectionTitle?: string;
+  whyChooseSectionTitle?: string;
+  comparisonSectionTitle?: string;
 }
 
 /**
@@ -21,6 +34,9 @@ interface SEOContentProps {
  * Displays features, how-to, educational content, use cases, FAQs, and more below the tool
  */
 export function SEOContent({ 
+  title,
+  subtitle,
+  trustBadges,
   features, 
   howToSteps, 
   educationalContent, 
@@ -29,8 +45,23 @@ export function SEOContent({
   technicalSpecs,
   whyChoose,
   comparison,
-  relatedTools
+  relatedTools,
+  howToSectionTitle,
+  featuresSectionTitle,
+  whyChooseSectionTitle,
+  comparisonSectionTitle
 }: SEOContentProps) {
+  // Default trust badges if none provided
+  const defaultBadges: TrustBadge[] = [
+    { icon: 'fas fa-gift', text: '100% Free' },
+    { icon: 'fas fa-shield-alt', text: 'Secure & Private' },
+    { icon: 'fas fa-bolt', text: 'Instant Results' },
+    { icon: 'fas fa-user-slash', text: 'No Signup' },
+    { icon: 'fas fa-code', text: 'Developer Tools' },
+    { icon: 'fas fa-check-circle', text: 'Production Ready' },
+  ];
+
+  const badges = trustBadges || defaultBadges;
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [newsletterMessage, setNewsletterMessage] = useState('');
@@ -99,36 +130,18 @@ export function SEOContent({
       <section className="seo-hero-section">
         <div className="container">
           <h1 className="seo-hero-title">
-            JSON to OpenAPI Converter - Generate API Specs Instantly
+            {title || 'Data Formatter Pro - Professional Data Conversion Tools'}
           </h1>
           <p className="seo-hero-subtitle">
-            Convert JSON examples into production-ready OpenAPI 3.0 specifications in seconds. Free online tool with smart type detection, multi-endpoint support, and instant results. No signup required.
+            {subtitle || 'Free online data formatting and conversion tools with instant results, client-side processing, and no signup required.'}
           </p>
           <div className="seo-trust-badges">
-            <div className="trust-badge">
-              <i className="fas fa-gift"></i>
-              <span>100% Free</span>
-            </div>
-            <div className="trust-badge">
-              <i className="fas fa-shield-alt"></i>
-              <span>Secure &amp; Private</span>
-            </div>
-            <div className="trust-badge">
-              <i className="fas fa-bolt"></i>
-              <span>Instant Results</span>
-            </div>
-            <div className="trust-badge">
-              <i className="fas fa-user-slash"></i>
-              <span>No Signup</span>
-            </div>
-            <div className="trust-badge">
-              <i className="fas fa-code"></i>
-              <span>YAML &amp; JSON</span>
-            </div>
-            <div className="trust-badge">
-              <i className="fas fa-check-circle"></i>
-              <span>Smart Detection</span>
-            </div>
+            {badges.map((badge, index) => (
+              <div key={index} className="trust-badge">
+                <i className={badge.icon}></i>
+                <span>{badge.text}</span>
+              </div>
+            ))}
           </div>
           <div className="seo-privacy-banner">
             <i className="fas fa-lock"></i>
@@ -162,7 +175,7 @@ export function SEOContent({
       {howToSteps && howToSteps.length > 0 && (
         <section className="seo-section">
           <div className="container">
-            <h2 className="seo-section-title">How to Convert JSON to OpenAPI Specification</h2>
+            <h2 className="seo-section-title">{howToSectionTitle || 'How to Use This Tool'}</h2>
             <div className="how-to-steps">
               {howToSteps.map((step, index) => (
                 <div key={index} className="how-to-step" id={`step-${step.number}`}>
@@ -182,7 +195,7 @@ export function SEOContent({
       {features && features.length > 0 && (
         <section className="seo-section">
           <div className="container">
-            <h2 className="seo-section-title">OpenAPI Generator Features</h2>
+            <h2 className="seo-section-title">{featuresSectionTitle || 'Key Features'}</h2>
             <div className="features-grid">
               {features.map((feature, index) => (
                 <div key={index} className="feature-card">
@@ -220,7 +233,7 @@ export function SEOContent({
       {whyChoose && whyChoose.length > 0 && (
         <section className="seo-section">
           <div className="container">
-            <h2 className="seo-section-title">Why Choose This JSON to OpenAPI Converter?</h2>
+            <h2 className="seo-section-title">{whyChooseSectionTitle || 'Why Choose This Tool?'}</h2>
             <div className="why-choose-list">
               {whyChoose.map((item, index) => (
                 <div key={index} className="why-choose-item" style={{ backgroundColor: item.color || '#F5F5F5' }}>
@@ -265,7 +278,7 @@ export function SEOContent({
       {comparison && comparison.length > 0 && (
         <section className="seo-section">
           <div className="container">
-            <h2 className="seo-section-title">JSON to OpenAPI Converter vs Competitors</h2>
+            <h2 className="seo-section-title">{comparisonSectionTitle || 'Comparison with Competitors'}</h2>
             <p style={{ textAlign: 'center', marginBottom: '2rem', color: 'var(--text-secondary)' }}>
               See why developers choose our tool over alternatives
             </p>

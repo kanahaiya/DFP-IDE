@@ -25,6 +25,16 @@ export const TOOLS: ToolMetadata[] = [
     keywords: ['openapi', 'swagger', 'api', 'rest', 'json', 'converter'],
     enabled: true,
   },
+  {
+    id: 'csv-to-json',
+    name: 'CSV to JSON',
+    route: '/csv-to-json',
+    icon: 'fas fa-table',
+    description: 'Convert CSV to JSON with custom formatting options',
+    category: 'converter',
+    keywords: ['csv', 'json', 'converter', 'table', 'data', 'parse'],
+    enabled: true,
+  },
 ];
 
 /**

@@ -55,7 +55,7 @@ export default function JSONToOpenAPIPage() {
     closeAllTabs,
     maxTabs,
     canAddTab,
-  } = useTabs();
+  } = useTabs({ toolName: 'JSON to OpenAPI', storageKey: 'openapi-tabs' });
   
   const [inputJSON, setInputJSON] = useState(activeEndpoint.json);
   const [outputSpec, setOutputSpec] = useState('');
@@ -182,7 +182,7 @@ export default function JSONToOpenAPIPage() {
   useEffect(() => {
     if (activeTab) {
       isTabSyncingRef.current = true;
-      setInputJSON(activeTab.inputJSON);
+      setInputJSON(activeTab.inputJSON || '');
       // Reset sync flag after state update completes
       const timer = setTimeout(() => {
         isTabSyncingRef.current = false;
@@ -839,11 +839,34 @@ export default function JSONToOpenAPIPage() {
     </main>
 
     {/* JSON-LD Structured Data */}
-    <JsonLd data={generateAllSchemas(jsonToOpenAPIContent.faqs, jsonToOpenAPIContent.howToSteps)} />
+    <JsonLd data={generateAllSchemas(
+      jsonToOpenAPIContent.faqs, 
+      jsonToOpenAPIContent.howToSteps,
+      {
+        toolName: 'JSON to OpenAPI Converter',
+        toolUrl: 'json-to-openapi',
+        description: 'Free online JSON to OpenAPI 3.0 and Swagger 2.0 converter with automatic schema inference, multi-endpoint support, and real-time validation.',
+        featureList: [
+          'Real-time JSON to OpenAPI conversion',
+          'Automatic schema inference',
+          'Multi-endpoint support',
+          'OpenAPI 3.0 and Swagger 2.0 support',
+          'Format detection (email, UUID, date-time)',
+          'Client-side processing for privacy',
+          'Export to JSON and YAML',
+          'Built-in Swagger UI preview',
+        ],
+        howToTitle: 'How to Convert JSON to OpenAPI Specification',
+        howToDescription: 'Step-by-step guide to converting JSON responses into OpenAPI 3.0 or Swagger 2.0 specifications using our free online tool.',
+      }
+    )} />
 
     {/* SEO Content Sections */}
     <article id="seo-content">
       <SEOContent 
+        title={jsonToOpenAPIContent.title}
+        subtitle={jsonToOpenAPIContent.subtitle}
+        trustBadges={jsonToOpenAPIContent.trustBadges}
         features={jsonToOpenAPIContent.features}
         howToSteps={jsonToOpenAPIContent.howToSteps}
         educationalContent={jsonToOpenAPIContent.educational}
@@ -853,6 +876,10 @@ export default function JSONToOpenAPIPage() {
         comparison={jsonToOpenAPIContent.comparison}
         faqs={jsonToOpenAPIContent.faqs}
         relatedTools={jsonToOpenAPIContent.relatedTools}
+        howToSectionTitle={jsonToOpenAPIContent.howToSectionTitle}
+        featuresSectionTitle={jsonToOpenAPIContent.featuresSectionTitle}
+        whyChooseSectionTitle={jsonToOpenAPIContent.whyChooseSectionTitle}
+        comparisonSectionTitle={jsonToOpenAPIContent.comparisonSectionTitle}
       />
     </article>
 

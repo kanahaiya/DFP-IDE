@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'JSON to OpenAPI Converter - Generate API Specs Instantly | Free Tool',
+  title: 'JSON to OpenAPI Converter - Free Online Tool',
   description: 'Convert JSON to OpenAPI 3.0 specifications instantly with our free online converter. Smart type detection, multi-endpoint support, and YAML/JSON export. No signup required, 100% client-side processing.',
   keywords: [
     'json to openapi converter',

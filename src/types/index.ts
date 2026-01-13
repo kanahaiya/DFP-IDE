@@ -13,6 +13,7 @@ export type EditorLanguage =
   | 'plaintext'
   | 'json'
   | 'yaml'
+  | 'csv'
   | 'xml'
   | 'csv'
   | 'typescript'

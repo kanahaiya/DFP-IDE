@@ -1,26 +1,32 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import type { Endpoint, OpenAPISettings } from '@/types';
+import type { Endpoint } from '@/types';
 
 export interface Tab {
   id: string;
   name: string;
-  inputJSON: string;
-  endpoints: Endpoint[];
-  settings: Partial<OpenAPISettings>;
+  inputJSON?: string;
+  inputCSV?: string;
+  outputJSON?: string;
+  endpoints?: Endpoint[];
+  settings?: Record<string, unknown>; // Generic settings storage for any tool
   createdAt: number;
 }
 
 const MAX_TABS = 10;
-const STORAGE_KEY = 'openapi-tabs';
 
-export function useTabs() {
+interface UseTabsProps {
+  toolName: string;
+  storageKey: string;
+}
+
+export function useTabs({ toolName, storageKey }: UseTabsProps = { toolName: 'JSON to OpenAPI', storageKey: 'openapi-tabs' }) {
   // Initialize with empty state to avoid hydration mismatch
   const [tabs, setTabs] = useState<Tab[]>([]);
   const [activeTabId, setActiveTabId] = useState<string | null>(null);
 
   // Load tabs from localStorage only on client after mount
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored = localStorage.getItem(storageKey);
     if (stored) {
       try {
         const { tabs: savedTabs, activeTabId: savedActiveId } = JSON.parse(stored);
@@ -38,21 +44,23 @@ export function useTabs() {
     const timestamp = Date.now();
     const defaultTab: Tab = {
       id: `tab-${timestamp}`,
-      name: 'JSON to OpenAPI',
+      name: toolName,
       inputJSON: '',
+      inputCSV: '',
+      outputJSON: '',
       endpoints: [],
       settings: {},
       createdAt: timestamp,
     };
     setTabs([defaultTab]);
     setActiveTabId(defaultTab.id);
-  }, []);
+  }, [storageKey, toolName]);
 
   // Helper function to create a new tab
   const createNewTab = useCallback((name?: string, currentTabs: Tab[] = tabs): Tab => {
     const timestamp = Date.now();
     // Calculate next untitled number: count existing untitled tabs and add 2
-    // (First untitled is "Untitled 2" after the default "JSON to OpenAPI" tab)
+    // (First untitled is "Untitled 2" after the default tab with tool name)
     const untitledCount = currentTabs.filter(t => t.name.startsWith('Untitled')).length;
     const nextUntitled = untitledCount + 2;
     
@@ -60,6 +68,8 @@ export function useTabs() {
       id: `tab-${timestamp}`,
       name: name || `Untitled ${nextUntitled}`,
       inputJSON: '',
+      inputCSV: '',
+      outputJSON: '',
       endpoints: [],
       settings: {},
       createdAt: timestamp,
@@ -69,9 +79,9 @@ export function useTabs() {
   // Save tabs to localStorage whenever they change
   useEffect(() => {
     if (tabs.length > 0) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ tabs, activeTabId }));
+      localStorage.setItem(storageKey, JSON.stringify({ tabs, activeTabId }));
     }
-  }, [tabs, activeTabId]);
+  }, [tabs, activeTabId, storageKey]);
 
   const addTab = useCallback(() => {
     if (tabs.length >= MAX_TABS) {
@@ -98,14 +108,14 @@ export function useTabs() {
 
       // If no tabs left, create a default one
       if (filtered.length === 0) {
-        const defaultTab = createNewTab('JSON to OpenAPI');
+        const defaultTab = createNewTab(toolName);
         setActiveTabId(defaultTab.id);
         return [defaultTab];
       }
 
       return filtered;
     });
-  }, [activeTabId, createNewTab]);
+  }, [activeTabId, createNewTab, toolName]);
 
   const renameTab = useCallback((tabId: string, newName: string) => {
     setTabs(prev => prev.map(tab => 
@@ -144,8 +154,10 @@ export function useTabs() {
       id: `tab-${timestamp}`,
       name: `${tabToDuplicate.name} Copy`,
       inputJSON: tabToDuplicate.inputJSON,
-      endpoints: [...tabToDuplicate.endpoints],
-      settings: { ...tabToDuplicate.settings },
+      inputCSV: tabToDuplicate.inputCSV,
+      outputJSON: tabToDuplicate.outputJSON,
+      endpoints: tabToDuplicate.endpoints ? [...tabToDuplicate.endpoints] : [],
+      settings: tabToDuplicate.settings ? { ...tabToDuplicate.settings } : {},
       createdAt: timestamp,
     };
 
@@ -165,10 +177,10 @@ export function useTabs() {
   }, []);
 
   const closeAllTabs = useCallback(() => {
-    const defaultTab = createNewTab('JSON to OpenAPI');
+    const defaultTab = createNewTab(toolName);
     setTabs([defaultTab]);
     setActiveTabId(defaultTab.id);
-  }, [createNewTab]);
+  }, [createNewTab, toolName]);
 
   return {
     tabs,
