@@ -83,3 +83,11 @@ export const trackDownload = (fileType: string): void => {
 export const trackCopy = (contentType: string): void => {
   event('copy', 'clipboard', contentType);
 };
+
+/**
+ * Track auto-correct usage
+ */
+export const trackAutoCorrect = (format: string, success: boolean): void => {
+  event('auto_correct', 'tool_usage', success ? 'success' : 'failure');
+  event('auto_correct_format', 'tool_usage', format);
+};

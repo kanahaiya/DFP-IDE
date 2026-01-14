@@ -16,6 +16,7 @@ interface EditorToolbarProps {
   onUrl?: () => void;
   onClear?: () => void;
   onSample?: () => void;
+  onAutoCorrect?: () => void;
   sampleTemplates?: SampleTemplate[];
   onLoadTemplate?: (template: SampleTemplate) => void;
   label?: string;
@@ -32,6 +33,7 @@ export function EditorToolbar({
   onUrl,
   onClear,
   onSample,
+  onAutoCorrect,
   sampleTemplates,
   onLoadTemplate,
   label = 'Input',
@@ -209,6 +211,17 @@ export function EditorToolbar({
                 </>
               )}
             </div>
+          )}
+          {onAutoCorrect && (
+            <button
+              className="btn btn-accent btn-sm"
+              onClick={onAutoCorrect}
+              title="Fix syntax errors & format"
+              aria-label="Fix syntax errors and format"
+            >
+              <i className="fas fa-magic"></i>
+              <span className="btn-text">Fix & Format</span>
+            </button>
           )}
           {onClear && (
             <>

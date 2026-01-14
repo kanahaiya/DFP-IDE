@@ -15,10 +15,11 @@ import { useOpenAPIStore } from '@/store/openapi';
 import { useTabs } from '@/hooks/useTabs';
 import { useJSONValidation } from '@/hooks/useJSONValidation';
 import { generateOpenAPISpec } from '@/lib/openapi/generator';
+import { autoCorrectJSON } from '@/lib/autoCorrect';
 import { readFileAsText, downloadTextFile, getTimestamp } from '@/lib/fileUtils';
 import { copyToClipboard } from '@/lib/clipboardUtils';
 import { createShareUrl, getUrlParam, safeDecodeParam } from '@/lib/urlUtils';
-import { trackCopy, trackDownload } from '@/lib/analytics';
+import { trackCopy, trackDownload, event as trackEvent } from '@/lib/analytics';
 import { useLayout } from '@/hooks/useLayout';
 import { useResizer } from '@/hooks/useResizer';
 import { ShareWidget } from '@/components/common/ShareWidget';
@@ -228,6 +229,23 @@ export default function JSONToOpenAPIPage() {
       showMessage('Pasted from clipboard', 'success');
     } catch {
       showMessage('Failed to paste from clipboard. Please check browser permissions.', 'error');
+    }
+  };
+
+  const handleAutoCorrect = () => {
+    if (!inputJSON.trim()) {
+      showMessage('No input to fix', 'warning');
+      return;
+    }
+
+    const result = autoCorrectJSON(inputJSON);
+    if (result.success) {
+      setInputJSON(result.output);
+      showMessage('Input fixed and formatted!', 'success');
+      trackEvent('auto_correct', 'tool_usage', 'openapi_success');
+    } else {
+      showMessage(`Could not auto-correct: ${result.error}`, 'error');
+      trackEvent('auto_correct', 'tool_usage', 'openapi_failure');
     }
   };
 
@@ -656,6 +674,7 @@ export default function JSONToOpenAPIPage() {
                   onPaste={handlePaste}
                   onUrl={() => {}}
                   onClear={handleClear}
+                  onAutoCorrect={handleAutoCorrect}
                   sampleTemplates={sampleTemplates}
                   onLoadTemplate={handleLoadTemplate}
                 />

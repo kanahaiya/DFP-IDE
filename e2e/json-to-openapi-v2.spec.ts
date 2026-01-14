@@ -1,9 +1,10 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures/test-base';
 
 /**
  * JSON to OpenAPI E2E Tests - Production Ready
  * Tests focus on UI/UX elements that are reliably testable
  * Avoids complex Monaco editor interactions that cause flaky tests
+ * Analytics and tracking are blocked to prevent E2E traffic from being counted
  */
 test.describe('JSON to OpenAPI Converter', () => {
   test.beforeEach(async ({ page }) => {

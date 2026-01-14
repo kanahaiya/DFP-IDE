@@ -1,8 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures/test-base';
 
 /**
  * CSV to JSON E2E Tests - Production Ready
  * Tests focus on UI/UX elements that are reliably testable
+ * Analytics and tracking are blocked to prevent E2E traffic from being counted
  */
 test.describe('CSV to JSON Converter', () => {
   test.beforeEach(async ({ page }) => {

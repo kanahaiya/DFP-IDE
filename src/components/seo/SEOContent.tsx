@@ -647,6 +647,22 @@ export function SEOContent({
           font-size: 1rem;
         }
 
+        :global(.step-description a) {
+          color: #7dd3fc !important; /* high-contrast on dark */
+          text-decoration: underline !important;
+          text-decoration-thickness: 2px;
+          text-underline-offset: 3px;
+          font-weight: 650;
+          border-radius: 4px;
+          padding: 1px 2px;
+          transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        :global(.step-description a:hover) {
+          color: #ffffff !important;
+          background: rgba(125, 211, 252, 0.18) !important;
+        }
+
         .educational-content {
           display: flex;
           flex-direction: column;
@@ -718,13 +734,20 @@ export function SEOContent({
           font-size: 1rem;
         }
 
-        .educational-description a {
-          color: var(--primary);
-          text-decoration: underline;
+        :global(.educational-description a) {
+          color: #7dd3fc !important;
+          text-decoration: underline !important;
+          text-decoration-thickness: 2px;
+          text-underline-offset: 3px;
+          font-weight: 650;
+          border-radius: 4px;
+          padding: 1px 2px;
+          transition: background 0.15s ease, color 0.15s ease;
         }
 
-        .educational-description a:hover {
-          opacity: 0.8;
+        :global(.educational-description a:hover) {
+          color: #ffffff !important;
+          background: rgba(125, 211, 252, 0.18) !important;
         }
 
         .use-cases-grid {
@@ -1071,6 +1094,22 @@ export function SEOContent({
           padding: 0 1.5rem 1rem;
           color: var(--text-secondary);
           line-height: 1.6;
+        }
+
+        :global(.faq-answer a) {
+          color: #7dd3fc !important;
+          text-decoration: underline !important;
+          text-decoration-thickness: 2px;
+          text-underline-offset: 3px;
+          font-weight: 650;
+          border-radius: 4px;
+          padding: 1px 2px;
+          transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        :global(.faq-answer a:hover) {
+          color: #ffffff !important;
+          background: rgba(125, 211, 252, 0.18) !important;
         }
 
         @media (max-width: 768px) {

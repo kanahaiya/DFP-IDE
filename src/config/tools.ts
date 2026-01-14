@@ -35,6 +35,16 @@ export const TOOLS: ToolMetadata[] = [
     keywords: ['csv', 'json', 'converter', 'table', 'data', 'parse'],
     enabled: true,
   },
+  {
+    id: 'json-to-yaml',
+    name: 'JSON to YAML',
+    route: '/json-to-yaml',
+    icon: 'fas fa-arrow-right',
+    description: 'Convert JSON to YAML with Kubernetes, Docker Compose, and Ansible presets',
+    category: 'converter',
+    keywords: ['json', 'yaml', 'yml', 'converter', 'config', 'kubernetes', 'docker'],
+    enabled: true,
+  },
 ];
 
 /**

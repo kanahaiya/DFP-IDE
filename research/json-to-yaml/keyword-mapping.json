@@ -1,0 +1,351 @@
+{
+  "tool_pages": {
+    "json-to-yaml": {
+      "primary_keywords": [
+        "json to yaml converter",
+        "convert json to yaml",
+        "json to yaml online",
+        "json to yaml free",
+        "json to yaml converter online free"
+      ],
+      "secondary_keywords": [
+        "json yaml converter",
+        "json to yml",
+        "json to yaml tool",
+        "json to yaml format",
+        "parse json to yaml",
+        "convert json file to yaml online",
+        "kubernetes json to yaml",
+        "docker compose json to yaml"
+      ],
+      "long_tail_keywords": [
+        "how to convert json to yaml",
+        "how to convert json to yaml online free",
+        "best json to yaml converter",
+        "json to yaml converter with formatting options",
+        "json to yaml kubernetes preset",
+        "json to yaml docker compose",
+        "json to yaml without upload",
+        "convert large json to yaml",
+        "json to yaml with indentation",
+        "json to yaml ansible playbook",
+        "json to yaml github actions"
+      ],
+      "search_volume": "medium-high",
+      "search_volume_count": "5400/month",
+      "keyword_difficulty": "32/100",
+      "competition": "medium",
+      "priority": "high",
+      "target_url": "/json-to-yaml",
+      "h1_keyword": "JSON to YAML Converter - Free Online Tool with Kubernetes & Docker Presets",
+      "meta_title": "JSON to YAML Converter Free Online - Kubernetes & Docker Presets",
+      "meta_description": "Convert JSON to YAML instantly with free online tool. Kubernetes, Docker Compose, Ansible presets. Client-side, no signup required.",
+      "content_focus": "One-way JSON to YAML conversion, Kubernetes/Docker/Ansible presets, formatting options, client-side privacy",
+      "serp_features": [
+        "people_also_ask",
+        "how_to",
+        "related_searches"
+      ],
+      "competitors": [
+        "codebeautify.org/json-to-yaml",
+        "onlineyamltools.com/convert-json-to-yaml",
+        "convertjson.com/json-to-yaml.htm",
+        "freeformatter.com/json-to-yaml.html",
+        "json2yaml.com"
+      ],
+      "related_queries": [
+        "json to yaml python",
+        "json to yaml javascript",
+        "json formatter",
+        "yaml validator",
+        "kubernetes json to yaml",
+        "docker compose json to yaml",
+        "openapi json to yaml"
+      ],
+      "semantic_variations": [
+        "transform json to yaml",
+        "convert json format to yaml",
+        "json yaml conversion",
+        "yaml from json",
+        "json2yaml converter",
+        "json to yml converter",
+        "yaml encoder from json",
+        "json to yaml parser"
+      ]
+    }
+  },
+  "use_cases": {
+    "kubernetes": {
+      "keywords": [
+        "kubernetes json to yaml",
+        "k8s manifest converter",
+        "kubernetes deployment json to yaml",
+        "kubectl json to yaml",
+        "convert kubernetes config json to yaml"
+      ],
+      "content_placement": [
+        "use_cases_section",
+        "presets_section",
+        "features_section"
+      ],
+      "density_target": "high",
+      "priority": "critical"
+    },
+    "docker_compose": {
+      "keywords": [
+        "docker compose json to yaml",
+        "docker compose converter",
+        "docker config json to yaml",
+        "docker-compose.yml generator"
+      ],
+      "content_placement": [
+        "use_cases_section",
+        "presets_section",
+        "examples_section"
+      ],
+      "density_target": "high",
+      "priority": "high"
+    },
+    "ci_cd": {
+      "keywords": [
+        "github actions json to yaml",
+        "gitlab ci json to yaml",
+        "ci cd config converter",
+        "workflow json to yaml"
+      ],
+      "content_placement": [
+        "use_cases_section",
+        "features_section"
+      ],
+      "density_target": "medium",
+      "priority": "medium"
+    },
+    "ansible": {
+      "keywords": [
+        "ansible json to yaml",
+        "ansible playbook converter",
+        "ansible inventory json to yaml"
+      ],
+      "content_placement": [
+        "use_cases_section",
+        "presets_section"
+      ],
+      "density_target": "medium",
+      "priority": "medium"
+    },
+    "openapi": {
+      "keywords": [
+        "openapi json to yaml",
+        "swagger json to yaml",
+        "openapi spec converter",
+        "swagger spec yaml"
+      ],
+      "content_placement": [
+        "use_cases_section",
+        "presets_section"
+      ],
+      "density_target": "medium",
+      "priority": "medium"
+    }
+  },
+  "feature_keywords": {
+    "presets": {
+      "terms": [
+        "yaml presets",
+        "kubernetes preset",
+        "docker preset",
+        "ansible preset",
+        "formatting presets",
+        "one-click formatting"
+      ],
+      "placement": [
+        "hero_section",
+        "features_section",
+        "how_to_section"
+      ],
+      "emphasis": "critical"
+    },
+    "formatting": {
+      "terms": [
+        "yaml formatting",
+        "yaml indentation",
+        "yaml quote style",
+        "yaml flow style",
+        "block style yaml",
+        "compact yaml"
+      ],
+      "placement": [
+        "features_section",
+        "how_to_section"
+      ],
+      "emphasis": "high"
+    },
+    "validation": {
+      "terms": [
+        "json validator",
+        "syntax validation",
+        "real-time validation",
+        "error detection"
+      ],
+      "placement": [
+        "features_section",
+        "trust_section"
+      ],
+      "emphasis": "high"
+    },
+    "privacy": {
+      "terms": [
+        "client-side conversion",
+        "no server upload",
+        "browser-based converter",
+        "offline converter",
+        "secure json to yaml",
+        "private conversion"
+      ],
+      "placement": [
+        "trust_section",
+        "why_choose_section",
+        "hero_section"
+      ],
+      "emphasis": "critical"
+    }
+  },
+  "modifiers": {
+    "quality": [
+      "best",
+      "free",
+      "top",
+      "fast",
+      "instant",
+      "quick",
+      "simple",
+      "easy"
+    ],
+    "location": [
+      "online",
+      "web",
+      "browser"
+    ],
+    "attributes": [
+      "free",
+      "no signup",
+      "no registration",
+      "no install",
+      "secure",
+      "private"
+    ]
+  },
+  "seo_sections": {
+    "hero": {
+      "keyword_density": {
+        "json to yaml": 2,
+        "converter": 2,
+        "presets": 1,
+        "free": 1
+      }
+    },
+    "features": {
+      "keyword_density": {
+        "json to yaml": 3,
+        "formatting": 3,
+        "kubernetes": 2,
+        "docker compose": 2,
+        "validation": 2,
+        "presets": 2
+      }
+    },
+    "how_to": {
+      "keyword_density": {
+        "convert json to yaml": 3,
+        "json to yaml converter": 2,
+        "preset": 2
+      }
+    },
+    "use_cases": {
+      "keyword_density": {
+        "kubernetes": 3,
+        "docker compose": 3,
+        "ansible": 2,
+        "github actions": 2,
+        "openapi": 2,
+        "ci cd": 1
+      }
+    },
+    "why_choose": {
+      "keyword_density": {
+        "best json to yaml converter": 1,
+        "free online converter": 1,
+        "client-side": 2,
+        "no upload": 1,
+        "presets": 1
+      }
+    },
+    "faq": {
+      "keyword_density": {
+        "json to yaml": 5,
+        "convert": 6,
+        "kubernetes": 2,
+        "docker": 1,
+        "preset": 2
+      }
+    }
+  },
+  "content_strategy": {
+    "target_keyword_density": "1.5-2.5%",
+    "lsi_keywords_min": 20,
+    "faq_questions_min": 12,
+    "word_count_target": "2500-3500",
+    "internal_links_min": 8,
+    "external_links_max": 3,
+    "headings_h2_min": 8,
+    "headings_h3_min": 15
+  },
+  "competitor_analysis": {
+    "top_performers": [
+      {
+        "domain": "codebeautify.org",
+        "strengths": ["fast loading", "simple UI", "ads present"],
+        "weaknesses": ["no presets", "limited formatting", "no kubernetes preset"],
+        "opportunities": ["better presets", "kubernetes/docker focus", "client-side only"]
+      },
+      {
+        "domain": "onlineyamltools.com",
+        "strengths": ["multiple tools", "good SEO"],
+        "weaknesses": ["dated UI", "no presets", "complex navigation"],
+        "opportunities": ["modern UI", "preset library", "better UX"]
+      },
+      {
+        "domain": "convertjson.com",
+        "strengths": ["multiple converters", "clean design"],
+        "weaknesses": ["no advanced options", "no validation", "ads"],
+        "opportunities": ["advanced formatting", "real-time validation", "ad-free"]
+      }
+    ],
+    "differentiation_keywords": [
+      "json to yaml with presets",
+      "kubernetes yaml converter",
+      "docker compose yaml generator",
+      "client-side yaml converter",
+      "real-time yaml validation",
+      "ansible playbook from json"
+    ]
+  },
+  "search_intent": {
+    "primary_intent": "transactional",
+    "secondary_intent": "informational",
+    "user_needs": [
+      "Quick conversion without learning",
+      "Kubernetes/Docker specific formatting",
+      "Privacy (no server upload)",
+      "One-click presets for DevOps tools",
+      "Validation and error checking"
+    ],
+    "pain_points": [
+      "Complex tools with too many options",
+      "No presets for common use cases",
+      "File upload required",
+      "No syntax validation",
+      "Generic formatting without DevOps focus"
+    ]
+  }
+}

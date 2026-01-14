@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { ToastContainer } from "@/components/common/ToastContainer";
 
 export const metadata: Metadata = {
   title: "Data Formatter Pro - JSON Tools & Converters",
@@ -36,6 +37,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         {children}
+        <ToastContainer />
       </body>
     </html>
   );

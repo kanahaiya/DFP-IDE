@@ -38,6 +38,13 @@ export default defineConfig({
     
     /* Video on failure */
     video: 'retain-on-failure',
+    
+    /* Block analytics and tracking requests during E2E tests */
+    /* This prevents test traffic from being counted as real traffic */
+    contextOptions: {
+      /* Set a custom user agent to identify E2E tests (optional, for debugging) */
+      userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Playwright-E2E-Test',
+    },
   },
 
   /* Configure projects for major browsers */
