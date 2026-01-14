@@ -42,9 +42,9 @@ const BLOCKED_PATTERNS = [
 async function blockAnalytics(page: Page): Promise<void> {
   // Block all analytics-related requests
   for (const pattern of BLOCKED_PATTERNS) {
-    await page.route(pattern, (route) => {
+    await page.route(pattern, async (route) => {
       // Abort the request silently
-      route.abort('blockedbyclient');
+      await route.abort('blockedbyclient');
     });
   }
 }
