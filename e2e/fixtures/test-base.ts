@@ -31,9 +31,9 @@ const BLOCKED_PATTERNS = [
   '**/mouseflow.com/**',
   '**/heap.io/**',
   '**/intercom.io/**',
-  // Generic patterns
-  '**/collect?**',
-  '**/analytics**',
+  // Generic patterns (Note: In Playwright glob, ? is literal, use * for wildcards)
+  '**/collect*',
+  '**/analytics*',
 ];
 
 /**
