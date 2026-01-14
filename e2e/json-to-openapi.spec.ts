@@ -80,8 +80,8 @@ test.describe('JSON to OpenAPI Converter', () => {
       const h2Count = await seoSection.locator('h2').count();
       expect(h2Count).toBeGreaterThan(3); // Should have multiple sections
       
-      // Check for FAQ section
-      const faqSection = page.locator('text=/how to convert/i, text=/what is openapi/i').first();
+      // Check for FAQ section (use .or() for OR matching in Playwright)
+      const faqSection = page.locator('text=/how to convert/i').or(page.locator('text=/what is openapi/i')).first();
       if (await faqSection.isVisible({ timeout: 1000 })) {
         await expect(faqSection).toBeVisible();
       }
