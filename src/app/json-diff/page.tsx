@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { IDELayout } from '@/components/layout/IDELayout';
-import { MonacoEditorPanel } from '@/components/common/MonacoEditorPanel';
 import { EditorToolbar } from '@/components/common/EditorToolbar';
 import { StatsBar } from '@/components/common/StatsBar';
 import { useToast } from '@/store/toast';
@@ -11,10 +11,40 @@ import { ComparisonOptionsPanel } from '@/components/tools/json-diff/ComparisonO
 import { ViewModeSelector } from '@/components/tools/json-diff/ViewModeSelector';
 import { ChangeNavigation } from '@/components/tools/json-diff/ChangeNavigation';
 import { ExportOptions } from '@/components/tools/json-diff/ExportOptions';
-import { UnifiedDiffView } from '@/components/tools/json-diff/UnifiedDiffView';
-import { TreeView } from '@/components/tools/json-diff/TreeView';
-import { ReportView } from '@/components/tools/json-diff/ReportView';
 import { useJSONDiffStore } from '@/store/jsonDiff';
+
+// Dynamic imports for heavy components to improve initial page load
+const MonacoEditorPanel = dynamic(
+  () => import('@/components/common/MonacoEditorPanel').then(mod => ({ default: mod.MonacoEditorPanel })),
+  { 
+    ssr: false,
+    loading: () => <div className="editor-loading-skeleton"><div className="skeleton-shimmer" /></div>
+  }
+);
+
+const UnifiedDiffView = dynamic(
+  () => import('@/components/tools/json-diff/UnifiedDiffView').then(mod => ({ default: mod.UnifiedDiffView })),
+  { 
+    ssr: false,
+    loading: () => <div className="view-loading-skeleton"><div className="skeleton-shimmer" /></div>
+  }
+);
+
+const TreeView = dynamic(
+  () => import('@/components/tools/json-diff/TreeView').then(mod => ({ default: mod.TreeView })),
+  { 
+    ssr: false,
+    loading: () => <div className="view-loading-skeleton"><div className="skeleton-shimmer" /></div>
+  }
+);
+
+const ReportView = dynamic(
+  () => import('@/components/tools/json-diff/ReportView').then(mod => ({ default: mod.ReportView })),
+  { 
+    ssr: false,
+    loading: () => <div className="view-loading-skeleton"><div className="skeleton-shimmer" /></div>
+  }
+);
 import { useTabs } from '@/hooks/useTabs';
 import { useLayout } from '@/hooks/useLayout';
 import { useResizer } from '@/hooks/useResizer';

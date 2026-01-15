@@ -401,7 +401,7 @@ export const jsonToYAMLContent = {
     {
       title: 'JSON to XML Converter',
       description: 'Convert JSON data to XML format with customizable root elements, attribute handling, and proper XML escaping for legacy system integration.',
-      icon: 'fas fa-exchange-alt',
+      icon: 'fas fa-file-code',
       link: '/json-to-xml',
     },
   ] as RelatedTool[],

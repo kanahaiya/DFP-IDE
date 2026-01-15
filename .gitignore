@@ -44,7 +44,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# markdown files (except README and CONTRIBUTING)
+# markdown files (except README, CONTRIBUTING, and template docs)
 *.md
 !README.md
 !CONTRIBUTING.md
+!detailed_seo_tool_template.md

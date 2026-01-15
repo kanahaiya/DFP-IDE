@@ -55,6 +55,16 @@ export const TOOLS: ToolMetadata[] = [
     keywords: ['json', 'diff', 'compare', 'comparison', 'patch', 'delta', 'merge', 'changes'],
     enabled: true,
   },
+  {
+    id: 'json-to-xml',
+    name: 'JSON to XML',
+    route: '/json-to-xml',
+    icon: 'fas fa-file-code',
+    description: 'Convert JSON to XML with SOAP, RSS, Sitemap presets and customizable formatting',
+    category: 'converter',
+    keywords: ['json', 'xml', 'converter', 'soap', 'rss', 'sitemap', 'cdata', 'namespace'],
+    enabled: true,
+  },
 ];
 
 /**

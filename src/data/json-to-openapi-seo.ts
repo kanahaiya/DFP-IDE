@@ -332,7 +332,7 @@ export const jsonToOpenAPIContent = {
     {
       title: 'JSON to YAML Converter',
       description: 'Convert between JSON and YAML formats. Export OpenAPI specifications as YAML for Git-friendly diffs and better human readability in documentation repositories.',
-      icon: 'fas fa-exchange-alt',
+      icon: 'fas fa-file-code',
       link: '/json-to-yaml/'
     },
     {

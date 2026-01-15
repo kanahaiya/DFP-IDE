@@ -156,7 +156,7 @@ export const jsonDiffContent = {
       title: 'API Response Regression Checks',
       description:
         'Compare JSON responses before and after backend changes to ensure contract compatibility and catch breaking changes early.',
-      icon: 'fas fa-exchange-alt',
+      icon: 'fas fa-file-code',
     },
     {
       title: 'Config / Feature Flag Auditing',

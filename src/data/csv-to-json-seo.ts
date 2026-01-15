@@ -435,7 +435,7 @@ export const csvToJSONContent = {
     {
       title: 'JSON to CSV',
       description: 'Convert JSON to CSV format for spreadsheet applications. Reverse conversion with flattening support.',
-      icon: 'fas fa-exchange-alt',
+      icon: 'fas fa-file-code',
       link: '/json-to-csv'
     },
     {
