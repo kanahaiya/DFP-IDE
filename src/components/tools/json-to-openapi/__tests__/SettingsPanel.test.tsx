@@ -75,45 +75,37 @@ describe('SettingsPanel', () => {
 
   describe('API Information Updates', () => {
     it('should update title', async () => {
-      const user = userEvent.setup();
       render(<SettingsPanel />);
       
       const titleInput = screen.getByLabelText('Title') as HTMLInputElement;
-      await user.clear(titleInput);
-      await user.type(titleInput, 'New API');
+      fireEvent.change(titleInput, { target: { value: 'New API' } });
       
       expect(mockStore.updateSettings).toHaveBeenCalledWith({ title: 'New API' });
     });
 
     it('should update version', async () => {
-      const user = userEvent.setup();
       render(<SettingsPanel />);
       
       const versionInput = screen.getByLabelText('Version') as HTMLInputElement;
-      await user.clear(versionInput);
-      await user.type(versionInput, '2.0.0');
+      fireEvent.change(versionInput, { target: { value: '2.0.0' } });
       
       expect(mockStore.updateSettings).toHaveBeenCalledWith({ version: '2.0.0' });
     });
 
     it('should update description', async () => {
-      const user = userEvent.setup();
       render(<SettingsPanel />);
       
       const descInput = screen.getByLabelText('Description') as HTMLTextAreaElement;
-      await user.clear(descInput);
-      await user.type(descInput, 'New description');
+      fireEvent.change(descInput, { target: { value: 'New description' } });
       
       expect(mockStore.updateSettings).toHaveBeenCalledWith({ description: 'New description' });
     });
 
     it('should update server URL', async () => {
-      const user = userEvent.setup();
       render(<SettingsPanel />);
       
       const urlInput = screen.getByLabelText('Server URL') as HTMLInputElement;
-      await user.clear(urlInput);
-      await user.type(urlInput, 'https://new-api.com');
+      fireEvent.change(urlInput, { target: { value: 'https://new-api.com' } });
       
       expect(mockStore.updateSettings).toHaveBeenCalledWith({ serverUrl: 'https://new-api.com' });
     });

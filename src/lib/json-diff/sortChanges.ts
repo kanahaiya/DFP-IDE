@@ -3,7 +3,7 @@
  */
 
 import { Change } from './diffEngine';
-import { parseJSONPath, PathSegment } from './jsonPath';
+import { parseJSONPath } from './jsonPath';
 
 /**
  * Sort changes by array index

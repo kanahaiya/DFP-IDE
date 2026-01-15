@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MonacoEditorPanel } from '../MonacoEditorPanel';
 import { PerformanceProfiler, generateLargeJSON } from '@/__tests__/test-utils';
@@ -56,7 +56,7 @@ jest.mock('@monaco-editor/react', () => ({
         {loading}
         <textarea
           data-testid="monaco-textarea"
-          value={value}
+          value={value ?? ''}
           onChange={(e) => onChange?.(e.target.value)}
         />
       </div>
@@ -79,6 +79,8 @@ describe('MonacoEditorPanel', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    const { useTheme } = require('@/hooks/useTheme');
+    useTheme.mockReturnValue({ theme: 'dark', mounted: true });
   });
 
   describe('Functional Tests', () => {
@@ -114,11 +116,10 @@ describe('MonacoEditorPanel', () => {
 
     describe('Value Changes', () => {
       it('should call onChange when value changes', async () => {
-        const user = userEvent.setup();
         render(<MonacoEditorPanel value="" onChange={mockOnChange} />);
         
         const textarea = screen.getByTestId('monaco-textarea');
-        await user.type(textarea, '{"test": "value"}');
+        fireEvent.change(textarea, { target: { value: '{"test": "value"}' } });
         
         expect(mockOnChange).toHaveBeenCalled();
       });

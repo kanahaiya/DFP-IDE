@@ -359,14 +359,14 @@ describe('OutputToolbar', () => {
           throw new Error('Callback error');
         });
         
-        // Error should be thrown but component should still render
+        // Error should be caught and reported, component should still render
         render(<OutputToolbar onCopy={errorCallback} />);
         
         const button = screen.getByTitle('Copy to clipboard');
-        
-        await expect(async () => {
-          await user.click(button);
-        }).rejects.toThrow('Callback error');
+
+        await user.click(button);
+        expect(errorCallback).toHaveBeenCalled();
+        expect(button).toBeInTheDocument();
       });
 
       it('should handle special characters in label', () => {

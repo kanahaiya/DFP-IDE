@@ -97,7 +97,7 @@ export function matchesPattern(jsonPath: string, pattern: string): boolean {
   // Handle deep matching with ..
   if (pattern.includes('..')) {
     // For deep matching, check if the pattern matches anywhere in the path
-    let searchPattern = pattern.replace(/^\$\.?/, '');
+    const searchPattern = pattern.replace(/^\$\.?/, '');
     
     // If pattern ends with .*, match the base and then allow array indices
     if (searchPattern.endsWith('.*')) {

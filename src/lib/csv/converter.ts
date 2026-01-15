@@ -299,7 +299,8 @@ export function convertCSVToJSON(csvText: string, settings: CSVSettings): string
     const parsed = parseCSV(csvText, settings);
     
     if (parsed.errors.length > 0) {
-      const criticalErrors = parsed.errors.filter(e => e.type === 'Quotes' || e.type === 'FieldMismatch');
+      // PapaParse can be forgiving about row length mismatches; only treat quote errors as critical.
+      const criticalErrors = parsed.errors.filter(e => e.type === 'Quotes');
       if (criticalErrors.length > 0) {
         throw new Error(`CSV parsing error: ${criticalErrors[0].message}`);
       }
@@ -328,6 +329,13 @@ export function convertCSVToJSON(csvText: string, settings: CSVSettings): string
     // Format output
     return formatJSONOutput(data, settings.indentation, settings.sortKeys);
   } catch (error) {
-    throw new Error(`Conversion failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    if (error instanceof Error) {
+      // Preserve parsing error message for callers/tests expecting it
+      if (error.message.startsWith('CSV parsing error:')) {
+        throw error;
+      }
+      throw new Error(`Conversion failed: ${error.message}`);
+    }
+    throw new Error('Conversion failed: Unknown error');
   }
 }

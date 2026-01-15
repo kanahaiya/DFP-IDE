@@ -1,6 +1,12 @@
 // jest.setup.js
 import '@testing-library/jest-dom'
 
+// Polyfill TextEncoder/TextDecoder for JSDOM (needed by Next/React tooling and some libs)
+import { TextDecoder, TextEncoder } from 'util'
+
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder
+
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
   constructor() {}

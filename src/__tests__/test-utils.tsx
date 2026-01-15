@@ -244,7 +244,7 @@ export class PerformanceProfiler {
     const start = this.marks.get(startMark);
     const end = endMark ? this.marks.get(endMark) : performance.now();
     
-    if (!start) {
+    if (start === undefined) {
       throw new Error(`Mark "${startMark}" not found`);
     }
     

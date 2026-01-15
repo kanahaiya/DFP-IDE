@@ -7,9 +7,6 @@
  * Run with: npm run test:lighthouse
  */
 
-import lighthouse from 'lighthouse';
-import chromeLauncher from 'chrome-launcher';
-
 // Test configuration
 const TEST_URL = process.env.TEST_URL || 'http://localhost:3000';
 const TIMEOUT = 60000; // 60 seconds
@@ -26,6 +23,10 @@ const THRESHOLDS = {
  * Launch Chrome and run Lighthouse audit
  */
 async function runLighthouseAudit(url: string, config: any) {
+  // Only import lighthouse when we actually run these tests (keeps `npm test` lightweight).
+  const { default: lighthouse } = await import('lighthouse');
+  // chrome-launcher is ESM; import dynamically to avoid Jest parsing issues during `npm test`.
+  const { default: chromeLauncher } = await import('chrome-launcher');
   const chrome = await chromeLauncher.launch({
     chromeFlags: ['--headless', '--disable-gpu', '--no-sandbox'],
   });
@@ -90,7 +91,13 @@ const mobileConfig = {
   },
 };
 
-describe('Lighthouse Audits', () => {
+const shouldRun =
+  process.env.RUN_LIGHTHOUSE_TESTS === '1' ||
+  process.env.npm_lifecycle_event === 'test:lighthouse';
+
+const describeIf = shouldRun ? describe : describe.skip;
+
+describeIf('Lighthouse Audits', () => {
   describe('Desktop Performance', () => {
     let auditResult: any;
 

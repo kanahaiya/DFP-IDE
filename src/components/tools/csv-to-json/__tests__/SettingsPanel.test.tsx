@@ -52,7 +52,7 @@ describe('SettingsPanel', () => {
     expect(screen.getByText('Parse numbers')).toBeInTheDocument();
     expect(screen.getByText('Parse booleans')).toBeInTheDocument();
     expect(screen.getByText('Parse null values')).toBeInTheDocument();
-    expect(screen.getByText('Parse dates')).toBeInTheDocument();
+    expect(screen.getByText(/Parse dates/i)).toBeInTheDocument();
   });
 
   it('toggles hasHeader when checkbox clicked', () => {

@@ -6,7 +6,7 @@ import { MonacoEditorPanel } from '@/components/common/MonacoEditorPanel';
 import { EditorToolbar } from '@/components/common/EditorToolbar';
 import { OutputToolbar } from '@/components/common/OutputToolbar';
 import { StatsBar } from '@/components/common/StatsBar';
-import { MessageBox, useMessage } from '@/components/common/MessageBox';
+import { useToast } from '@/store/toast';
 import TabManager from '@/components/common/TabManager';
 import { SettingsPanel } from '@/components/tools/csv-to-json/SettingsPanel';
 import { OutputFormatToggle } from '@/components/tools/csv-to-json/OutputFormatToggle';
@@ -32,6 +32,7 @@ import { generateAllSchemas } from '@/lib/seo/schema-generator';
 
 export default function CSVToJSONPage() {
   const { settings: globalSettings, updateSettings } = useCSVStore();
+  const toast = useToast();
   const { layout } = useLayout();
   const { size, resizerRef, containerRef } = useResizer({
     defaultSize: 50,
@@ -57,7 +58,6 @@ export default function CSVToJSONPage() {
   
   const [inputCSV, setInputCSV] = useState('');
   const [outputJSON, setOutputJSON] = useState('');
-  const { message, type, showMessage, clearMessage } = useMessage();
   const [settingsTabId, setSettingsTabId] = useState('settings-parsing');
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -112,7 +112,6 @@ export default function CSVToJSONPage() {
       // Don't convert if input is empty
       if (!inputCSV || !inputCSV.trim()) {
         setOutputJSON('');
-        clearMessage();
         lastConvertedInputRef.current = '';
         lastConvertedSettingsRef.current = '';
         return;
@@ -120,11 +119,13 @@ export default function CSVToJSONPage() {
 
       // Create a hash of current settings to detect changes
       const settingsHash = JSON.stringify(settings);
+      const hasOutput = Boolean(outputJSON && outputJSON.trim());
       
       // Skip conversion if nothing changed
       if (
         inputCSV === lastConvertedInputRef.current &&
-        settingsHash === lastConvertedSettingsRef.current
+        settingsHash === lastConvertedSettingsRef.current &&
+        hasOutput
       ) {
         return;
       }
@@ -132,17 +133,19 @@ export default function CSVToJSONPage() {
       // Perform conversion
       const result = convertCSVToJSON(inputCSV, settings);
       setOutputJSON(result);
-      clearMessage();
       
       // Update refs to track what we just converted
       lastConvertedInputRef.current = inputCSV;
       lastConvertedSettingsRef.current = settingsHash;
     } catch (error) {
       console.error('Conversion error:', error);
-      showMessage(`Conversion failed: ${error instanceof Error ? error.message : 'Unknown error'}`, 'error');
+      toast.error(
+        `Conversion failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        4000
+      );
       setOutputJSON('');
     }
-  }, [inputCSV, settings, clearMessage, showMessage]);
+  }, [inputCSV, outputJSON, settings, toast]);
 
   // Debounced conversion - 500ms as per PRD
   useEffect(() => {
@@ -185,6 +188,8 @@ export default function CSVToJSONPage() {
       // Release sync lock after a brief delay
       const timer = setTimeout(() => {
         isTabSyncingRef.current = false;
+        // Ensure output is computed even when tab loads with output missing/stale.
+        convertToJSON();
       }, 100);
       
       return () => clearTimeout(timer);
@@ -227,7 +232,7 @@ export default function CSVToJSONPage() {
       const decoded = safeDecodeParam(csvParam);
       if (decoded) {
         setInputCSV(decoded);
-        showMessage('Loaded from share link', 'success');
+        toast.success('Loaded from share link');
         // Clean URL
         if (typeof window !== 'undefined') {
           window.history.replaceState({}, '', window.location.pathname);
@@ -242,9 +247,9 @@ export default function CSVToJSONPage() {
       const text = await readFileAsText(file);
       const sizeMB = (file.size / 1024 / 1024).toFixed(2);
       setInputCSV(text);
-      showMessage(`File loaded successfully (${sizeMB} MB)`, 'success');
+      toast.success(`File loaded successfully (${sizeMB} MB)`);
     } catch {
-      showMessage('Failed to load file', 'error');
+      toast.error('Failed to load file');
     }
   };
 
@@ -252,19 +257,19 @@ export default function CSVToJSONPage() {
     try {
       const text = await navigator.clipboard.readText();
       if (!text || !text.trim()) {
-        showMessage('Clipboard is empty', 'error');
+        toast.error('Clipboard is empty');
         return;
       }
       setInputCSV(text);
-      showMessage('Pasted from clipboard', 'success');
+      toast.success('Pasted from clipboard');
     } catch {
-      showMessage('Failed to paste from clipboard. Please check browser permissions.', 'error');
+      toast.error('Failed to paste from clipboard. Please check browser permissions.');
     }
   };
 
   const handleClear = () => {
     setInputCSV('');
-    showMessage('Input cleared', 'success');
+    toast.success('Input cleared');
   };
 
   // Convert sample templates to the format expected by EditorToolbar
@@ -282,56 +287,56 @@ export default function CSVToJSONPage() {
   const handleLoadSample = () => {
     const defaultSample = getDefaultSample();
     setInputCSV(defaultSample.content);
-    showMessage('Sample CSV loaded', 'success');
+    toast.success('Sample CSV loaded');
   };
 
   const handleLoadTemplate = (template: { name: string; description: string; content: string }) => {
     setInputCSV(template.content);
-    showMessage(`Loaded: ${template.name}`, 'success');
+    toast.success(`Loaded: ${template.name}`);
   };
 
   const handleCopy = useCallback(async () => {
     try {
       await copyToClipboard(outputJSON);
-      showMessage('Copied to clipboard', 'success');
+      toast.success('Copied to clipboard');
       trackCopy('csv-json');
     } catch {
-      showMessage('Failed to copy', 'error');
+      toast.error('Failed to copy');
     }
-  }, [outputJSON, showMessage]);
+  }, [outputJSON, toast]);
 
   const handleDownload = useCallback(() => {
     try {
       const filename = `converted-${getTimestamp()}.json`;
       downloadTextFile(outputJSON, filename, 'application/json');
-      showMessage('Downloaded successfully', 'success');
+      toast.success('Downloaded successfully');
       trackDownload('json');
     } catch {
-      showMessage('Failed to download', 'error');
+      toast.error('Failed to download');
     }
-  }, [outputJSON, showMessage]);
+  }, [outputJSON, toast]);
 
   const handleShare = async () => {
     try {
       const url = createShareUrl('/csv-to-json', 'csv', inputCSV);
       await copyToClipboard(url);
-      showMessage('Share link copied to clipboard', 'success');
+      toast.success('Share link copied to clipboard');
     } catch {
-      showMessage('Failed to create share link', 'error');
+      toast.error('Failed to create share link');
     }
   };
 
   const handleValidate = () => {
     try {
       if (!outputJSON || !outputJSON.trim()) {
-        showMessage('No JSON to validate', 'error');
+        toast.error('No JSON to validate');
         return;
       }
 
       JSON.parse(outputJSON);
-      showMessage('Valid JSON', 'success');
+      toast.success('Valid JSON');
     } catch (error) {
-      showMessage('Invalid JSON: ' + (error instanceof Error ? error.message : 'Parse error'), 'error');
+      toast.error('Invalid JSON: ' + (error instanceof Error ? error.message : 'Parse error'));
     }
   };
 
@@ -357,7 +362,7 @@ export default function CSVToJSONPage() {
 
     const file = files[0];
     if (!file.name.match(/\.(csv|txt)$/i)) {
-      showMessage('Please drop a CSV or text file', 'error');
+      toast.error('Please drop a CSV or text file');
       return;
     }
 
@@ -475,17 +480,12 @@ export default function CSVToJSONPage() {
                 value={inputCSV}
                 onChange={setInputCSV}
                 language="csv"
+                editorSide="left"
                 placeholder="Paste your CSV data here or drag & drop a CSV file..."
                 onLoadSample={handleLoadSample}
               />
               
               <StatsBar text={inputCSV} validationState={validationState} />
-              
-              {message && (
-                <div style={{ padding: '0.5rem 1rem' }}>
-                  <MessageBox message={message} type={type} onClose={clearMessage} />
-                </div>
-              )}
             </div>
 
             {/* Resizer */}
@@ -509,6 +509,7 @@ export default function CSVToJSONPage() {
               <MonacoEditorPanel
                 value={outputJSON}
                 language="json"
+                editorSide="right"
                 readOnly
                 placeholder="JSON output will appear here..."
               />

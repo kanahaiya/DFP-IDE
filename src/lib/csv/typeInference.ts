@@ -58,8 +58,10 @@ export function isDateTime(value: string): boolean {
   
   const trimmed = value.trim();
   
-  // ISO 8601 date-time patterns
-  const iso8601Pattern = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})?)?$/;
+  // ISO 8601 date-time patterns (must include time portion)
+  // Examples: 2024-01-15T10:30:00Z, 2024-01-15T10:30:00.123+05:30
+  const iso8601Pattern =
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})?$/;
   
   if (!iso8601Pattern.test(trimmed)) {
     return false;

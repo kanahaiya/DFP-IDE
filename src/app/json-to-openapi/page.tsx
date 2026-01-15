@@ -6,7 +6,7 @@ import { MonacoEditorPanel } from '@/components/common/MonacoEditorPanel';
 import { EditorToolbar } from '@/components/common/EditorToolbar';
 import { OutputToolbar } from '@/components/common/OutputToolbar';
 import { StatsBar } from '@/components/common/StatsBar';
-import { MessageBox, useMessage } from '@/components/common/MessageBox';
+import { useToast } from '@/store/toast';
 import TabManager from '@/components/common/TabManager';
 import { EndpointManager } from '@/components/tools/json-to-openapi/EndpointManager';
 import { SettingsPanel } from '@/components/tools/json-to-openapi/SettingsPanel';
@@ -34,6 +34,7 @@ import jsYaml from 'js-yaml';
 
 export default function JSONToOpenAPIPage() {
   const { endpoints, activeEndpointIndex, settings, outputFormat, loadEndpointJSON } = useOpenAPIStore();
+  const toast = useToast();
   const activeEndpoint = endpoints[activeEndpointIndex];
   const { layout } = useLayout();
   const { size, resizerRef, containerRef } = useResizer({
@@ -60,11 +61,11 @@ export default function JSONToOpenAPIPage() {
   
   const [inputJSON, setInputJSON] = useState(activeEndpoint.json);
   const [outputSpec, setOutputSpec] = useState('');
-  const { message, type, showMessage, clearMessage } = useMessage();
   const [settingsTabId, setSettingsTabId] = useState('settings-general');
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const lastAutoErrorRef = useRef<string>('');
   
   // Ref to track if we're currently syncing from endpoint switch (prevents saving during sync)
   const isSyncingRef = useRef(false);
@@ -84,13 +85,6 @@ export default function JSONToOpenAPIPage() {
     warningCount: inputValidation.warnings.length,
   }), [inputValidation.isValid, inputValidation.errors.length, inputValidation.warnings.length]);
 
-  // Clear error messages when JSON becomes valid
-  useEffect(() => {
-    if (inputValidation.isValid && type === 'error' && message.includes('JSON error')) {
-      clearMessage();
-    }
-  }, [inputValidation.isValid, type, message, clearMessage]);
-
   // Convert to OpenAPI spec - callable function that always uses current values
   const convertToOpenAPI = useCallback(() => {
     try {
@@ -99,14 +93,15 @@ export default function JSONToOpenAPIPage() {
       
       if (endpointsWithJson.length === 0) {
         setOutputSpec('');
-        clearMessage(); // Clear any previous messages
+        lastAutoErrorRef.current = '';
         return;
       }
 
       // Check for JSON validation errors in input
       if (!inputValidation.isValid && inputJSON.trim().length > 0) {
         setOutputSpec('');
-        showMessage(`Please fix ${inputValidation.errors.length} JSON error${inputValidation.errors.length > 1 ? 's' : ''} before converting`, 'error');
+        // Avoid spamming toasts while user is typing; validation markers + error count show in UI.
+        lastAutoErrorRef.current = `json-errors:${inputValidation.errors.length}`;
         return;
       }
 
@@ -118,13 +113,17 @@ export default function JSONToOpenAPIPage() {
       });
       
       setOutputSpec(output);
-      clearMessage(); // Clear any previous error messages on success
+      lastAutoErrorRef.current = '';
     } catch (error) {
       console.error('Conversion error:', error);
-      showMessage(`Conversion failed: ${error instanceof Error ? error.message : 'Unknown error'}`, 'error');
+      const msg = `Conversion failed: ${error instanceof Error ? error.message : 'Unknown error'}`;
+      if (lastAutoErrorRef.current !== msg) {
+        toast.error(msg, 4000);
+        lastAutoErrorRef.current = msg;
+      }
       setOutputSpec('');
     }
-  }, [endpoints, settings, outputFormat, inputJSON, inputValidation.isValid, inputValidation.errors.length, clearMessage, showMessage]);
+  }, [endpoints, settings, outputFormat, inputJSON, inputValidation.isValid, inputValidation.errors.length, toast]);
 
   // Debounced conversion - batches rapid changes with 150ms delay
   // Note: convertToOpenAPI is NOT in deps to avoid circular dependency
@@ -169,7 +168,7 @@ export default function JSONToOpenAPIPage() {
       const decoded = safeDecodeParam(jsonParam);
       if (decoded) {
         setInputJSON(decoded);
-        showMessage('Loaded from share link', 'success');
+        toast.success('Loaded from share link');
         // Clean URL
         if (typeof window !== 'undefined') {
           window.history.replaceState({}, '', window.location.pathname);
@@ -212,9 +211,9 @@ export default function JSONToOpenAPIPage() {
       const text = await readFileAsText(file);
       const sizeMB = (file.size / 1024 / 1024).toFixed(2);
       setInputJSON(text);
-      showMessage(`File loaded successfully (${sizeMB} MB)`, 'success');
+      toast.success(`File loaded successfully (${sizeMB} MB)`);
     } catch {
-      showMessage('Failed to load file', 'error');
+      toast.error('Failed to load file');
     }
   };
 
@@ -222,36 +221,36 @@ export default function JSONToOpenAPIPage() {
     try {
       const text = await navigator.clipboard.readText();
       if (!text || !text.trim()) {
-        showMessage('Clipboard is empty', 'error');
+        toast.error('Clipboard is empty');
         return;
       }
       setInputJSON(text);
-      showMessage('Pasted from clipboard', 'success');
+      toast.success('Pasted from clipboard');
     } catch {
-      showMessage('Failed to paste from clipboard. Please check browser permissions.', 'error');
+      toast.error('Failed to paste from clipboard. Please check browser permissions.');
     }
   };
 
   const handleAutoCorrect = () => {
     if (!inputJSON.trim()) {
-      showMessage('No input to fix', 'warning');
+      toast.warning('No input to fix');
       return;
     }
 
     const result = autoCorrectJSON(inputJSON);
     if (result.success) {
       setInputJSON(result.output);
-      showMessage('Input fixed and formatted!', 'success');
+      toast.success('Input fixed and formatted!');
       trackEvent('auto_correct', 'tool_usage', 'openapi_success');
     } else {
-      showMessage(`Could not auto-correct: ${result.error}`, 'error');
+      toast.error(`Could not auto-correct: ${result.error}`);
       trackEvent('auto_correct', 'tool_usage', 'openapi_failure');
     }
   };
 
   const handleClear = () => {
     setInputJSON('');
-    showMessage('Input cleared', 'success');
+    toast.success('Input cleared');
   };
 
   const sampleTemplates = useMemo(() => [
@@ -444,7 +443,7 @@ export default function JSONToOpenAPIPage() {
     // Load the first template by default
     if (sampleTemplates.length > 0) {
       setInputJSON(sampleTemplates[0].content);
-      showMessage('Sample JSON loaded', 'success');
+      toast.success('Sample JSON loaded');
       // Note: Conversion will be triggered automatically by the debounced effect
       // when inputJSON updates, ensuring the save effect runs first
     }
@@ -452,7 +451,7 @@ export default function JSONToOpenAPIPage() {
 
   const handleLoadTemplate = (template: { name: string; description: string; content: string }) => {
     setInputJSON(template.content);
-    showMessage(`Loaded: ${template.name}`, 'success');
+    toast.success(`Loaded: ${template.name}`);
     // Note: Conversion will be triggered automatically by the debounced effect
     // when inputJSON updates, ensuring the save effect runs first
   };
@@ -460,13 +459,13 @@ export default function JSONToOpenAPIPage() {
   const handleCopy = useCallback(async () => {
     try {
       await copyToClipboard(outputSpec);
-      showMessage('Copied to clipboard', 'success');
+      toast.success('Copied to clipboard');
       // Track copy action
       trackCopy('openapi-spec');
     } catch {
-      showMessage('Failed to copy', 'error');
+      toast.error('Failed to copy');
     }
-  }, [outputSpec, showMessage]);
+  }, [outputSpec, toast]);
 
   const handleDownload = useCallback(() => {
     try {
@@ -474,28 +473,28 @@ export default function JSONToOpenAPIPage() {
       const filename = `openapi-spec-${getTimestamp()}.${ext}`;
       const mimeType = outputFormat === 'yaml' ? 'text/yaml' : 'application/json';
       downloadTextFile(outputSpec, filename, mimeType);
-      showMessage('Downloaded successfully', 'success');
+      toast.success('Downloaded successfully');
       // Track download action
       trackDownload(`openapi-${ext}`);
     } catch {
-      showMessage('Failed to download', 'error');
+      toast.error('Failed to download');
     }
-  }, [outputSpec, outputFormat, showMessage]);
+  }, [outputSpec, outputFormat, toast]);
 
   const handleShare = async () => {
     try {
       const url = createShareUrl('/json-to-openapi', 'json', inputJSON);
       await copyToClipboard(url);
-      showMessage('Share link copied to clipboard', 'success');
+      toast.success('Share link copied to clipboard');
     } catch {
-      showMessage('Failed to create share link', 'error');
+      toast.error('Failed to create share link');
     }
   };
 
   const handleValidate = () => {
     try {
       if (!outputSpec || !outputSpec.trim()) {
-        showMessage('No spec to validate', 'error');
+        toast.error('No spec to validate');
         return;
       }
 
@@ -508,28 +507,28 @@ export default function JSONToOpenAPIPage() {
       const specObj = outputFormat === 'json' ? JSON.parse(outputSpec) : null;
       if (specObj) {
         if (!specObj.openapi && !specObj.swagger) {
-          showMessage('Invalid spec: missing openapi/swagger version', 'error');
+          toast.error('Invalid spec: missing openapi/swagger version');
           return;
         }
         if (!specObj.info) {
-          showMessage('Invalid spec: missing info object', 'error');
+          toast.error('Invalid spec: missing info object');
           return;
         }
         if (!specObj.paths) {
-          showMessage('Invalid spec: missing paths object', 'error');
+          toast.error('Invalid spec: missing paths object');
           return;
         }
       }
 
-      // Valid spec - no message needed (output already shows it's valid)
+      toast.success('Spec is valid');
     } catch (error) {
-      showMessage('Invalid spec: ' + (error instanceof Error ? error.message : 'Parse error'), 'error');
+      toast.error('Invalid spec: ' + (error instanceof Error ? error.message : 'Parse error'));
     }
   };
 
   const handlePreview = () => {
     if (!outputSpec || !outputSpec.trim()) {
-      showMessage('No spec to preview', 'error');
+      toast.error('No spec to preview');
       return;
     }
     
@@ -543,7 +542,7 @@ export default function JSONToOpenAPIPage() {
       }
       setShowPreviewModal(true);
     } catch {
-      showMessage('Cannot preview: Invalid spec format', 'error');
+      toast.error('Cannot preview: Invalid spec format');
     }
   };
 
@@ -569,7 +568,7 @@ export default function JSONToOpenAPIPage() {
 
     const file = files[0];
     if (!file.name.match(/\.(json|txt)$/i)) {
-      showMessage('Please drop a JSON or text file', 'error');
+      toast.error('Please drop a JSON or text file');
       return;
     }
 
@@ -683,18 +682,13 @@ export default function JSONToOpenAPIPage() {
             value={inputJSON}
             onChange={setInputJSON}
             language="json"
+            editorSide="left"
             placeholder="Paste your JSON example here..."
             onLoadSample={handleLoadSample}
             validationErrors={validationErrors}
           />
           
           <StatsBar text={inputJSON} validationState={validationState} />
-          
-          {message && (
-            <div style={{ padding: '0.5rem 1rem' }}>
-              <MessageBox message={message} type={type} onClose={clearMessage} />
-            </div>
-          )}
         </div>
 
         {/* Resizer */}
@@ -721,6 +715,7 @@ export default function JSONToOpenAPIPage() {
           <MonacoEditorPanel
             value={outputSpec}
             language={outputFormat === 'yaml' ? 'yaml' : 'json'}
+            editorSide="right"
             readOnly
             placeholder="OpenAPI spec will appear here"
           />

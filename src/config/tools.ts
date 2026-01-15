@@ -45,6 +45,16 @@ export const TOOLS: ToolMetadata[] = [
     keywords: ['json', 'yaml', 'yml', 'converter', 'config', 'kubernetes', 'docker'],
     enabled: true,
   },
+  {
+    id: 'json-diff',
+    name: 'JSON Diff',
+    route: '/json-diff',
+    icon: 'fas fa-not-equal',
+    description: 'Compare two JSON documents with visual diff, tree view, and detailed reports',
+    category: 'utility',
+    keywords: ['json', 'diff', 'compare', 'comparison', 'patch', 'delta', 'merge', 'changes'],
+    enabled: true,
+  },
 ];
 
 /**

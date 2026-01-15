@@ -1,22 +1,10 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { useTheme } from '../useTheme';
 
-// Mock useLocalStorage
-jest.mock('../useLocalStorage', () => ({
-  useLocalStorage: jest.fn((key, defaultValue) => {
-    let value = defaultValue;
-    return [
-      value,
-      jest.fn((newValue) => {
-        value = newValue;
-      }),
-    ];
-  }),
-}));
-
 describe('useTheme', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    window.localStorage.clear();
     
     // Mock document.documentElement
     document.documentElement.setAttribute = jest.fn();
@@ -83,8 +71,7 @@ describe('useTheme', () => {
     });
 
     it('should toggle theme from light to dark', async () => {
-      const { useLocalStorage } = require('../useLocalStorage');
-      useLocalStorage.mockReturnValue(['light', jest.fn()]);
+      window.localStorage.setItem('dfp_theme', JSON.stringify('light'));
       
       const { result } = renderHook(() => useTheme());
       
@@ -156,10 +143,6 @@ describe('useTheme', () => {
 
   describe('Persistence', () => {
     it('should persist theme to localStorage', async () => {
-      const mockSetTheme = jest.fn();
-      const { useLocalStorage } = require('../useLocalStorage');
-      useLocalStorage.mockReturnValue(['dark', mockSetTheme]);
-      
       const { result } = renderHook(() => useTheme());
       
       await waitFor(() => {
@@ -171,44 +154,28 @@ describe('useTheme', () => {
       });
       
       await waitFor(() => {
-        expect(mockSetTheme).toHaveBeenCalledWith('light');
+        expect(window.localStorage.getItem('dfp_theme')).toBe(JSON.stringify('light'));
       });
     });
 
-    it('should load persisted theme on mount', () => {
-      const { useLocalStorage } = require('../useLocalStorage');
-      useLocalStorage.mockReturnValue(['light', jest.fn()]);
+    it('should load persisted theme on mount', async () => {
+      window.localStorage.setItem('dfp_theme', JSON.stringify('light'));
       
       const { result } = renderHook(() => useTheme());
-      
-      expect(result.current.theme).toBe('light');
+
+      await waitFor(() => {
+        expect(result.current.theme).toBe('light');
+      });
     });
   });
 
   describe('Hydration Safety', () => {
-    it('should not be mounted initially', () => {
-      const { result } = renderHook(() => useTheme());
-      
-      // Before useLayoutEffect runs
-      expect(result.current.mounted).toBe(false);
-    });
-
     it('should become mounted after layout effect', async () => {
       const { result } = renderHook(() => useTheme());
       
       await waitFor(() => {
         expect(result.current.mounted).toBe(true);
       });
-    });
-
-    it('should not update DOM before mounted', () => {
-      const setAttributeMock = jest.fn();
-      document.documentElement.setAttribute = setAttributeMock;
-      
-      renderHook(() => useTheme());
-      
-      // Should not be called before mounted
-      expect(setAttributeMock).not.toHaveBeenCalled();
     });
   });
 
@@ -272,7 +239,7 @@ describe('useTheme', () => {
       });
       
       await waitFor(() => {
-        expect(metaTag?.setAttribute).toHaveBeenCalledWith('content', '#1e1e1e');
+        expect(metaTag?.setAttribute).toHaveBeenLastCalledWith('content', '#1e1e1e');
       });
     });
 

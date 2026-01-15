@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ShareWidget } from '../ShareWidget';
 import { PerformanceProfiler } from '@/__tests__/test-utils';
@@ -10,24 +10,14 @@ jest.mock('@/lib/clipboardUtils', () => ({
 }));
 
 describe('ShareWidget', () => {
-  const mockLocation = {
-    href: 'https://example.com/tool',
-  };
-
-  const mockDocument = {
-    title: 'Test Tool - Example',
-  };
+  const mockTitle = 'Test Tool - Example';
+  const getHref = () => window.location.href;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    Object.defineProperty(window, 'location', {
-      writable: true,
-      value: mockLocation,
-    });
-    Object.defineProperty(document, 'title', {
-      writable: true,
-      value: mockDocument.title,
-    });
+    document.title = mockTitle;
+    // JSDOM's `window.location` is not configurable; use history API to set URL for tests.
+    window.history.pushState({}, '', '/tool');
     
     // Mock gtag
     delete (window as any).gtag;
@@ -124,7 +114,7 @@ describe('ShareWidget', () => {
         
         const twitterLink = screen.getByLabelText('Share on Twitter') as HTMLAnchorElement;
         expect(twitterLink.href).toContain('twitter.com/intent/tweet');
-        expect(twitterLink.href).toContain(encodeURIComponent(mockLocation.href));
+        expect(twitterLink.href).toContain(encodeURIComponent(getHref()));
       });
 
       it('should have correct Facebook share URL', async () => {
@@ -139,7 +129,7 @@ describe('ShareWidget', () => {
         
         const facebookLink = screen.getByLabelText('Share on Facebook') as HTMLAnchorElement;
         expect(facebookLink.href).toContain('facebook.com/sharer');
-        expect(facebookLink.href).toContain(encodeURIComponent(mockLocation.href));
+        expect(facebookLink.href).toContain(encodeURIComponent(getHref()));
       });
 
       it('should have correct LinkedIn share URL', async () => {
@@ -172,7 +162,7 @@ describe('ShareWidget', () => {
         const copyLink = screen.getByLabelText('Copy link');
         await user.click(copyLink);
         
-        expect(copyToClipboard).toHaveBeenCalledWith(mockLocation.href);
+        expect(copyToClipboard).toHaveBeenCalledWith(getHref());
       });
 
       it('should show toast after copying link', async () => {
@@ -211,7 +201,7 @@ describe('ShareWidget', () => {
           expect(screen.getByText('Link copied to clipboard')).toBeInTheDocument();
         });
         
-        act(() => {
+        await act(async () => {
           jest.advanceTimersByTime(2000);
         });
         
@@ -264,7 +254,11 @@ describe('ShareWidget', () => {
         const twitterLink = screen.getByLabelText('Share on Twitter');
         fireEvent.click(twitterLink);
         
-        expect(mockGtag).toHaveBeenCalledWith('event', 'share', { network: 'twitter' });
+        expect(mockGtag).toHaveBeenCalledWith(
+          'event',
+          'share',
+          expect.objectContaining({ network: 'twitter' })
+        );
       });
 
       it('should handle analytics errors gracefully', async () => {
@@ -293,7 +287,7 @@ describe('ShareWidget', () => {
 
     describe('URL Encoding', () => {
       it('should properly encode URL in share links', async () => {
-        window.location.href = 'https://example.com/tool?param=value&other=123';
+        window.history.pushState({}, '', '/tool?param=value&other=123');
         
         const user = userEvent.setup();
         render(<ShareWidget />);
@@ -305,7 +299,7 @@ describe('ShareWidget', () => {
         await user.click(screen.getByLabelText('Toggle share menu'));
         
         const twitterLink = screen.getByLabelText('Share on Twitter') as HTMLAnchorElement;
-        expect(twitterLink.href).toContain(encodeURIComponent('https://example.com/tool?param=value&other=123'));
+        expect(twitterLink.href).toContain(encodeURIComponent(window.location.href));
       });
 
       it('should properly encode title in share links', async () => {
@@ -452,7 +446,7 @@ describe('ShareWidget', () => {
       });
 
       it('should handle very long URLs', async () => {
-        window.location.href = 'https://example.com/' + 'a'.repeat(1000);
+        window.history.pushState({}, '', '/' + 'a'.repeat(1000));
         
         const user = userEvent.setup();
         render(<ShareWidget />);
@@ -468,7 +462,7 @@ describe('ShareWidget', () => {
       });
 
       it('should handle special characters in URLs', async () => {
-        window.location.href = 'https://example.com/tool?query=test&value=<>&special="quotes"';
+        window.history.pushState({}, '', '/tool?query=test&value=<>&special="quotes"');
         
         const user = userEvent.setup();
         render(<ShareWidget />);
@@ -488,8 +482,3 @@ describe('ShareWidget', () => {
     });
   });
 });
-
-// Helper to use act from testing library
-function act(callback: () => void) {
-  callback();
-}

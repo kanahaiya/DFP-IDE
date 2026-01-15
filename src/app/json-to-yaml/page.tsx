@@ -6,7 +6,6 @@ import { MonacoEditorPanel } from '@/components/common/MonacoEditorPanel';
 import { EditorToolbar } from '@/components/common/EditorToolbar';
 import { OutputToolbar } from '@/components/common/OutputToolbar';
 import { StatsBar } from '@/components/common/StatsBar';
-import { MessageBox, useMessage } from '@/components/common/MessageBox';
 import { useToast } from '@/store/toast';
 import TabManager from '@/components/common/TabManager';
 import { YAMLFormatPanel } from '@/components/tools/json-to-yaml/YAMLFormatPanel';
@@ -61,7 +60,6 @@ export default function JSONToYAMLPage() {
   
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
-  const { message, type, showMessage, clearMessage } = useMessage();
   const [settingsTabId, setSettingsTabId] = useState('settings-format');
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -125,7 +123,6 @@ export default function JSONToYAMLPage() {
       if (!inputText || !inputText.trim()) {
         setOutputText('');
         setErrors([]);
-        clearMessage();
         lastConvertedInputRef.current = '';
         lastConvertedSettingsRef.current = '';
         return;
@@ -158,7 +155,6 @@ export default function JSONToYAMLPage() {
       
       if (result.success && result.output) {
         setOutputText(result.output);
-        clearMessage();
         lastConvertedInputRef.current = inputText;
         lastConvertedSettingsRef.current = settingsHash;
         
@@ -173,7 +169,7 @@ export default function JSONToYAMLPage() {
       toast.error(`Conversion failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
       setOutputText('');
     }
-  }, [inputText, settings, clearMessage, showMessage]);
+  }, [inputText, settings, toast]);
 
   // Debounced conversion - 300ms for faster response
   useEffect(() => {
@@ -313,11 +309,11 @@ export default function JSONToYAMLPage() {
   // Handle sample template selection
   const handleLoadTemplate = useCallback((template: { name: string; content: string; description: string }) => {
     setInputText(template.content);
-    showMessage(`Loaded: ${template.name}`, 'success');
+    toast.success(`Loaded: ${template.name}`);
     
     // Track template load
     trackEvent('yaml_template_load', 'tool_usage', template.name);
-  }, [showMessage]);
+  }, [toast]);
 
   // Handle clear
   const handleClear = useCallback(() => {
@@ -360,8 +356,8 @@ export default function JSONToYAMLPage() {
 
   // Handle share (placeholder)
   const handleShare = useCallback(() => {
-    showMessage('Share feature coming soon', 'info');
-  }, [showMessage]);
+    toast.info('Share feature coming soon');
+  }, [toast]);
 
   // Sample templates for dropdown - always use JSON samples
   const sampleTemplates = useMemo(() => 
@@ -464,16 +460,11 @@ export default function JSONToYAMLPage() {
                 value={inputText}
                 onChange={setInputText}
                 language={inputLanguage}
+                editorSide="left"
                 placeholder={`Paste your ${inputLanguage.toUpperCase()} data here or drag & drop a file...`}
               />
               
               <StatsBar text={inputText} validationState={validationState} />
-              
-              {message && (
-                <div style={{ padding: '0.5rem 1rem' }}>
-                  <MessageBox message={message} type={type} onClose={clearMessage} />
-                </div>
-              )}
             </div>
 
             {/* Resizer */}
@@ -497,6 +488,7 @@ export default function JSONToYAMLPage() {
               <MonacoEditorPanel
                 value={outputText}
                 language={outputLanguage}
+                editorSide="right"
                 readOnly
                 placeholder={`${outputLanguage.toUpperCase()} output will appear here...`}
               />

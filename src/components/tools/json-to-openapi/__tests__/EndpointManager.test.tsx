@@ -65,9 +65,9 @@ describe('EndpointManager', () => {
     });
 
     it('should display HTTP methods', () => {
-      render(<EndpointManager />);
-      expect(screen.getByText('GET')).toBeInTheDocument();
-      expect(screen.getByText('POST')).toBeInTheDocument();
+      const { container } = render(<EndpointManager />);
+      expect(container.querySelector('.endpoint-method.get')).toHaveTextContent('GET');
+      expect(container.querySelector('.endpoint-method.post')).toHaveTextContent('POST');
     });
 
     it('should show JSON status icon for endpoint with JSON', () => {
@@ -119,30 +119,21 @@ describe('EndpointManager', () => {
 
   describe('Expanding/Collapsing Endpoints', () => {
     it('should expand endpoint when header is clicked', async () => {
-      const user = userEvent.setup();
       render(<EndpointManager />);
-      
-      const endpoint = screen.getByText('/api/users').closest('.endpoint-card');
-      await user.click(screen.getByText('/api/users'));
-      
-      await waitFor(() => {
-        expect(screen.getByLabelText('Path')).toBeInTheDocument();
-      });
+      // Active endpoint is expanded by default
+      expect(screen.getByLabelText(/path/i)).toBeInTheDocument();
     });
 
     it('should show collapse icon when expanded', async () => {
-      const user = userEvent.setup();
       const { container } = render(<EndpointManager />);
-      
-      await user.click(screen.getByText('/api/users'));
-      
-      await waitFor(() => {
-        expect(container.querySelector('.fa-chevron-up')).toBeInTheDocument();
-      });
+      expect(container.querySelector('.fa-chevron-up')).toBeInTheDocument();
     });
 
-    it('should show expand icon when collapsed', () => {
+    it('should show expand icon when collapsed', async () => {
+      const user = userEvent.setup();
       const { container } = render(<EndpointManager />);
+      // Collapse the expanded endpoint
+      await user.click(screen.getByText('/api/users'));
       expect(container.querySelector('.fa-chevron-down')).toBeInTheDocument();
     });
 
@@ -152,48 +143,39 @@ describe('EndpointManager', () => {
       
       const header = screen.getByText('/api/users');
       
-      // Expand
+      // Collapse (was expanded initially)
       await user.click(header);
-      await waitFor(() => {
-        expect(screen.getByLabelText('Path')).toBeInTheDocument();
-      });
-      
-      // Collapse
+      expect(screen.queryByLabelText(/path/i)).not.toBeInTheDocument();
+
+      // Expand again
       await user.click(header);
-      await waitFor(() => {
-        expect(screen.queryByLabelFor('Path')).not.toBeInTheDocument();
-      });
+      expect(screen.getByLabelText(/path/i)).toBeInTheDocument();
     });
   });
 
   describe('Editing Endpoint Configuration', () => {
-    beforeEach(async () => {
-      const user = userEvent.setup();
+    beforeEach(() => {
       render(<EndpointManager />);
-      await user.click(screen.getByText('/api/users'));
     });
 
     it('should display all configuration fields when expanded', async () => {
       await waitFor(() => {
-        expect(screen.getByLabelText('Path')).toBeInTheDocument();
-        expect(screen.getByLabelText('HTTP Method')).toBeInTheDocument();
-        expect(screen.getByLabelText('Operation ID')).toBeInTheDocument();
-        expect(screen.getByLabelText('Response Code')).toBeInTheDocument();
-        expect(screen.getByLabelText('Tags (comma-separated)')).toBeInTheDocument();
-        expect(screen.getByLabelText('Summary')).toBeInTheDocument();
+        expect(screen.getByLabelText(/path/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/http method/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/operation id/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/response code/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/tags/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/summary/i)).toBeInTheDocument();
       });
     });
 
     it('should update path when changed', async () => {
-      const user = userEvent.setup();
-      
       await waitFor(() => {
-        expect(screen.getByLabelText('Path')).toBeInTheDocument();
+        expect(screen.getByLabelText(/path/i)).toBeInTheDocument();
       });
       
-      const pathInput = screen.getByLabelText('Path') as HTMLInputElement;
-      await user.clear(pathInput);
-      await user.type(pathInput, '/api/v2/users');
+      const pathInput = screen.getByLabelText(/path/i) as HTMLInputElement;
+      fireEvent.change(pathInput, { target: { value: '/api/v2/users' } });
       
       expect(mockStore.updateEndpoint).toHaveBeenCalledWith(
         0,
@@ -205,10 +187,10 @@ describe('EndpointManager', () => {
       const user = userEvent.setup();
       
       await waitFor(() => {
-        expect(screen.getByLabelText('HTTP Method')).toBeInTheDocument();
+        expect(screen.getByLabelText(/http method/i)).toBeInTheDocument();
       });
       
-      const methodSelect = screen.getByLabelText('HTTP Method');
+      const methodSelect = screen.getByLabelText(/http method/i);
       await user.selectOptions(methodSelect, 'post');
       
       expect(mockStore.updateEndpoint).toHaveBeenCalledWith(
@@ -218,15 +200,12 @@ describe('EndpointManager', () => {
     });
 
     it('should update operation ID when changed', async () => {
-      const user = userEvent.setup();
-      
       await waitFor(() => {
-        expect(screen.getByLabelText('Operation ID')).toBeInTheDocument();
+        expect(screen.getByLabelText(/operation id/i)).toBeInTheDocument();
       });
       
-      const operationInput = screen.getByLabelText('Operation ID') as HTMLInputElement;
-      await user.clear(operationInput);
-      await user.type(operationInput, 'listUsers');
+      const operationInput = screen.getByLabelText(/operation id/i) as HTMLInputElement;
+      fireEvent.change(operationInput, { target: { value: 'listUsers' } });
       
       expect(mockStore.updateEndpoint).toHaveBeenCalledWith(
         0,
@@ -235,15 +214,12 @@ describe('EndpointManager', () => {
     });
 
     it('should update response code when changed', async () => {
-      const user = userEvent.setup();
-      
       await waitFor(() => {
-        expect(screen.getByLabelText('Response Code')).toBeInTheDocument();
+        expect(screen.getByLabelText(/response code/i)).toBeInTheDocument();
       });
       
-      const codeInput = screen.getByLabelText('Response Code') as HTMLInputElement;
-      await user.clear(codeInput);
-      await user.type(codeInput, '201');
+      const codeInput = screen.getByLabelText(/response code/i) as HTMLInputElement;
+      fireEvent.change(codeInput, { target: { value: '201' } });
       
       expect(mockStore.updateEndpoint).toHaveBeenCalledWith(
         0,
@@ -252,15 +228,12 @@ describe('EndpointManager', () => {
     });
 
     it('should update tags when changed', async () => {
-      const user = userEvent.setup();
-      
       await waitFor(() => {
-        expect(screen.getByLabelText('Tags (comma-separated)')).toBeInTheDocument();
+        expect(screen.getByLabelText(/tags/i)).toBeInTheDocument();
       });
       
-      const tagsInput = screen.getByLabelText('Tags (comma-separated)') as HTMLInputElement;
-      await user.clear(tagsInput);
-      await user.type(tagsInput, 'users, authentication');
+      const tagsInput = screen.getByLabelText(/tags/i) as HTMLInputElement;
+      fireEvent.change(tagsInput, { target: { value: 'users, authentication' } });
       
       expect(mockStore.updateEndpoint).toHaveBeenCalledWith(
         0,
@@ -269,15 +242,12 @@ describe('EndpointManager', () => {
     });
 
     it('should update summary when changed', async () => {
-      const user = userEvent.setup();
-      
       await waitFor(() => {
-        expect(screen.getByLabelText('Summary')).toBeInTheDocument();
+        expect(screen.getByLabelText(/summary/i)).toBeInTheDocument();
       });
       
-      const summaryInput = screen.getByLabelText('Summary') as HTMLInputElement;
-      await user.clear(summaryInput);
-      await user.type(summaryInput, 'Get list of all users');
+      const summaryInput = screen.getByLabelText(/summary/i) as HTMLInputElement;
+      fireEvent.change(summaryInput, { target: { value: 'Get list of all users' } });
       
       expect(mockStore.updateEndpoint).toHaveBeenCalledWith(
         0,
@@ -287,20 +257,18 @@ describe('EndpointManager', () => {
   });
 
   describe('Loading Sample JSON', () => {
-    beforeEach(async () => {
-      const user = userEvent.setup();
+    beforeEach(() => {
       render(<EndpointManager />);
-      await user.click(screen.getByText('/api/users'));
     });
 
     it('should display sample JSON buttons', async () => {
       await waitFor(() => {
-        expect(screen.getByText('User')).toBeInTheDocument();
-        expect(screen.getByText('Product')).toBeInTheDocument();
-        expect(screen.getByText('Blog')).toBeInTheDocument();
-        expect(screen.getByText('Order')).toBeInTheDocument();
-        expect(screen.getByText('Error')).toBeInTheDocument();
-        expect(screen.getByText('List')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /user/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /product/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /blog/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /order/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /error/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /list/i })).toBeInTheDocument();
       });
     });
 
@@ -308,10 +276,10 @@ describe('EndpointManager', () => {
       const user = userEvent.setup();
       
       await waitFor(() => {
-        expect(screen.getByText('User')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /user/i })).toBeInTheDocument();
       });
       
-      await user.click(screen.getByText('User'));
+      await user.click(screen.getByRole('button', { name: /user/i }));
       
       expect(mockStore.loadEndpointJSON).toHaveBeenCalledWith(
         0,
@@ -323,10 +291,10 @@ describe('EndpointManager', () => {
       const user = userEvent.setup();
       
       await waitFor(() => {
-        expect(screen.getByText('Product')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /product/i })).toBeInTheDocument();
       });
       
-      await user.click(screen.getByText('Product'));
+      await user.click(screen.getByRole('button', { name: /product/i }));
       
       expect(mockStore.loadEndpointJSON).toHaveBeenCalledWith(0, expect.any(String));
     });
@@ -335,7 +303,7 @@ describe('EndpointManager', () => {
       const user = userEvent.setup();
       
       await waitFor(() => {
-        expect(screen.getByText('User')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /user/i })).toBeInTheDocument();
       });
       
       const sampleButtons = [
@@ -348,7 +316,7 @@ describe('EndpointManager', () => {
       ];
       
       for (const buttonText of sampleButtons) {
-        await user.click(screen.getByText(buttonText));
+        await user.click(screen.getByRole('button', { name: new RegExp(buttonText, 'i') }));
         expect(mockStore.loadEndpointJSON).toHaveBeenCalled();
         mockStore.loadEndpointJSON.mockClear();
       }
@@ -357,25 +325,20 @@ describe('EndpointManager', () => {
 
   describe('HTTP Method Options', () => {
     it('should have all HTTP method options', async () => {
-      const user = userEvent.setup();
       render(<EndpointManager />);
-      
-      await user.click(screen.getByText('/api/users'));
-      
-      await waitFor(() => {
-        const methodSelect = screen.getByLabelText('HTTP Method');
-        expect(methodSelect).toBeInTheDocument();
-        
-        const options = Array.from(methodSelect.querySelectorAll('option')).map(
-          (opt) => opt.value
-        );
-        
-        expect(options).toContain('get');
-        expect(options).toContain('post');
-        expect(options).toContain('put');
-        expect(options).toContain('patch');
-        expect(options).toContain('delete');
-      });
+
+      const methodSelect = screen.getByLabelText('HTTP Method');
+      expect(methodSelect).toBeInTheDocument();
+
+      const options = Array.from(methodSelect.querySelectorAll('option')).map(
+        (opt) => opt.value
+      );
+
+      expect(options).toContain('get');
+      expect(options).toContain('post');
+      expect(options).toContain('put');
+      expect(options).toContain('patch');
+      expect(options).toContain('delete');
     });
   });
 
@@ -431,8 +394,10 @@ describe('EndpointManager', () => {
         endpoints: [{ ...mockStore.endpoints[0], path: '' }],
       });
       
-      render(<EndpointManager />);
-      expect(screen.getByText('')).toBeInTheDocument();
+      const { container } = render(<EndpointManager />);
+      const pathEl = container.querySelector('.endpoint-path');
+      expect(pathEl).toBeInTheDocument();
+      expect(pathEl).toHaveTextContent('');
     });
 
     it('should handle endpoints with long paths', () => {
@@ -480,16 +445,11 @@ describe('EndpointManager', () => {
 
   describe('Accessibility', () => {
     it('should have proper ARIA labels', async () => {
-      const user = userEvent.setup();
       render(<EndpointManager />);
-      
-      await user.click(screen.getByText('/api/users'));
-      
-      await waitFor(() => {
-        expect(screen.getByLabelText('Path')).toBeInTheDocument();
-        expect(screen.getByLabelText('HTTP Method')).toBeInTheDocument();
-        expect(screen.getByLabelText('Operation ID')).toBeInTheDocument();
-      });
+
+      expect(screen.getByLabelText('Path')).toBeInTheDocument();
+      expect(screen.getByLabelText('HTTP Method')).toBeInTheDocument();
+      expect(screen.getByLabelText('Operation ID')).toBeInTheDocument();
     });
 
     it('should be keyboard navigable', async () => {

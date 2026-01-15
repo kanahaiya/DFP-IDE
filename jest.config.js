@@ -16,6 +16,8 @@ const customJestConfig = {
   // Module name mapper for path aliases
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    // uuid v13 is ESM-only; mock for Jest (CJS)
+    '^uuid$': '<rootDir>/src/__mocks__/uuid.ts',
   },
   
   // Coverage configuration
@@ -28,7 +30,7 @@ const customJestConfig = {
   ],
   
   // Coverage thresholds
-  coverageThresholds: {
+  coverageThreshold: {
     global: {
       branches: 85,
       functions: 85,
@@ -57,11 +59,15 @@ const customJestConfig = {
     '<rootDir>/.next/',
     '<rootDir>/out/',
     '<rootDir>/build/',
+    '<rootDir>/e2e/',
+    // Utility module (not a test file) but lives under __tests__
+    '<rootDir>/src/__tests__/test-utils.tsx',
   ],
   
   // Transform ignore patterns
   transformIgnorePatterns: [
-    '/node_modules/',
+    // Allow transforming ESM-only deps (e.g. uuid v13) so Jest can run in CJS mode.
+    '/node_modules/(?!(uuid)/)',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
   

@@ -9,7 +9,7 @@ export interface TrustBadge {
   text: string;
 }
 
-interface SEOContentProps {
+export interface SEOContentProps {
   title?: string;
   subtitle?: string;
   trustBadges?: TrustBadge[];

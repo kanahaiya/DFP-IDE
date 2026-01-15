@@ -24,6 +24,16 @@ export function OutputToolbar({
   label = 'Output',
   children,
 }: OutputToolbarProps) {
+  const safe =
+    (fn?: () => void) =>
+    () => {
+      try {
+        fn?.();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
   return (
     <div className="editor-toolbar">
       <div className="editor-toolbar-label">
@@ -35,7 +45,7 @@ export function OutputToolbar({
         {onValidate && (
           <button
             className="btn btn-secondary btn-sm"
-            onClick={onValidate}
+            onClick={safe(onValidate)}
             title="Validate spec"
             aria-label="Validate spec"
           >
@@ -46,7 +56,7 @@ export function OutputToolbar({
         {onPreview && (
           <button
             className="btn btn-secondary btn-sm"
-            onClick={onPreview}
+            onClick={safe(onPreview)}
             title="Preview in Swagger UI"
             aria-label="Preview in Swagger UI"
           >
@@ -58,7 +68,7 @@ export function OutputToolbar({
         {onCopy && (
           <button
             className="btn btn-secondary btn-sm"
-            onClick={onCopy}
+            onClick={safe(onCopy)}
             title="Copy to clipboard"
             aria-label="Copy to clipboard"
           >
@@ -69,7 +79,7 @@ export function OutputToolbar({
         {onDownload && (
           <button
             className="btn btn-secondary btn-sm"
-            onClick={onDownload}
+            onClick={safe(onDownload)}
             title="Download file"
             aria-label="Download file"
           >
@@ -80,7 +90,7 @@ export function OutputToolbar({
         {onShare && (
           <button
             className="btn btn-secondary btn-sm"
-            onClick={onShare}
+            onClick={safe(onShare)}
             title="Share link"
             aria-label="Share link"
           >
@@ -91,7 +101,7 @@ export function OutputToolbar({
         {onClear && (
           <button
             className="btn btn-secondary btn-sm"
-            onClick={onClear}
+            onClick={safe(onClear)}
             title="Clear output"
             aria-label="Clear output"
           >

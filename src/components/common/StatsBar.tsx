@@ -4,16 +4,26 @@ import { useMemo } from 'react';
 import { formatFileSize } from '@/lib/fileUtils';
 import type { EditorStats, ValidationState } from '@/types';
 
+interface DiffStats {
+  total: number;
+  added: number;
+  removed: number;
+  modified: number;
+  typeChanged: number;
+  moved: number;
+}
+
 interface StatsBarProps {
   text: string;
   className?: string;
   validationState?: ValidationState;
+  diffStats?: DiffStats | null;
 }
 
 /**
- * Display character count, word count, line count, size, and validation status
+ * Display character count, word count, line count, size, validation status, and optional diff stats
  */
-export function StatsBar({ text, className = '', validationState }: StatsBarProps) {
+export function StatsBar({ text, className = '', validationState, diffStats }: StatsBarProps) {
   const stats: EditorStats = useMemo(() => {
     const charCount = text.length;
     const lines = text.split('\n');
@@ -33,7 +43,7 @@ export function StatsBar({ text, className = '', validationState }: StatsBarProp
 
   return (
     <div className={`stats-bar ${className}`}>
-      {/* Validation indicators - shown first for visibility */}
+      {/* Validation indicators - shown first */}
       {validationState && text.trim() && (
         <>
           {validationState.errorCount > 0 && (
@@ -54,6 +64,37 @@ export function StatsBar({ text, className = '', validationState }: StatsBarProp
               <span>JSON Valid</span>
             </div>
           )}
+        </>
+      )}
+
+      {/* Diff stats - shown after validation status */}
+      {diffStats && (
+        <>
+          <div className="stat-separator"></div>
+          <div className="stat stat-diff-total">
+            <span>Changes:</span>
+            <span>{diffStats.total}</span>
+          </div>
+          <div className="stat stat-diff-added">
+            <span>Added:</span>
+            <span>{diffStats.added}</span>
+          </div>
+          <div className="stat stat-diff-removed">
+            <span>Removed:</span>
+            <span>{diffStats.removed}</span>
+          </div>
+          <div className="stat stat-diff-modified">
+            <span>Modified:</span>
+            <span>{diffStats.modified}</span>
+          </div>
+          <div className="stat stat-diff-type-changed">
+            <span>Type Changed:</span>
+            <span>{diffStats.typeChanged}</span>
+          </div>
+          <div className="stat stat-diff-moved">
+            <span>Moved:</span>
+            <span>{diffStats.moved}</span>
+          </div>
         </>
       )}
       

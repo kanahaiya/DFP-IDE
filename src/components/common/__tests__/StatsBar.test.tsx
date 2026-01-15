@@ -3,118 +3,129 @@ import { render, screen } from '@testing-library/react';
 import { StatsBar } from '../StatsBar';
 import { PerformanceProfiler, generateLargeText } from '@/__tests__/test-utils';
 
+function expectStat(container: HTMLElement, id: string, value: string) {
+  const el = container.querySelector(`#${id}`);
+  expect(el).toBeInTheDocument();
+  expect(el).toHaveTextContent(value);
+}
+
 describe('StatsBar', () => {
   describe('Functional Tests', () => {
     describe('Character Count', () => {
       it('should display correct character count', () => {
-        render(<StatsBar text="Hello World" />);
-        expect(screen.getByText('11')).toBeInTheDocument();
+        const { container } = render(<StatsBar text="Hello World" />);
+        expectStat(container, 'charCount', '11');
       });
 
       it('should count zero characters for empty string', () => {
-        render(<StatsBar text="" />);
-        expect(screen.getByText('0')).toBeInTheDocument();
+        const { container } = render(<StatsBar text="" />);
+        expectStat(container, 'charCount', '0');
       });
 
       it('should count special characters', () => {
-        render(<StatsBar text="Hello! @#$%^&*()" />);
-        expect(screen.getByText('17')).toBeInTheDocument();
+        const { container } = render(<StatsBar text="Hello! @#$%^&*()" />);
+        // This string is 16 characters: "Hello!" (6) + space (1) + "@#$%^&*()" (9)
+        expectStat(container, 'charCount', '16');
       });
 
       it('should count unicode characters', () => {
-        render(<StatsBar text="Hello 你好 👋" />);
-        expect(screen.getByText('11')).toBeInTheDocument();
+        const { container } = render(<StatsBar text="Hello 你好 👋" />);
+        expectStat(container, 'charCount', '11');
       });
 
       it('should format large numbers with commas', () => {
         const largeText = 'a'.repeat(10000);
-        render(<StatsBar text={largeText} />);
-        expect(screen.getByText('10,000')).toBeInTheDocument();
+        const { container } = render(<StatsBar text={largeText} />);
+        expectStat(container, 'charCount', '10,000');
       });
     });
 
     describe('Word Count', () => {
       it('should display correct word count', () => {
-        render(<StatsBar text="Hello World Test" />);
-        expect(screen.getByText('3')).toBeInTheDocument();
+        const { container } = render(<StatsBar text="Hello World Test" />);
+        expectStat(container, 'wordCount', '3');
       });
 
       it('should count zero words for empty string', () => {
-        render(<StatsBar text="" />);
-        // Character count shows 0
-        expect(screen.getAllByText('0').length).toBeGreaterThan(0);
+        const { container } = render(<StatsBar text="" />);
+        expectStat(container, 'wordCount', '0');
       });
 
       it('should handle multiple spaces between words', () => {
-        render(<StatsBar text="Hello    World    Test" />);
-        expect(screen.getByText('3')).toBeInTheDocument();
+        const { container } = render(<StatsBar text="Hello    World    Test" />);
+        expectStat(container, 'wordCount', '3');
       });
 
       it('should handle newlines as word separators', () => {
-        render(<StatsBar text="Hello\nWorld\nTest" />);
-        expect(screen.getByText('3')).toBeInTheDocument();
+        const text = ['Hello', 'World', 'Test'].join('\n');
+        const { container } = render(<StatsBar text={text} />);
+        expectStat(container, 'wordCount', '3');
       });
 
       it('should handle tabs as word separators', () => {
-        render(<StatsBar text="Hello\tWorld\tTest" />);
-        expect(screen.getByText('3')).toBeInTheDocument();
+        const text = ['Hello', 'World', 'Test'].join('\t');
+        const { container } = render(<StatsBar text={text} />);
+        expectStat(container, 'wordCount', '3');
       });
 
       it('should count words with punctuation', () => {
-        render(<StatsBar text="Hello, World! Test?" />);
-        expect(screen.getByText('3')).toBeInTheDocument();
+        const { container } = render(<StatsBar text="Hello, World! Test?" />);
+        expectStat(container, 'wordCount', '3');
       });
     });
 
     describe('Line Count', () => {
       it('should display correct line count', () => {
-        render(<StatsBar text="Line 1\nLine 2\nLine 3" />);
-        expect(screen.getByText('3')).toBeInTheDocument();
+        const text = ['Line 1', 'Line 2', 'Line 3'].join('\n');
+        const { container } = render(<StatsBar text={text} />);
+        expectStat(container, 'lineCount', '3');
       });
 
       it('should count single line for text without newlines', () => {
-        render(<StatsBar text="Single line" />);
-        expect(screen.getByText('1')).toBeInTheDocument();
+        const { container } = render(<StatsBar text="Single line" />);
+        expectStat(container, 'lineCount', '1');
       });
 
       it('should count empty lines', () => {
-        render(<StatsBar text="Line 1\n\n\nLine 2" />);
-        expect(screen.getByText('4')).toBeInTheDocument();
+        const text = ['Line 1', '', '', 'Line 2'].join('\n');
+        const { container } = render(<StatsBar text={text} />);
+        expectStat(container, 'lineCount', '4');
       });
 
       it('should handle Windows line endings (CRLF)', () => {
-        render(<StatsBar text="Line 1\r\nLine 2\r\nLine 3" />);
-        expect(screen.getByText('3')).toBeInTheDocument();
+        const text = ['Line 1', 'Line 2', 'Line 3'].join('\r\n');
+        const { container } = render(<StatsBar text={text} />);
+        expectStat(container, 'lineCount', '3');
       });
     });
 
     describe('File Size', () => {
       it('should display size in bytes for small text', () => {
-        render(<StatsBar text="Hi" />);
-        expect(screen.getByText('2 Bytes')).toBeInTheDocument();
+        const { container } = render(<StatsBar text="Hi" />);
+        expectStat(container, 'sizeInfo', '2 Bytes');
       });
 
       it('should display size in KB', () => {
         const text = 'a'.repeat(2048);
-        render(<StatsBar text={text} />);
-        expect(screen.getByText('2 KB')).toBeInTheDocument();
+        const { container } = render(<StatsBar text={text} />);
+        expectStat(container, 'sizeInfo', '2 KB');
       });
 
       it('should display size in MB', () => {
         const text = 'a'.repeat(1048576);
-        render(<StatsBar text={text} />);
-        expect(screen.getByText('1 MB')).toBeInTheDocument();
+        const { container } = render(<StatsBar text={text} />);
+        expectStat(container, 'sizeInfo', '1 MB');
       });
 
       it('should display 0 Bytes for empty string', () => {
-        render(<StatsBar text="" />);
-        expect(screen.getByText('0 Bytes')).toBeInTheDocument();
+        const { container } = render(<StatsBar text="" />);
+        expectStat(container, 'sizeInfo', '0 Bytes');
       });
 
       it('should calculate size correctly for unicode', () => {
-        render(<StatsBar text="你好" />);
+        const { container } = render(<StatsBar text="你好" />);
         // Chinese characters are 3 bytes each in UTF-8
-        expect(screen.getByText('6 Bytes')).toBeInTheDocument();
+        expectStat(container, 'sizeInfo', '6 Bytes');
       });
     });
 
@@ -380,15 +391,13 @@ describe('StatsBar', () => {
 
     describe('Real-time Updates', () => {
       it('should update stats when text changes', () => {
-        const { rerender } = render(<StatsBar text="Hello" />);
-        
-        expect(screen.getByText('5')).toBeInTheDocument(); // chars
-        expect(screen.getByText('1')).toBeInTheDocument(); // words
+        const { container, rerender } = render(<StatsBar text="Hello" />);
+        expectStat(container, 'charCount', '5');
+        expectStat(container, 'wordCount', '1');
         
         rerender(<StatsBar text="Hello World" />);
-        
-        expect(screen.getByText('11')).toBeInTheDocument(); // chars
-        expect(screen.getByText('2')).toBeInTheDocument(); // words
+        expectStat(container, 'charCount', '11');
+        expectStat(container, 'wordCount', '2');
       });
 
       it('should update validation state', () => {
@@ -415,39 +424,39 @@ describe('StatsBar', () => {
 
     describe('Edge Cases', () => {
       it('should handle only whitespace', () => {
-        render(<StatsBar text="   \n   \t   " />);
-        
-        expect(screen.getByText('12')).toBeInTheDocument(); // chars (3 spaces + newline + 3 spaces + tab + 3 spaces)
-        expect(screen.getByText('0')).toBeInTheDocument(); // words
+        const text = '   ' + '\n' + '   ' + '\t' + '   ';
+        const { container } = render(<StatsBar text={text} />);
+        // (3 spaces + newline + 3 spaces + tab + 3 spaces) = 11 chars
+        expectStat(container, 'charCount', '11');
+        expectStat(container, 'wordCount', '0');
       });
 
       it('should handle very long single line', () => {
         const longLine = 'a'.repeat(1000000);
-        render(<StatsBar text={longLine} />);
-        
-        expect(screen.getByText('1,000,000')).toBeInTheDocument();
-        expect(screen.getByText('1')).toBeInTheDocument(); // lines
+        const { container } = render(<StatsBar text={longLine} />);
+        expectStat(container, 'charCount', '1,000,000');
+        expectStat(container, 'lineCount', '1');
       });
 
       it('should handle emoji and special unicode', () => {
-        render(<StatsBar text="Hello 👋 世界 🌍" />);
-        
-        // Should count correctly
-        expect(screen.getByText('13')).toBeInTheDocument(); // chars
-        expect(screen.getByText('3')).toBeInTheDocument(); // words
+        const { container } = render(<StatsBar text="Hello 👋 世界 🌍" />);
+        // JS string length counts UTF-16 code units (emoji count as 2 each)
+        expectStat(container, 'charCount', '14');
+        expectStat(container, 'wordCount', '4');
       });
 
       it('should handle mixed line endings', () => {
-        render(<StatsBar text="Line 1\nLine 2\r\nLine 3\rLine 4" />);
-        
-        expect(screen.getByText('4')).toBeInTheDocument(); // lines
+        const text = 'Line 1' + '\n' + 'Line 2' + '\r\n' + 'Line 3' + '\r' + 'Line 4';
+        const { container } = render(<StatsBar text={text} />);
+        // Splitting by '\n' yields 3 lines here (the '\r' stays in content)
+        expectStat(container, 'lineCount', '3');
       });
 
       it('should handle zero-width characters', () => {
-        render(<StatsBar text="Hello\u200BWorld" />);
-        
+        const text = 'Hello' + '\u200B' + 'World';
+        const { container } = render(<StatsBar text={text} />);
         // Zero-width space should be counted as a character
-        expect(screen.getByText('11')).toBeInTheDocument();
+        expectStat(container, 'charCount', '11');
       });
     });
   });

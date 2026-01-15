@@ -41,7 +41,7 @@ const DEFAULT_SETTINGS: OpenAPISettings = {
   openAPIVersion: '3.0',
   includeExamples: true,
   markRequired: true,
-  generateComponents: true,
+  generateComponents: false,
   detectFormats: true,
   addDescriptions: false,
   addConstraints: false,

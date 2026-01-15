@@ -5,7 +5,7 @@
  */
 
 import type { Monaco } from '@monaco-editor/react';
-import type { editor } from 'monaco-editor';
+import type { editor, languages } from 'monaco-editor';
 
 // Column color palette (cycles through 8 colors)
 const CSV_COLUMN_COLORS = [
@@ -34,15 +34,18 @@ export function registerCSVLanguage(monaco: Monaco) {
   monaco.languages.register({ id: 'csv' });
 
   // Basic language configuration
-  monaco.languages.setLanguageConfiguration('csv', {
-    wordPattern: /[^,;\t|\s"]+|"[^"]*"/g,
-    brackets: [
-      ['"', '"'],
-    ],
-    autoClosingPairs: [
-      { open: '"', close: '"', notIn: ['string'] },
-    ],
-  });
+  // In tests, monaco may be a partial mock without this API.
+  type MonacoLanguagesMaybeConfig = Monaco['languages'] & {
+    setLanguageConfiguration?: (languageId: string, configuration: languages.LanguageConfiguration) => void;
+  };
+  const maybeLanguages = monaco.languages as unknown as MonacoLanguagesMaybeConfig;
+  if (typeof maybeLanguages.setLanguageConfiguration === 'function') {
+    maybeLanguages.setLanguageConfiguration('csv', {
+      wordPattern: /[^,;\t|\s"]+|"[^"]*"/g,
+      brackets: [['"', '"']],
+      autoClosingPairs: [{ open: '"', close: '"', notIn: ['string'] }],
+    });
+  }
 }
 
 /**

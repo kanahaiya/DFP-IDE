@@ -9,8 +9,10 @@ export interface LCSMatch {
   index2?: number;
 }
 
-export interface IDMatch extends LCSMatch {
+export interface IDMatch {
   type: 'same' | 'added' | 'removed' | 'modified';
+  index1?: number;
+  index2?: number;
 }
 
 type CompareFunction = (a: any, b: any) => boolean;

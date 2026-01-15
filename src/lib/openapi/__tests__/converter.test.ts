@@ -10,7 +10,9 @@ describe('OpenAPI Converter', () => {
     openAPIVersion: '3.0',
     includeExamples: true,
     markRequired: true,
-    generateComponents: true,
+    // Most tests assert inline schemas via `schema.properties.*`.
+    // Component schemas are covered explicitly in dedicated tests below.
+    generateComponents: false,
     detectFormats: true,
     addDescriptions: true,
     addConstraints: true,

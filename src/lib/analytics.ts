@@ -91,3 +91,31 @@ export const trackAutoCorrect = (format: string, success: boolean): void => {
   event('auto_correct', 'tool_usage', success ? 'success' : 'failure');
   event('auto_correct_format', 'tool_usage', format);
 };
+
+/**
+ * Track diff computation
+ */
+export const trackDiffComputed = (changeCount: number): void => {
+  event('diff_computed', 'json_diff', 'changes', changeCount);
+};
+
+/**
+ * Track view mode change
+ */
+export const trackViewModeChange = (mode: string): void => {
+  event('view_mode_change', 'json_diff', mode);
+};
+
+/**
+ * Track export format
+ */
+export const trackExport = (format: string): void => {
+  event('export', 'json_diff', format);
+};
+
+/**
+ * Track change navigation
+ */
+export const trackChangeNavigation = (direction: 'next' | 'previous' | 'jump'): void => {
+  event('change_navigation', 'json_diff', direction);
+};

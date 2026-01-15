@@ -33,9 +33,19 @@ export interface Change {
 export interface CompareOptions {
   maxDepth?: number;
   ignorePatterns?: string[];
+  ignoreWhitespace?: boolean;
+  ignoreProperties?: string[];
   typeCoercion?: boolean;
   floatTolerance?: number;
+  /**
+   * @deprecated Use keyCaseInsensitive / valueCaseInsensitive instead.
+   * If provided, will be treated as both key + value case-insensitive.
+   */
   caseInsensitive?: boolean;
+  /** Ignore casing differences in object keys */
+  keyCaseInsensitive?: boolean;
+  /** Ignore casing differences in string values */
+  valueCaseInsensitive?: boolean;
   ignoreKeyOrder?: boolean;
   arrayStrategy?: 'index' | 'identifier' | 'lcs';
   identifierFields?: string[];
@@ -61,6 +71,20 @@ interface ComparisonResult {
   typeChanged: boolean;
 }
 
+function normalizeStringForComparison(value: string, options: CompareOptions): string {
+  const ignoreWhitespace = options.ignoreWhitespace || false;
+  const valueCaseInsensitive = options.valueCaseInsensitive ?? options.caseInsensitive ?? false;
+  let out = value;
+  if (ignoreWhitespace) {
+    // Ignore spacing differences inside strings
+    out = out.replace(/\s+/g, '');
+  }
+  if (valueCaseInsensitive) {
+    out = out.toLowerCase();
+  }
+  return out;
+}
+
 /**
  * Compare two values with type coercion and tolerance
  */
@@ -68,7 +92,6 @@ function compareValues(oldVal: any, newVal: any, options: CompareOptions = {}): 
   const {
     typeCoercion = false,
     floatTolerance = 0.0001,
-    caseInsensitive = false,
   } = options;
 
   // Strict equality
@@ -129,7 +152,8 @@ function compareValues(oldVal: any, newVal: any, options: CompareOptions = {}): 
       return { equal: true, typeChanged: false };
     }
   } else if (oldType === 'string' && newType === 'string') {
-    if (caseInsensitive && oldVal.toLowerCase() === newVal.toLowerCase()) {
+    // Apply ignoreWhitespace and/or caseInsensitive
+    if (normalizeStringForComparison(oldVal, options) === normalizeStringForComparison(newVal, options)) {
       return { equal: true, typeChanged: false };
     }
   }
@@ -173,9 +197,35 @@ function compareObjects(
 ): Change[] {
   const changes: Change[] = [];
   const { structureOnly } = options;
-  const allKeys = new Set([
-    ...Object.keys(oldObj),
-    ...Object.keys(newObj),
+  const ignoreProperties = new Set((options.ignoreProperties || []).filter(Boolean));
+  const keyCaseInsensitive = options.keyCaseInsensitive ?? options.caseInsensitive ?? false;
+
+  // If caseInsensitive is enabled, compare object keys case-insensitively
+  // (helps when keys differ only by casing: apiKey vs APIKey).
+  const buildKeyIndex = (obj: Record<string, any>) => {
+    const index = new Map<string, string>();
+    let hasCollision = false;
+    for (const k of Object.keys(obj)) {
+      const nk = keyCaseInsensitive ? k.toLowerCase() : k;
+      if (index.has(nk) && index.get(nk) !== k) {
+        hasCollision = true;
+      }
+      index.set(nk, k);
+    }
+    return { index, hasCollision };
+  };
+
+  const oldIndex = buildKeyIndex(oldObj);
+  const newIndex = buildKeyIndex(newObj);
+  const disableKeyNormalization = keyCaseInsensitive && (oldIndex.hasCollision || newIndex.hasCollision);
+
+  const getNormKey = (k: string) => (keyCaseInsensitive && !disableKeyNormalization ? k.toLowerCase() : k);
+  const getActualOldKey = (k: string) => (keyCaseInsensitive && !disableKeyNormalization ? oldIndex.index.get(k) : k);
+  const getActualNewKey = (k: string) => (keyCaseInsensitive && !disableKeyNormalization ? newIndex.index.get(k) : k);
+
+  const allKeys = new Set<string>([
+    ...Object.keys(oldObj).map(getNormKey),
+    ...Object.keys(newObj).map(getNormKey),
   ]);
 
   // Handle key ordering
@@ -184,7 +234,15 @@ function compareObjects(
     : Array.from(allKeys);
 
   for (const key of keys) {
-    const currentPath = [...path, key];
+    const oldKey = getActualOldKey(key);
+    const newKey = getActualNewKey(key);
+    const displayKey = newKey ?? oldKey ?? key;
+
+    if (typeof displayKey === 'string' && ignoreProperties.has(displayKey)) {
+      continue;
+    }
+
+    const currentPath = [...path, displayKey];
     const jsonPath = buildJSONPath(currentPath);
 
     // Check ignore patterns
@@ -206,19 +264,17 @@ function compareObjects(
       }
     }
 
-    const oldVal = oldObj[key];
-    const newVal = newObj[key];
-    const oldExists = key in oldObj;
-    const newExists = key in newObj;
+    const oldExists = !!oldKey && oldKey in oldObj;
+    const newExists = !!newKey && newKey in newObj;
+    const oldVal = oldExists ? oldObj[oldKey as string] : undefined;
+    const newVal = newExists ? newObj[newKey as string] : undefined;
 
     if (!oldExists && newExists) {
       if (options.excludePatterns && shouldIgnorePath(jsonPath, options.excludePatterns)) {
         continue;
       }
-      if (options.includePatterns && !matchesPattern(jsonPath, options.includePatterns)) {
-        if (!shouldIncludePath(jsonPath, options.includePatterns)) {
-          continue;
-        }
+      if (options.includePatterns && !shouldIncludePath(jsonPath, options.includePatterns)) {
+        continue;
       }
       
       changes.push({
@@ -231,10 +287,8 @@ function compareObjects(
       if (options.excludePatterns && shouldIgnorePath(jsonPath, options.excludePatterns)) {
         continue;
       }
-      if (options.includePatterns && !matchesPattern(jsonPath, options.includePatterns)) {
-        if (!shouldIncludePath(jsonPath, options.includePatterns)) {
-          continue;
-        }
+      if (options.includePatterns && !shouldIncludePath(jsonPath, options.includePatterns)) {
+        continue;
       }
       
       changes.push({
@@ -531,12 +585,17 @@ export function compare(
     ignorePatterns = [],
     typeCoercion = false,
     floatTolerance = 0.0001,
-    caseInsensitive = false,
     ignoreKeyOrder = false,
     arrayStrategy = 'index',
     identifierFields = ['id', 'uuid', 'key', '_id'],
     treatNullAsMissing = false,
   } = options;
+
+  // These options are wired through the UI but not fully implemented in the engine yet.
+  // Mark them as intentionally-unused to avoid lint noise until the behaviors land.
+  void ignoreKeyOrder;
+  void arrayStrategy;
+  void identifierFields;
 
   // Check max depth
   if (path.length >= maxDepth) {
@@ -636,7 +695,8 @@ export function compare(
         const coercionResult = compareValues(oldVal, newVal, {
           typeCoercion: true,
           floatTolerance,
-          caseInsensitive,
+          valueCaseInsensitive: options.valueCaseInsensitive ?? options.caseInsensitive ?? false,
+          ignoreWhitespace: options.ignoreWhitespace || false,
         });
         
         if (coercionResult.equal) {
@@ -668,7 +728,8 @@ export function compare(
     const result = comparePrimitives(oldVal, newVal, {
       typeCoercion,
       floatTolerance,
-      caseInsensitive,
+      valueCaseInsensitive: options.valueCaseInsensitive ?? options.caseInsensitive ?? false,
+      ignoreWhitespace: options.ignoreWhitespace || false,
     });
     
     if (result.type === CHANGE_TYPES.SAME) {

@@ -28,6 +28,26 @@ const eslintConfig = [
   },
   ...compat.extends("next/core-web-vitals"),
   ...compat.extends("next/typescript"),
+  {
+    files: ["src/lib/json-diff/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+    },
+  },
+  {
+    files: ["src/data/**/*.ts", "src/data/**/*.tsx"],
+    rules: {
+      "react/no-unescaped-entities": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
+  {
+    files: ["src/components/tools/json-diff/**/*.tsx", "src/hooks/useDiff.ts"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "warn",
+    },
+  },
 ];
 
 export default eslintConfig;
