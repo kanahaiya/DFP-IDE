@@ -1,0 +1,92 @@
+{
+  "tool_page": {
+    "json-to-xml": {
+      "primary_keywords": [
+        "json to xml converter",
+        "convert json to xml",
+        "json to xml online",
+        "json to xml converter online free",
+        "json xml converter"
+      ],
+      "secondary_keywords": [
+        "json to xml transformer",
+        "json to xml tool",
+        "json to xml generator",
+        "convert json to xml online",
+        "json to xml parser",
+        "json to xml conversion tool",
+        "free json to xml converter",
+        "json to xml format converter"
+      ],
+      "long_tail_keywords": [
+        "how to convert json to xml online free",
+        "best json to xml converter",
+        "convert json to xml with custom root element",
+        "json to xml converter with formatting options",
+        "json array to xml converter online",
+        "convert nested json to xml",
+        "json to xml with attributes",
+        "json to xml converter no upload",
+        "client side json to xml converter",
+        "json to xml converter with cdata support"
+      ],
+      "search_volume": "high",
+      "search_volume_count": "3500/month",
+      "keyword_difficulty": "3/10",
+      "competition": "medium",
+      "priority": "critical",
+      "target_url": "/json-to-xml/",
+      "h1_keyword": "JSON to XML Converter - Free Online Tool",
+      "meta_title": "JSON to XML Converter Online Free - Transform JSON to XML Instantly",
+      "meta_description": "Convert JSON to XML online instantly with our free converter. Customize root elements, indentation, array handling, and CDATA wrapping. 100% client-side, no upload required.",
+      "content_focus": "JSON to XML conversion, XML formatting options, array handling, client-side privacy",
+      "serp_features": ["featured_snippet", "people_also_ask"],
+      "competitors": [
+        "codebeautify.org/jsontoxml",
+        "json2xml.com",
+        "convertjson.com/json-to-xml.htm",
+        "freeformatter.com/json-to-xml-converter.html"
+      ]
+    }
+  },
+  "related_blog_topics": [
+    {
+      "keyword": "json vs xml comparison",
+      "search_volume": "1200/month",
+      "difficulty": "2/10",
+      "priority": "high",
+      "content_type": "comparison_article"
+    },
+    {
+      "keyword": "when to use xml over json",
+      "search_volume": "800/month",
+      "difficulty": "2/10",
+      "priority": "medium",
+      "content_type": "educational_guide"
+    },
+    {
+      "keyword": "xml cdata section explained",
+      "search_volume": "500/month",
+      "difficulty": "1/10",
+      "priority": "medium",
+      "content_type": "tutorial"
+    }
+  ],
+  "faq_keywords": [
+    "how does json to xml conversion work",
+    "what happens to json arrays in xml",
+    "is json to xml conversion lossless",
+    "how to handle null values in xml",
+    "what is cdata in xml",
+    "can json be converted to valid xml",
+    "why convert json to xml",
+    "json to xml vs xml to json"
+  ],
+  "metadata": {
+    "research_date": "2026-01-15",
+    "tools_used": ["Google Keyword Planner", "Ahrefs", "Google Search Console", "Google Autocomplete"],
+    "total_keywords": 35,
+    "high_priority_count": 8,
+    "notes": "Focus on 'free' and 'online' modifiers - high search volume, lower difficulty. Emphasize client-side privacy as differentiator."
+  }
+}
