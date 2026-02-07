@@ -1,0 +1,138 @@
+{
+  "tool_pages": {
+    "json-generator": {
+      "primary_keywords": [
+        "json generator online",
+        "fake json generator",
+        "json data generator",
+        "mock json generator",
+        "random json generator"
+      ],
+      "secondary_keywords": [
+        "json test data generator",
+        "generate fake json data",
+        "json mock data generator",
+        "sample json generator",
+        "json faker online",
+        "json dummy data generator",
+        "realistic json generator",
+        "bulk json generator"
+      ],
+      "long_tail_keywords": [
+        "how to generate fake json data online",
+        "free json test data generator no signup",
+        "generate realistic json data for testing",
+        "create mock json api response online",
+        "json generator with custom schema",
+        "generate random json objects online free",
+        "best fake json generator for developers",
+        "json data generator with faker",
+        "create sample json data for api testing"
+      ],
+      "search_volume": "high",
+      "search_volume_count": "3500/month",
+      "keyword_difficulty": "3/10",
+      "competition": "medium",
+      "priority": "critical",
+      "target_url": "/json-generator/",
+      "h1_keyword": "JSON Generator - Create Fake Test Data Instantly",
+      "meta_title": "JSON Generator Online Free - Generate Fake JSON Data | Mock Data Tool",
+      "meta_description": "Generate realistic fake JSON data instantly. Free online JSON generator with 50+ data types, custom schemas, and bulk generation. No signup required - create test data in seconds.",
+      "content_focus": "Tool functionality, realistic data generation, schema customization, bulk generation, developer workflow",
+      "serp_features": ["featured_snippet", "people_also_ask"],
+      "competitors": [
+        "mockaroo.com",
+        "json-generator.com",
+        "generatedata.com",
+        "fakejson.com"
+      ]
+    }
+  },
+  "blog_content": {
+    "educational": [
+      {
+        "keyword": "what is mock data",
+        "search_volume": "1200/month",
+        "difficulty": "2/10",
+        "priority": "high",
+        "target_url": "/blog/what-is-mock-data/",
+        "content_type": "educational_guide"
+      },
+      {
+        "keyword": "json test data best practices",
+        "search_volume": "600/month",
+        "difficulty": "3/10",
+        "priority": "medium",
+        "target_url": "/blog/json-test-data-best-practices/",
+        "content_type": "tutorial"
+      }
+    ],
+    "how_to": [
+      {
+        "keyword": "how to generate fake data for testing",
+        "search_volume": "900/month",
+        "difficulty": "2/10",
+        "priority": "high",
+        "target_url": "/blog/generate-fake-data-testing/",
+        "content_type": "tutorial"
+      },
+      {
+        "keyword": "how to create mock api responses",
+        "search_volume": "750/month",
+        "difficulty": "3/10",
+        "priority": "medium",
+        "target_url": "/blog/create-mock-api-responses/",
+        "content_type": "tutorial"
+      }
+    ]
+  },
+  "comparison_queries": [
+    {
+      "keyword": "mockaroo vs json generator",
+      "search_volume": "400/month",
+      "difficulty": "4/10",
+      "priority": "medium",
+      "target_url": "/blog/mockaroo-alternatives/",
+      "content_type": "comparison_roundup"
+    },
+    {
+      "keyword": "best json data generator 2026",
+      "search_volume": "350/month",
+      "difficulty": "3/10",
+      "priority": "medium",
+      "target_url": "/blog/best-json-generators/",
+      "content_type": "comparison_roundup"
+    }
+  ],
+  "related_keywords": {
+    "data_types": [
+      "faker.js data types",
+      "random name generator json",
+      "random email generator json",
+      "random address generator json",
+      "uuid generator json",
+      "lorem ipsum json"
+    ],
+    "use_cases": [
+      "json for api testing",
+      "mock data for frontend development",
+      "sample data for database",
+      "test data for unit tests",
+      "dummy data for prototyping"
+    ],
+    "features": [
+      "json schema generator",
+      "bulk data generation",
+      "custom json template",
+      "realistic test data",
+      "nested json generator"
+    ]
+  },
+  "metadata": {
+    "research_date": "2026-01-16",
+    "tools_used": ["Google Keyword Planner", "Google Search Console", "Google Autocomplete", "People Also Ask"],
+    "total_keywords": 45,
+    "high_priority_count": 8,
+    "notes": "Focus on 'free', 'online', and 'no signup' modifiers - high search volume, lower difficulty. Main competitors are Mockaroo (requires account for full features) and json-generator.com. Our advantage: unlimited free usage, no backend required, privacy-focused."
+  }
+}

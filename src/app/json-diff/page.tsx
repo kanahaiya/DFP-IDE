@@ -782,6 +782,18 @@ export default function JSONDiffPage() {
               language="json"
               readOnly={false}
               editorSide="left"
+              placeholder="Paste your first JSON here..."
+              emptyStateTitle="Welcome to JSON Diff"
+              emptyStateInstructions={[
+                'Pasting JSON from your API',
+                'Uploading a .json file',
+                'Loading a sample template',
+              ]}
+              onLoadSample={() => {
+                if (leftSamples.length > 0) {
+                  setLeftJSON(leftSamples[0].content);
+                }
+              }}
               decorations={leftDecorations}
               showGlyphMargin={settings.showGlyphMargin}
               wordWrap={settings.wordWrap}
@@ -817,6 +829,18 @@ export default function JSONDiffPage() {
               language="json"
               readOnly={false}
               editorSide="right"
+              placeholder="Paste your second JSON here..."
+              emptyStateTitle="Second JSON Input"
+              emptyStateInstructions={[
+                'Paste your second JSON to compare',
+                'Upload a .json file',
+                'Load a sample template',
+              ]}
+              onLoadSample={() => {
+                if (rightSamples.length > 0) {
+                  setRightJSON(rightSamples[0].content);
+                }
+              }}
               decorations={rightDecorations}
               showGlyphMargin={settings.showGlyphMargin}
               wordWrap={settings.wordWrap}

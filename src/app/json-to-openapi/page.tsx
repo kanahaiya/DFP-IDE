@@ -602,26 +602,26 @@ export default function JSONToOpenAPIPage() {
 
   // Settings Sidebar Content
   const settingsSidebar = (
-    <>
-      <div className="sidebar-nav">
-        <div
+    <div className="settings-sidebar">
+      <div className="sidebar-tabs">
+        <button
           className={`sidebar-tab ${settingsTabId === 'settings-general' ? 'active' : ''}`}
           onClick={() => setSettingsTabId('settings-general')}
         >
-          General
-        </div>
-        <div
+          <i className="fas fa-cog"></i> General
+        </button>
+        <button
           className={`sidebar-tab ${settingsTabId === 'settings-endpoints' ? 'active' : ''}`}
           onClick={() => setSettingsTabId('settings-endpoints')}
         >
-          Endpoints
-        </div>
+          <i className="fas fa-route"></i> Endpoints
+        </button>
       </div>
       <div className="sidebar-content">
         {settingsTabId === 'settings-general' && <SettingsPanel />}
         {settingsTabId === 'settings-endpoints' && <EndpointManager />}
       </div>
-    </>
+    </div>
   );
 
 
@@ -684,6 +684,12 @@ export default function JSONToOpenAPIPage() {
             language="json"
             editorSide="left"
             placeholder="Paste your JSON example here..."
+            emptyStateTitle="Welcome to JSON to OpenAPI Generator"
+            emptyStateInstructions={[
+              'Pasting JSON from your API',
+              'Uploading a .json file',
+              'Loading a sample template',
+            ]}
             onLoadSample={handleLoadSample}
             validationErrors={validationErrors}
           />
@@ -718,6 +724,11 @@ export default function JSONToOpenAPIPage() {
             editorSide="right"
             readOnly
             placeholder="OpenAPI spec will appear here"
+            emptyStateTitle="OpenAPI Spec Output"
+            emptyStateInstructions={[
+              'Generated OpenAPI specification will appear here',
+              'Use the input panel to paste your JSON',
+            ]}
           />
           
           <StatsBar text={outputSpec} />
@@ -899,6 +910,39 @@ export default function JSONToOpenAPIPage() {
 
     {/* Footer */}
     <Footer />
+
+    <style jsx>{`
+      /* Ensure ide-pane fills full height and stats bar appears at bottom */
+      .ide-pane {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+        min-height: 0 !important;
+      }
+      
+      /* Ensure proper flex ordering */
+      .ide-pane :global(.editor-toolbar),
+      .ide-pane :global(.output-toolbar) {
+        order: 1 !important;
+        flex-shrink: 0 !important;
+      }
+      
+      .ide-pane :global(.monaco-editor-wrapper) {
+        order: 2 !important;
+        flex: 1 1 0 !important;
+        min-height: 0 !important;
+      }
+      
+      .ide-pane :global(.editor-errors) {
+        order: 998 !important;
+        flex-shrink: 0 !important;
+      }
+      
+      .ide-pane :global(.stats-bar) {
+        order: 999 !important;
+        flex-shrink: 0 !important;
+      }
+    `}</style>
     </>
   );
 }

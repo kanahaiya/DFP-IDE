@@ -1,0 +1,48 @@
+{
+  "tool_pages": {
+    "json-to-dart": {
+      "primary_keywords": [
+        "json to dart",
+        "json to dart class",
+        "convert json to dart",
+        "json to dart model",
+        "json to dart converter"
+      ],
+      "secondary_keywords": [
+        "dart model generator",
+        "flutter json parser",
+        "dart class from json",
+        "json serializable dart",
+        "freezed dart generator"
+      ],
+      "long_tail_keywords": [
+        "convert json to dart class online free",
+        "generate dart model from json api",
+        "json to dart with null safety",
+        "flutter json to dart model generator",
+        "json to dart freezed online"
+      ],
+      "search_volume": "high",
+      "search_volume_count": "5100/month",
+      "keyword_difficulty": "3/10",
+      "competition": "medium",
+      "priority": "critical",
+      "target_url": "/json-to-dart/",
+      "h1_keyword": "JSON to Dart Converter - Generate Flutter Models",
+      "meta_title": "JSON to Dart Converter Free Online - Generate Flutter Model Classes",
+      "meta_description": "Convert JSON to Dart classes instantly. Generate null-safe Flutter models with fromJson/toJson, Freezed, and JSON Serializable support. 100% client-side processing.",
+      "content_focus": "Dart class generation, Flutter development, null safety, fromJson/toJson, Freezed",
+      "serp_features": ["featured_snippet", "people_also_ask"],
+      "competitors": [
+        "app.quicktype.io",
+        "javiercbk.github.io/json_to_dart",
+        "transform.tools/json-to-dart"
+      ]
+    }
+  },
+  "metadata": {
+    "last_updated": "2026-01-16",
+    "researcher": "AI Assistant",
+    "tool_category": "converter"
+  }
+}

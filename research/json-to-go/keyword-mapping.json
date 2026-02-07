@@ -1,0 +1,61 @@
+{
+  "tool_pages": {
+    "json-to-go": {
+      "primary_keywords": [
+        "json to go struct",
+        "json to golang",
+        "convert json to go",
+        "json to go struct online",
+        "json to go converter"
+      ],
+      "secondary_keywords": [
+        "go struct generator",
+        "json to golang struct",
+        "golang json parser",
+        "go struct from json",
+        "json go struct tags"
+      ],
+      "long_tail_keywords": [
+        "convert json to go struct online free",
+        "generate go struct from json api response",
+        "json to go struct with tags",
+        "nested json to go struct converter",
+        "json to go struct generator tool"
+      ],
+      "search_volume": "high",
+      "search_volume_count": "3500/month",
+      "keyword_difficulty": "4/10",
+      "competition": "medium",
+      "priority": "critical",
+      "target_url": "/json-to-go/",
+      "h1_keyword": "JSON to Go Struct Converter - Free Online Tool",
+      "meta_title": "JSON to Go Struct Converter Online Free - Generate Go Structs",
+      "meta_description": "Convert JSON to Go structs instantly with our free online converter. Generate production-ready Go code with proper tags, nested struct support, and type inference. 100% client-side processing.",
+      "content_focus": "Go struct generation, JSON tags, nested objects, type mapping, API integration",
+      "serp_features": ["featured_snippet", "people_also_ask"],
+      "competitors": [
+        "mholt.github.io/json-to-go",
+        "transform.tools/json-to-go",
+        "curlconverter.com/json-to-go"
+      ]
+    }
+  },
+  "related_keywords": {
+    "informational": [
+      "how to convert json to go struct",
+      "go struct json tags explained",
+      "golang json unmarshal tutorial",
+      "json to go best practices"
+    ],
+    "comparison": [
+      "json-to-go vs quicktype",
+      "best json to go converter",
+      "online go struct generators"
+    ]
+  },
+  "metadata": {
+    "last_updated": "2026-01-16",
+    "researcher": "AI Assistant",
+    "tool_category": "converter"
+  }
+}

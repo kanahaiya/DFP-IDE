@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 interface SampleTemplate {
   name: string;
@@ -17,6 +17,10 @@ interface EditorToolbarProps {
   onClear?: () => void;
   onSample?: () => void;
   onAutoCorrect?: () => void;
+  onAction?: () => void;
+  actionLabel?: string;
+  actionIcon?: string;
+  actionVariant?: 'primary' | 'secondary' | 'accent' | 'warning' | 'danger';
   sampleTemplates?: SampleTemplate[];
   onLoadTemplate?: (template: SampleTemplate) => void;
   label?: string;
@@ -25,24 +29,48 @@ interface EditorToolbarProps {
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 /**
- * Input editor toolbar with upload, paste, URL, clear, and sample actions
+ * Input editor toolbar with upload, URL, clear, and sample actions
  */
 export function EditorToolbar({
   onUpload,
-  onPaste,
   onUrl,
   onClear,
   onSample,
   onAutoCorrect,
+  onAction,
+  actionLabel,
+  actionIcon,
+  actionVariant = 'primary',
   sampleTemplates,
   onLoadTemplate,
   label = 'Input',
 }: EditorToolbarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [showUrlModal, setShowUrlModal] = useState(false);
   const [urlInput, setUrlInput] = useState('');
   const [urlError, setUrlError] = useState('');
   const [showSamplesMenu, setShowSamplesMenu] = useState(false);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        showSamplesMenu
+      ) {
+        setShowSamplesMenu(false);
+      }
+    };
+
+    if (showSamplesMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [showSamplesMenu]);
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
@@ -112,6 +140,17 @@ export function EditorToolbar({
           {label}
         </div>
         <div className="editor-toolbar-actions">
+          {onAction && (
+            <button
+              className={`btn btn-${actionVariant} btn-sm`}
+              onClick={onAction}
+              title={actionLabel || 'Action'}
+              aria-label={actionLabel || 'Action'}
+            >
+              <i className={actionIcon || 'fas fa-play'}></i>
+              <span className="btn-text">{actionLabel || 'Action'}</span>
+            </button>
+          )}
           {onUpload && (
             <>
               <input
@@ -132,17 +171,6 @@ export function EditorToolbar({
               </button>
             </>
           )}
-          {onPaste && (
-            <button
-              className="btn btn-secondary btn-sm"
-              onClick={onPaste}
-              title="Paste from clipboard"
-              aria-label="Paste from clipboard"
-            >
-              <i className="fas fa-paste"></i>
-              <span className="btn-text">Paste</span>
-            </button>
-          )}
           {onUrl && (
             <button
               className="btn btn-secondary btn-sm"
@@ -155,10 +183,13 @@ export function EditorToolbar({
             </button>
           )}
           {(onSample || (sampleTemplates && onLoadTemplate)) && (
-            <div className="templates-dropdown">
+            <div className="templates-dropdown" ref={dropdownRef}>
               <button
                 className="btn btn-secondary btn-sm"
-                onClick={() => setShowSamplesMenu(!showSamplesMenu)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowSamplesMenu(!showSamplesMenu);
+                }}
                 title="Load sample template"
                 aria-label="Load sample template"
               >
@@ -170,15 +201,27 @@ export function EditorToolbar({
                 <>
                   <div 
                     className="dropdown-backdrop" 
-                    onClick={() => setShowSamplesMenu(false)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowSamplesMenu(false);
+                    }}
                   />
-                  <div className="dropdown-menu">
+                  <div 
+                    className="dropdown-menu templates-dropdown-menu" 
+                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                      display: 'block',
+                      visibility: 'visible',
+                      opacity: 1,
+                    }}
+                  >
                     {sampleTemplates && sampleTemplates.length > 0 ? (
                       sampleTemplates.map((template, index) => (
                         <div
                           key={index}
                           className="dropdown-item"
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             onLoadTemplate?.(template);
                             setShowSamplesMenu(false);
                           }}
@@ -198,7 +241,8 @@ export function EditorToolbar({
                     ) : (
                       <div
                         className="dropdown-item"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           onSample?.();
                           setShowSamplesMenu(false);
                         }}

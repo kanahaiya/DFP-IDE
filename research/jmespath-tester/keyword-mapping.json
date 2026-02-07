@@ -1,0 +1,85 @@
+{
+  "primary_keywords": [
+    {
+      "keyword": "jmespath tester online",
+      "search_volume": 1800,
+      "difficulty": 32,
+      "intent": "tool"
+    },
+    {
+      "keyword": "test jmespath query",
+      "search_volume": 990,
+      "difficulty": 28,
+      "intent": "tool"
+    },
+    {
+      "keyword": "aws cli query tester",
+      "search_volume": 720,
+      "difficulty": 35,
+      "intent": "tool"
+    }
+  ],
+  "secondary_keywords": [
+    {
+      "keyword": "jmespath playground",
+      "search_volume": 480,
+      "difficulty": 22,
+      "intent": "tool"
+    },
+    {
+      "keyword": "jmespath evaluator",
+      "search_volume": 390,
+      "difficulty": 20,
+      "intent": "tool"
+    },
+    {
+      "keyword": "jmespath online tool",
+      "search_volume": 320,
+      "difficulty": 18,
+      "intent": "tool"
+    },
+    {
+      "keyword": "aws jmespath tester",
+      "search_volume": 260,
+      "difficulty": 25,
+      "intent": "tool"
+    },
+    {
+      "keyword": "jmespath expression tester",
+      "search_volume": 210,
+      "difficulty": 18,
+      "intent": "tool"
+    }
+  ],
+  "long_tail_keywords": [
+    "test jmespath query online free",
+    "aws cli --query tester",
+    "jmespath filter expression example",
+    "jmespath sort_by function",
+    "jmespath multiselect hash",
+    "jmespath vs jsonpath comparison",
+    "jmespath flatten array",
+    "jmespath built-in functions list"
+  ],
+  "related_topics": [
+    "AWS CLI output parsing",
+    "JMESPath specification",
+    "JSON query languages",
+    "JMESPath functions",
+    "AWS CLI --query flag",
+    "JMESPath projections"
+  ],
+  "competitor_keywords": [
+    "jmespath.org",
+    "jmespath terminal",
+    "aws json query"
+  ],
+  "content_mapping": {
+    "title": "jmespath tester online, aws cli query tester",
+    "h1": "JMESPath Tester",
+    "meta_description": "jmespath online tool, test jmespath query, aws cli compatible",
+    "features": "jmespath filter, jmespath functions, jmespath multiselect",
+    "how_to": "test jmespath query, aws cli query syntax",
+    "faq": "jmespath tutorial, jmespath syntax reference, aws cli examples"
+  }
+}

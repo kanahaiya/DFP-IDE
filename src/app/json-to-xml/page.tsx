@@ -381,32 +381,32 @@ export default function JSONToXMLPage() {
 
   // Settings Sidebar Content
   const settingsSidebar = (
-    <>
-      <div className="sidebar-nav">
-        <div
+    <div className="settings-sidebar">
+      <div className="sidebar-tabs">
+        <button
           className={`sidebar-tab ${settingsTabId === 'settings-format' ? 'active' : ''}`}
           onClick={() => setSettingsTabId('settings-format')}
         >
-          Format
-        </div>
-        <div
+          <i className="fas fa-align-left"></i> Format
+        </button>
+        <button
           className={`sidebar-tab ${settingsTabId === 'settings-arrays' ? 'active' : ''}`}
           onClick={() => setSettingsTabId('settings-arrays')}
         >
-          Arrays
-        </div>
-        <div
+          <i className="fas fa-list"></i> Arrays
+        </button>
+        <button
           className={`sidebar-tab ${settingsTabId === 'settings-advanced' ? 'active' : ''}`}
           onClick={() => setSettingsTabId('settings-advanced')}
         >
-          Advanced
-        </div>
-        <div
+          <i className="fas fa-cog"></i> Advanced
+        </button>
+        <button
           className={`sidebar-tab ${settingsTabId === 'settings-presets' ? 'active' : ''}`}
           onClick={() => setSettingsTabId('settings-presets')}
         >
-          Presets
-        </div>
+          <i className="fas fa-magic"></i> Presets
+        </button>
       </div>
       <div className="sidebar-content">
         {settingsTabId === 'settings-format' && <XMLFormatPanel />}
@@ -414,7 +414,7 @@ export default function JSONToXMLPage() {
         {settingsTabId === 'settings-advanced' && <XMLAdvancedPanel />}
         {settingsTabId === 'settings-presets' && <XMLPresetsPanel />}
       </div>
-    </>
+    </div>
   );
 
   return (
@@ -477,6 +477,17 @@ export default function JSONToXMLPage() {
                 language={inputLanguage}
                 editorSide="left"
                 placeholder={`Paste your ${inputLanguage.toUpperCase()} data here or drag & drop a file...`}
+                emptyStateTitle="Welcome to JSON to XML Converter"
+                emptyStateInstructions={[
+                  'Pasting JSON from your API',
+                  'Uploading a .json file',
+                  'Loading a sample template',
+                ]}
+                onLoadSample={() => {
+                  if (sampleTemplates.length > 0) {
+                    setInputText(sampleTemplates[0].content);
+                  }
+                }}
               />
               
               <StatsBar text={inputText} validationState={validationState} />
@@ -506,6 +517,11 @@ export default function JSONToXMLPage() {
                 editorSide="right"
                 readOnly
                 placeholder={`${outputLanguage.toUpperCase()} output will appear here...`}
+                emptyStateTitle="XML Output"
+                emptyStateInstructions={[
+                  'Converted XML will appear here',
+                  'Use the input panel to paste your JSON',
+                ]}
               />
               
               <StatsBar text={outputText} />

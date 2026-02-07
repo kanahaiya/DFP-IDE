@@ -1,0 +1,40 @@
+{
+  "tool_page": {
+    "json-schema-validator": {
+      "primary_keywords": [
+        "json schema validator",
+        "validate json schema",
+        "json schema online",
+        "json schema validation tool",
+        "json schema checker"
+      ],
+      "secondary_keywords": [
+        "json schema draft 7",
+        "json schema 2020-12",
+        "validate json against schema",
+        "json schema tester",
+        "json schema verifier"
+      ],
+      "long_tail_keywords": [
+        "validate json against schema online free",
+        "json schema validator with custom schema",
+        "draft-07 json schema validator",
+        "json schema validation with error messages",
+        "test json against json schema"
+      ],
+      "search_volume": "medium",
+      "search_volume_count": "4500/month",
+      "keyword_difficulty": "5/10",
+      "priority": "high",
+      "target_url": "/json-schema-validator/",
+      "h1_keyword": "JSON Schema Validator - Validate Data Against Schema",
+      "meta_title": "JSON Schema Validator Online Free - Draft 2020-12 Support",
+      "meta_description": "Validate JSON data against custom JSON Schema definitions. Free online validator supports Draft-04 to 2020-12 with detailed error messages. No signup required."
+    }
+  },
+  "metadata": {
+    "research_date": "2026-01-16",
+    "tools_used": ["Google Keyword Planner", "Ahrefs"],
+    "total_keywords": 15
+  }
+}

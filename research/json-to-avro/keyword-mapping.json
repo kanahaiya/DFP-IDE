@@ -1,0 +1,50 @@
+{
+  "tool_pages": {
+    "json-to-avro": {
+      "primary_keywords": [
+        "json to avro converter",
+        "json to avro online",
+        "convert json to avro",
+        "json to avro schema",
+        "avro encoder online"
+      ],
+      "secondary_keywords": [
+        "avro schema generator",
+        "json to avsc converter",
+        "generate avro from json",
+        "avro binary encoder",
+        "json to apache avro"
+      ],
+      "long_tail_keywords": [
+        "how to convert json to avro online free",
+        "generate avro schema from json example",
+        "json to avro binary encoder online",
+        "convert json array to avro format",
+        "apache avro schema generator from json"
+      ],
+      "search_volume": "medium",
+      "search_volume_count": "600/month",
+      "keyword_difficulty": "3/10",
+      "competition": "low",
+      "priority": "critical",
+      "target_url": "/json-to-avro/",
+      "h1_keyword": "JSON to Avro Converter - Generate Avro Schemas Online",
+      "meta_title": "JSON to Avro Converter Online Free - Generate Avro Schemas",
+      "meta_description": "Convert JSON to Apache Avro format instantly. Free online JSON to Avro converter with schema generation and binary encoding. Generate .avsc and .avro files.",
+      "content_focus": "Schema inference, binary encoding, compression options",
+      "serp_features": ["people_also_ask", "how_to"],
+      "competitors": [
+        "toolslick.com",
+        "codebeautify.org",
+        "datamakeup.com"
+      ]
+    }
+  },
+  "metadata": {
+    "research_date": "2026-01-17",
+    "tools_used": ["Google Keyword Planner"],
+    "total_keywords": 15,
+    "high_priority_count": 5,
+    "notes": "Focus on data engineering and big data keywords"
+  }
+}

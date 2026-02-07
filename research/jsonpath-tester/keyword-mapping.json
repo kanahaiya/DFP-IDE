@@ -1,0 +1,85 @@
+{
+  "primary_keywords": [
+    {
+      "keyword": "jsonpath tester online",
+      "search_volume": 2400,
+      "difficulty": 35,
+      "intent": "tool"
+    },
+    {
+      "keyword": "test jsonpath expression",
+      "search_volume": 1200,
+      "difficulty": 30,
+      "intent": "tool"
+    },
+    {
+      "keyword": "jsonpath online tool",
+      "search_volume": 880,
+      "difficulty": 28,
+      "intent": "tool"
+    }
+  ],
+  "secondary_keywords": [
+    {
+      "keyword": "jsonpath playground",
+      "search_volume": 590,
+      "difficulty": 25,
+      "intent": "tool"
+    },
+    {
+      "keyword": "jsonpath evaluator",
+      "search_volume": 480,
+      "difficulty": 22,
+      "intent": "tool"
+    },
+    {
+      "keyword": "jsonpath query tester",
+      "search_volume": 390,
+      "difficulty": 20,
+      "intent": "tool"
+    },
+    {
+      "keyword": "jsonpath filter online",
+      "search_volume": 320,
+      "difficulty": 18,
+      "intent": "tool"
+    },
+    {
+      "keyword": "jsonpath validator",
+      "search_volume": 260,
+      "difficulty": 22,
+      "intent": "tool"
+    }
+  ],
+  "long_tail_keywords": [
+    "test jsonpath expression online free",
+    "jsonpath filter expression tester",
+    "jsonpath recursive descent example",
+    "jsonpath array filter syntax",
+    "jsonpath wildcard query",
+    "jsonpath vs xpath for json",
+    "jsonpath bracket notation vs dot notation",
+    "jsonpath slice array syntax"
+  ],
+  "related_topics": [
+    "JSON query languages",
+    "XPath for JSON",
+    "JSON data extraction",
+    "API response filtering",
+    "JSONPath specification",
+    "JSONPath vs JMESPath"
+  ],
+  "competitor_keywords": [
+    "jsonpath.com",
+    "jsonpathfinder",
+    "jsonquerytool"
+  ],
+  "content_mapping": {
+    "title": "jsonpath tester online, test jsonpath expression",
+    "h1": "JSONPath Tester",
+    "meta_description": "jsonpath online tool, test jsonpath expression, jsonpath evaluator",
+    "features": "jsonpath filter, jsonpath recursive descent, jsonpath array slice",
+    "how_to": "test jsonpath expression, jsonpath query syntax",
+    "faq": "jsonpath tutorial, jsonpath syntax reference"
+  }
+}

@@ -6,7 +6,7 @@ export function YAMLAdvancedPanel() {
   const { settings, updateSettings } = useYAMLStore();
 
   return (
-    <div className="settings-panel-content">
+    <div className="settings-panel">
       <div className="settings-group">
         <h3><i className="fas fa-cogs"></i> Advanced Options</h3>
         

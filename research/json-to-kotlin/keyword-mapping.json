@@ -1,0 +1,42 @@
+{
+  "tool_page": {
+    "primary_keywords": [
+      "json to kotlin",
+      "json to kotlin converter",
+      "json to kotlin data class",
+      "convert json to kotlin",
+      "json to kotlin class"
+    ],
+    "secondary_keywords": [
+      "json to kotlin online",
+      "json to kotlin generator",
+      "json to kotlinx serialization",
+      "json to kotlin gson",
+      "json to kotlin moshi"
+    ],
+    "long_tail_keywords": [
+      "how to convert json to kotlin data class",
+      "generate kotlin data class from json",
+      "json to kotlin converter online free",
+      "kotlin data class generator from json",
+      "json to kotlin with annotations"
+    ],
+    "search_volume": "high",
+    "search_volume_count": "6000/month",
+    "keyword_difficulty": "3/10",
+    "competition": "medium",
+    "priority": "high",
+    "target_url": "/json-to-kotlin/",
+    "h1_keyword": "JSON to Kotlin Converter - Generate Data Classes & Annotations",
+    "meta_title": "JSON to Kotlin Converter Online Free - Data Classes & Serialization",
+    "meta_description": "Convert JSON to Kotlin data classes instantly. Free online tool generates Kotlinx Serialization, Gson, Moshi, Jackson annotations. Android development.",
+    "content_focus": "Kotlin data class generation, serialization annotations, Android development"
+  },
+  "metadata": {
+    "research_date": "2026-01-16",
+    "tools_used": ["Google Keyword Planner", "Ahrefs", "Google Search Console"],
+    "total_keywords": 15,
+    "high_priority_count": 5,
+    "notes": "Kotlin is extremely popular for Android development - high search volume"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "tool_pages": {
+    "json-stats": {
+      "primary_keywords": [
+        "json analyzer online",
+        "json statistics tool",
+        "analyze json structure",
+        "json file analyzer",
+        "json data analysis tool"
+      ],
+      "secondary_keywords": [
+        "json structure analyzer",
+        "json depth analyzer",
+        "count json keys online",
+        "json data type analyzer",
+        "json complexity analyzer"
+      ],
+      "long_tail_keywords": [
+        "how to analyze json file structure",
+        "count objects in json online",
+        "find json nesting depth online",
+        "analyze json data types distribution",
+        "json file statistics and metrics"
+      ],
+      "search_volume": "medium-high",
+      "search_volume_count": "2000-8000/month",
+      "keyword_difficulty": "3/10",
+      "competition": "low",
+      "priority": "critical",
+      "target_url": "/json-stats/",
+      "h1_keyword": "JSON Stats - Analyze JSON Structure & Data Types Online",
+      "meta_title": "JSON Stats Online Free - Analyze JSON Structure, Types & Quality",
+      "meta_description": "Analyze JSON structure, data types, and quality instantly. Free JSON statistics tool with depth analysis, type distribution, key counts, and data quality insights. 100% client-side.",
+      "content_focus": "Structure analysis, type distribution, key analysis, data quality, visualization",
+      "serp_features": ["featured_snippet", "people_also_ask"],
+      "competitors": [
+        "jsonlint.com",
+        "jsoneditoronline.org",
+        "jsonformatter.org"
+      ]
+    }
+  },
+  "blog_content": {
+    "educational": [
+      {
+        "keyword": "how to analyze json structure",
+        "search_volume": "900/month",
+        "difficulty": "2/10",
+        "priority": "high",
+        "target_url": "/blog/analyze-json-structure/",
+        "content_type": "educational_guide"
+      },
+      {
+        "keyword": "json data quality best practices",
+        "search_volume": "600/month",
+        "difficulty": "3/10",
+        "priority": "medium",
+        "target_url": "/blog/json-data-quality/",
+        "content_type": "educational_guide"
+      }
+    ],
+    "how_to": [
+      {
+        "keyword": "how to count keys in json",
+        "search_volume": "1100/month",
+        "difficulty": "2/10",
+        "priority": "high",
+        "target_url": "/blog/count-json-keys/",
+        "content_type": "tutorial"
+      },
+      {
+        "keyword": "how to find json nesting depth",
+        "search_volume": "700/month",
+        "difficulty": "2/10",
+        "priority": "high",
+        "target_url": "/blog/json-nesting-depth/",
+        "content_type": "tutorial"
+      }
+    ]
+  },
+  "comparison_queries": [
+    {
+      "keyword": "best json analysis tools 2026",
+      "search_volume": "400/month",
+      "difficulty": "3/10",
+      "priority": "medium",
+      "target_url": "/blog/best-json-analysis-tools/",
+      "content_type": "comparison_roundup"
+    }
+  ],
+  "metadata": {
+    "research_date": "2026-01-16",
+    "tools_used": ["Google Keyword Planner", "Ahrefs", "Google Search Console"],
+    "total_keywords": 32,
+    "high_priority_count": 8,
+    "notes": "Unique tool category with low competition. Focus on 'analyze', 'structure', 'statistics', 'count' modifiers. Data quality insights are a major differentiator."
+  }
+}

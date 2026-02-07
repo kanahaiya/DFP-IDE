@@ -1,0 +1,98 @@
+{
+  "tool_pages": {
+    "json-minifier": {
+      "primary_keywords": [
+        "json minifier online free",
+        "minify json online",
+        "json minify tool",
+        "compress json online",
+        "json compressor"
+      ],
+      "secondary_keywords": [
+        "json minifier beautifier",
+        "minify json file online",
+        "json minification tool",
+        "reduce json size online",
+        "json formatter minifier"
+      ],
+      "long_tail_keywords": [
+        "how to minify json online free",
+        "best free json minifier tool",
+        "minify json without losing data",
+        "compress json for api optimization",
+        "json minifier with validation"
+      ],
+      "search_volume": "high",
+      "search_volume_count": "5000-15000/month",
+      "keyword_difficulty": "3/10",
+      "competition": "medium",
+      "priority": "critical",
+      "target_url": "/json-minifier/",
+      "h1_keyword": "JSON Minifier - Free Online JSON Minify & Compress Tool",
+      "meta_title": "JSON Minifier Online Free - Minify & Compress JSON Instantly",
+      "meta_description": "Minify JSON online instantly with our free JSON minifier. Compress JSON data, reduce file size by up to 70%, and beautify with one click. 100% client-side, no upload required.",
+      "content_focus": "Minification, compression ratio, beautify toggle, file size reduction, validation",
+      "serp_features": ["featured_snippet", "people_also_ask", "how_to"],
+      "competitors": [
+        "codebeautify.org/jsonminifier",
+        "jsonformatter.org/json-minify",
+        "jsonlint.com"
+      ]
+    }
+  },
+  "blog_content": {
+    "educational": [
+      {
+        "keyword": "what is json minification",
+        "search_volume": "800/month",
+        "difficulty": "2/10",
+        "priority": "high",
+        "target_url": "/blog/what-is-json-minification/",
+        "content_type": "educational_guide"
+      },
+      {
+        "keyword": "json minify vs beautify",
+        "search_volume": "500/month",
+        "difficulty": "2/10",
+        "priority": "medium",
+        "target_url": "/blog/json-minify-vs-beautify/",
+        "content_type": "comparison_article"
+      }
+    ],
+    "how_to": [
+      {
+        "keyword": "how to minify json in javascript",
+        "search_volume": "1800/month",
+        "difficulty": "3/10",
+        "priority": "high",
+        "target_url": "/blog/minify-json-javascript/",
+        "content_type": "tutorial"
+      },
+      {
+        "keyword": "how to reduce json file size",
+        "search_volume": "1200/month",
+        "difficulty": "3/10",
+        "priority": "high",
+        "target_url": "/blog/reduce-json-file-size/",
+        "content_type": "tutorial"
+      }
+    ]
+  },
+  "comparison_queries": [
+    {
+      "keyword": "best json minifier tools 2026",
+      "search_volume": "600/month",
+      "difficulty": "4/10",
+      "priority": "medium",
+      "target_url": "/blog/best-json-minifiers/",
+      "content_type": "comparison_roundup"
+    }
+  ],
+  "metadata": {
+    "research_date": "2026-01-16",
+    "tools_used": ["Google Keyword Planner", "Ahrefs", "Google Search Console"],
+    "total_keywords": 35,
+    "high_priority_count": 10,
+    "notes": "Focus on 'minify', 'compress', 'reduce size', 'free', 'online' modifiers. Compression ratio and beautify toggle are key differentiators."
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "tool_pages": {
+    "json-to-parquet": {
+      "primary_keywords": [
+        "json to parquet converter",
+        "json to parquet online",
+        "convert json to parquet",
+        "parquet converter online",
+        "json to parquet free"
+      ],
+      "secondary_keywords": [
+        "parquet file generator",
+        "jsonl to parquet converter",
+        "online parquet converter",
+        "json to parquet browser",
+        "parquet from json"
+      ],
+      "long_tail_keywords": [
+        "how to convert json to parquet online free",
+        "convert json file to parquet format online",
+        "json array to parquet file converter",
+        "browser based json to parquet conversion",
+        "client side json to parquet converter"
+      ],
+      "search_volume": "medium-high",
+      "search_volume_count": "1200/month",
+      "keyword_difficulty": "4/10",
+      "competition": "medium",
+      "priority": "critical",
+      "target_url": "/json-to-parquet/",
+      "h1_keyword": "JSON to Parquet Converter - Convert JSON Files Online",
+      "meta_title": "JSON to Parquet Converter Online Free - Generate Parquet Files",
+      "meta_description": "Convert JSON to Apache Parquet format instantly in your browser. Free online JSON to Parquet converter with compression options. No upload required.",
+      "content_focus": "Data compression, schema inference, columnar format benefits",
+      "serp_features": ["people_also_ask", "how_to"],
+      "competitors": [
+        "convertcsv.com",
+        "parquet-viewer.com",
+        "cloudconvert.com"
+      ]
+    }
+  },
+  "metadata": {
+    "research_date": "2026-01-17",
+    "tools_used": ["Google Keyword Planner"],
+    "total_keywords": 15,
+    "high_priority_count": 5,
+    "notes": "High demand in data engineering. Focus on browser-based conversion advantage."
+  }
+}

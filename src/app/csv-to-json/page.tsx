@@ -395,33 +395,33 @@ export default function CSVToJSONPage() {
 
   // Settings Sidebar Content
   const settingsSidebar = (
-    <>
-      <div className="sidebar-nav">
-        <div
+    <div className="settings-sidebar">
+      <div className="sidebar-tabs">
+        <button
           className={`sidebar-tab ${settingsTabId === 'settings-parsing' ? 'active' : ''}`}
           onClick={() => setSettingsTabId('settings-parsing')}
         >
-          Parsing
-        </div>
-        <div
+          <i className="fas fa-cogs"></i> Parsing
+        </button>
+        <button
           className={`sidebar-tab ${settingsTabId === 'settings-format' ? 'active' : ''}`}
           onClick={() => setSettingsTabId('settings-format')}
         >
-          Format
-        </div>
-        <div
+          <i className="fas fa-align-left"></i> Format
+        </button>
+        <button
           className={`sidebar-tab ${settingsTabId === 'settings-output' ? 'active' : ''}`}
           onClick={() => setSettingsTabId('settings-output')}
         >
-          Output
-        </div>
+          <i className="fas fa-file-export"></i> Output
+        </button>
       </div>
       <div className="sidebar-content">
         {settingsTabId === 'settings-parsing' && <SettingsPanel />}
         {settingsTabId === 'settings-format' && <FormattingPanel />}
         {settingsTabId === 'settings-output' && <OutputFormatToggle />}
       </div>
-    </>
+    </div>
   );
 
   return (
@@ -482,6 +482,12 @@ export default function CSVToJSONPage() {
                 language="csv"
                 editorSide="left"
                 placeholder="Paste your CSV data here or drag & drop a CSV file..."
+                emptyStateTitle="Welcome to CSV to JSON Converter"
+                emptyStateInstructions={[
+                  'Pasting CSV data',
+                  'Uploading a .csv file',
+                  'Loading a sample template',
+                ]}
                 onLoadSample={handleLoadSample}
               />
               
@@ -512,6 +518,11 @@ export default function CSVToJSONPage() {
                 editorSide="right"
                 readOnly
                 placeholder="JSON output will appear here..."
+                emptyStateTitle="JSON Output"
+                emptyStateInstructions={[
+                  'Converted JSON will appear here',
+                  'Use the input panel to paste your CSV',
+                ]}
               />
               
               <StatsBar text={outputJSON} />

@@ -1,0 +1,50 @@
+{
+  "tool_pages": {
+    "json-to-flow": {
+      "primary_keywords": [
+        "json visualizer",
+        "json to flowchart",
+        "json tree viewer",
+        "visualize json online",
+        "json diagram generator"
+      ],
+      "secondary_keywords": [
+        "json structure viewer",
+        "json graph viewer",
+        "interactive json viewer",
+        "json hierarchy viewer",
+        "json to diagram converter"
+      ],
+      "long_tail_keywords": [
+        "how to visualize json data as flowchart",
+        "json to interactive diagram online free",
+        "visualize nested json structure as tree",
+        "convert json to visual diagram online",
+        "json structure visualization tool free"
+      ],
+      "search_volume": "high",
+      "search_volume_count": "2500/month",
+      "keyword_difficulty": "5/10",
+      "competition": "medium",
+      "priority": "critical",
+      "target_url": "/json-to-flow/",
+      "h1_keyword": "JSON Visualizer - Interactive Flowchart Diagram Generator",
+      "meta_title": "JSON Visualizer Online Free - Convert JSON to Flowchart Diagrams",
+      "meta_description": "Visualize JSON data as interactive flowchart diagrams. Free online JSON visualizer with zoom, search, and export to PNG/SVG. Perfect for understanding complex JSON structures.",
+      "content_focus": "Visual representation, interactive exploration, export options",
+      "serp_features": ["people_also_ask", "images", "how_to"],
+      "competitors": [
+        "jsonvisio.com",
+        "jsoncrack.com",
+        "jsonformatter.org"
+      ]
+    }
+  },
+  "metadata": {
+    "research_date": "2026-01-17",
+    "tools_used": ["Google Keyword Planner"],
+    "total_keywords": 15,
+    "high_priority_count": 5,
+    "notes": "High demand for visual JSON tools. Focus on interactive features."
+  }
+}

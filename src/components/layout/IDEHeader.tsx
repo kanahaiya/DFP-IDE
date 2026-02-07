@@ -10,6 +10,7 @@ import { useEditorSnapshotsStore } from '@/store/editorSnapshots';
 import { exportEditorsAsPng } from '@/lib/editorPngExport';
 import { useToast } from '@/store/toast';
 import { TOOLS, type ToolMetadata } from '@/config/tools';
+import { ToolIcon } from '@/components/common/ToolIcon';
 
 interface IDEHeaderProps {
   toolName: string;
@@ -233,7 +234,7 @@ export function IDEHeader({ toolName, onSidebarToggle, onHelpClick }: IDEHeaderP
                     role="option"
                     aria-selected={index === selectedIndex}
                   >
-                    <i className={`${tool.icon} tool-search-item-icon`}></i>
+                    <ToolIcon icon={tool.icon} toolId={tool.id} className="tool-search-item-icon" />
                     <div className="tool-search-item-content">
                       <span className="tool-search-item-name">{tool.name}</span>
                       <span className="tool-search-item-desc">{tool.description}</span>

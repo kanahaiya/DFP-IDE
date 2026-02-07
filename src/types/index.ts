@@ -22,7 +22,20 @@ export type EditorLanguage =
   | 'java'
   | 'csharp'
   | 'go'
-  | 'dart';
+  | 'swift'
+  | 'dart'
+  | 'crystal'
+  | 'sql'
+  | 'objective-c'
+  | 'kotlin'
+  | 'cpp'
+  | 'ruby'
+  | 'elm'
+  | 'haskell'
+  | 'rust'
+  | 'graphql'
+  | 'protobuf'
+  | 'avro';
 
 // Tool category types
 export type ToolCategory = 

@@ -89,23 +89,6 @@ describe('EditorToolbar', () => {
       });
     });
 
-    describe('Paste Functionality', () => {
-      it('should render paste button when onPaste prop is provided', () => {
-        render(<EditorToolbar onPaste={mockCallbacks.onPaste} />);
-        expect(screen.getByTitle('Paste from clipboard')).toBeInTheDocument();
-      });
-
-      it('should call onPaste when paste button is clicked', async () => {
-        const user = userEvent.setup();
-        render(<EditorToolbar onPaste={mockCallbacks.onPaste} />);
-        
-        const pasteButton = screen.getByTitle('Paste from clipboard');
-        await user.click(pasteButton);
-        
-        expect(mockCallbacks.onPaste).toHaveBeenCalledTimes(1);
-      });
-    });
-
     describe('URL Functionality', () => {
       it('should open URL modal when URL button is clicked', async () => {
         const user = userEvent.setup();
@@ -368,7 +351,6 @@ describe('EditorToolbar', () => {
         render(
           <EditorToolbar
             onUpload={mockCallbacks.onUpload}
-            onPaste={mockCallbacks.onPaste}
             onUrl={mockCallbacks.onUrl}
             onClear={mockCallbacks.onClear}
             onSample={mockCallbacks.onSample}
@@ -386,29 +368,14 @@ describe('EditorToolbar', () => {
         render(
           <EditorToolbar
             onUpload={mockCallbacks.onUpload}
-            onPaste={mockCallbacks.onPaste}
             onUrl={mockCallbacks.onUrl}
             onClear={mockCallbacks.onClear}
           />
         );
         
         expect(screen.getByLabelText('Upload file')).toBeInTheDocument();
-        expect(screen.getByLabelText('Paste from clipboard')).toBeInTheDocument();
         expect(screen.getByLabelText('Load from URL')).toBeInTheDocument();
         expect(screen.getByLabelText('Clear input')).toBeInTheDocument();
-      });
-
-      it('should be keyboard accessible', async () => {
-        const user = userEvent.setup();
-        render(<EditorToolbar onPaste={mockCallbacks.onPaste} />);
-        
-        const pasteButton = screen.getByTitle('Paste from clipboard');
-        pasteButton.focus();
-        
-        expect(pasteButton).toHaveFocus();
-        
-        await user.keyboard('{Enter}');
-        expect(mockCallbacks.onPaste).toHaveBeenCalled();
       });
     });
 
@@ -455,12 +422,10 @@ describe('EditorToolbar', () => {
         render(
           <EditorToolbar
             onUpload={mockCallbacks.onUpload}
-            onPaste={mockCallbacks.onPaste}
           />
         );
         
         expect(document.querySelector('.fa-upload')).toBeInTheDocument();
-        expect(document.querySelector('.fa-paste')).toBeInTheDocument();
       });
 
       it('should close modal on overlay click', async () => {

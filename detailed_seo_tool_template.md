@@ -2394,7 +2394,7 @@ The `SEOContent` component should be reusable across all tool pages with **dynam
 
 **1. SEO Data File Structure:**
 
-Each tool should have its own SEO data file with `title`, `subtitle`, and `trustBadges` properties:
+Each tool should have its own SEO data file with `title`, `subtitle`, `trustBadges`, and section titles:
 
 ```typescript
 // src/data/csv-to-json-seo.ts
@@ -2402,6 +2402,7 @@ export const csvToJSONContent = {
   // Hero Section - MUST be included
   title: 'CSV to JSON Converter Online Free – Convert CSV to JSON Instantly',
   subtitle: 'Free online CSV to JSON converter with support for custom delimiters, nested objects, and smart type detection. Convert CSV files to JSON instantly in your browser - 100% secure, no uploads required.',
+  description: 'Free online CSV to JSON converter with smart type detection',  // For JSON-LD
   
   // Trust Badges - MUST be tool-specific
   trustBadges: [
@@ -2413,10 +2414,22 @@ export const csvToJSONContent = {
     { icon: 'fas fa-magic', text: 'Smart Type Detection' },  // Tool-specific
   ],
   
+  // Section Titles - for keyword optimization in H2 headings
+  howToSectionTitle: 'How to Convert CSV to JSON Online',
+  featuresSectionTitle: 'CSV to JSON Converter Features',
+  whyChooseSectionTitle: 'Why Choose This CSV to JSON Converter?',
+  comparisonSectionTitle: 'CSV to JSON Converter Comparison',
+  
   // Rest of content sections
   features: [...],
   howToSteps: [...],
   educational: [...],
+  whyChoose: [...],           // "Why choose" section items
+  comparisonTable: {          // Comparison table structure
+    competitorAName: 'Competitor A',
+    competitorBName: 'Competitor B',
+    rows: [...]
+  },
   // ... etc
 };
 ```
@@ -2443,6 +2456,12 @@ interface SEOContentProps {
   whyChoose?: WhyChooseItem[];
   comparison?: ComparisonRow[];
   relatedTools?: RelatedTool[];
+  
+  // Section title customization (for keyword optimization)
+  howToSectionTitle?: string;       // e.g., "How to Escape JSON Strings Online"
+  featuresSectionTitle?: string;    // e.g., "JSON Escaper Features"
+  whyChooseSectionTitle?: string;   // e.g., "Why Choose This JSON Escaper?"
+  comparisonSectionTitle?: string;  // e.g., "JSON Escaper Comparison"
 }
 
 export function SEOContent({ 
@@ -2521,9 +2540,14 @@ export default function CSVToJSONPage() {
           useCases={csvToJSONContent.useCases}
           whyChoose={csvToJSONContent.whyChoose}
           technicalSpecs={csvToJSONContent.technicalSpecs}
-          comparison={csvToJSONContent.comparison}
+          comparison={csvToJSONContent.comparisonTable?.rows}  // Note: .rows for table data
           faqs={csvToJSONContent.faqs}
           relatedTools={csvToJSONContent.relatedTools}
+          // Section title customization for keyword optimization
+          howToSectionTitle={csvToJSONContent.howToSectionTitle}
+          featuresSectionTitle={csvToJSONContent.featuresSectionTitle}
+          whyChooseSectionTitle={csvToJSONContent.whyChooseSectionTitle}
+          comparisonSectionTitle={csvToJSONContent.comparisonSectionTitle}
         />
       </article>
     </>
@@ -2810,7 +2834,7 @@ Target Scores (Minimum):
 
 ### 2. Icon Selection Guidelines (CRITICAL - COMMON MISTAKE)
 
-**Tool icons must match the tool's directionality. Using wrong icons confuses users.**
+**Tool icons must match the tool's directionality and purpose. Using wrong icons confuses users.**
 
 | Tool Type | Correct Icons | Wrong Icons |
 |-----------|---------------|-------------|
@@ -2819,6 +2843,10 @@ Target Scores (Minimum):
 | **Diff/Compare Tool** | `fa-not-equal`, `fa-code-compare` | `fa-exchange-alt` |
 | **Validator** | `fa-check-circle`, `fa-spell-check`, `fa-shield-check` | `fa-arrow-right` |
 | **Formatter** | `fa-indent`, `fa-align-left`, `fa-code` | `fa-exchange-alt` |
+| **Encoder** (URL, Base64, Hex encoding) | `fa-lock`, `fa-key`, `fa-shield-alt` | `fa-unlock`, `fa-exchange-alt` |
+| **Decoder** (decoding encoded data) | `fa-unlock`, `fa-unlock-alt`, `fa-key` | `fa-lock`, `fa-exchange-alt` |
+| **Escaper** (escaping special chars) | `fa-shield-alt`, `fa-code`, `fa-quote-right` | `fa-unlock`, `fa-exchange-alt` |
+| **Unescaper** (unescaping special chars) | `fa-unlock-alt`, `fa-unlock`, `fa-magic` | `fa-shield-alt`, `fa-exchange-alt` |
 
 **Icon Consistency Checklist:**
 - [ ] Same icon in `src/config/tools.ts` (tool metadata)
@@ -3023,6 +3051,8 @@ useEffect(() => {
 
 When creating a new tool, ensure ALL these files are created:
 
+**A. For CONVERTER Tools (json-to-yaml, json-to-xml, csv-to-json):**
+
 ```
 □ src/app/json-to-[format]/layout.tsx     # Metadata
 □ src/app/json-to-[format]/page.tsx       # Main page
@@ -3041,6 +3071,36 @@ When creating a new tool, ensure ALL these files are created:
 □ e2e/json-to-[format].spec.ts            # E2E tests
 ```
 
+**B. For UTILITY Tools (escaper, unescaper, encoder, decoder, diff):**
+
+Utility tools use `json-[tool]` naming pattern (NOT `json-to-[tool]`):
+
+```
+□ src/app/json-[tool]/layout.tsx          # Metadata (e.g., json-escaper)
+□ src/app/json-[tool]/page.tsx            # Main page
+□ src/store/[tool].ts                      # Zustand store (e.g., escaper.ts)
+□ src/lib/[tool]/converter.ts             # Core logic
+□ src/lib/[tool]/validator.ts             # Input validation
+□ src/lib/[tool]/presets.ts               # Preset configs
+□ src/components/tools/json-[tool]/[Tool]ModePanel.tsx    # "Mode" tab (not "Format")
+□ src/components/tools/json-[tool]/[Tool]OptionsPanel.tsx
+□ src/components/tools/json-[tool]/[Tool]AdvancedPanel.tsx
+□ src/components/tools/json-[tool]/[Tool]PresetsPanel.tsx
+□ src/data/json-[tool]-seo.ts             # SEO content
+□ src/data/json-[tool]-help.ts            # Help modal
+□ src/data/json-[tool]-samples.ts         # Sample templates
+□ src/config/tools.ts                      # Add tool entry (category: 'utility')
+□ e2e/json-[tool].spec.ts                 # E2E tests
+```
+
+**Naming Pattern Examples:**
+| Tool Type | Route | Store | Lib Folder | Components Folder |
+|-----------|-------|-------|------------|-------------------|
+| Converter | `/json-to-yaml` | `yaml.ts` | `lib/yaml/` | `json-to-yaml/` |
+| Encoder | `/json-encoder` | `encoder.ts` | `lib/encoder/` | `json-encoder/` |
+| Escaper | `/json-escaper` | `escaper.ts` | `lib/escaper/` | `json-escaper/` |
+| Diff | `/json-diff` | `diff.ts` | `lib/diff/` | `json-diff/` |
+
 ### 8. Common Integration Mistakes to Avoid
 
 | Mistake | Impact | Prevention |
@@ -3052,6 +3112,143 @@ When creating a new tool, ensure ALL these files are created:
 | Missing debounce on conversion | Performance issues, lag | Always wrap in 300ms setTimeout |
 | Hardcoded SEO content | Wrong content on page | Pass title/subtitle/badges as props |
 | Missing E2E tests | Regression bugs | Create comprehensive test file |
+| Wrong naming pattern for utility tools | Routing confusion | Use `json-[tool]` NOT `json-to-[tool]` for escaper/encoder/diff |
+| Missing `'use client'` directive | SSR errors | Add at top of store files and client components |
+| Wrong settings panel tab name | Inconsistent UX | Use "Mode" for utility tools, "Format" for converters |
+| Missing tool in `src/config/tools.ts` | Tool not in sidebar/navigation | Always add entry with correct category |
+| Wrong category in tools.ts | Wrong sidebar section | Use 'converter' or 'utility' based on tool type |
+| Missing cross-links in SEO | Poor internal linking | Link escaper↔unescaper, encoder↔decoder in relatedTools |
+| ValidationError missing severity | TypeScript errors | Add `severity: 'error' \| 'warning'` to ValidationError interface |
+| EditorToolbar missing autoCorrect for utility tools | No fix button | Only include onAutoCorrect for tools that accept JSON input |
+
+### 9. Utility Tool Specific Patterns (Escaper, Unescaper, Encoder, Decoder)
+
+**⚠️ Utility tools have different patterns than converters. Follow these guidelines:**
+
+**A. Store Pattern for Utility Tools**
+
+Utility tools may need additional state properties beyond converters:
+
+```typescript
+// src/store/unescaper.ts - Example with tool-specific state
+interface UnescaperState {
+  input: string;
+  output: string;
+  settings: UnescaperSettings;
+  errors: ValidationError[];
+  isUnescaping: boolean;
+  
+  // Tool-specific state (not in converters)
+  unescapeChain: string[];    // Track transformation steps
+  isValidJSON: boolean;        // Validate output
+  escapeLevel: number;         // Detected escape level
+  
+  // Standard setters
+  setInput: (input: string) => void;
+  setOutput: (output: string) => void;
+  updateSettings: (updates: Partial<UnescaperSettings>) => void;
+  
+  // Tool-specific setters
+  setUnescapeChain: (chain: string[]) => void;
+  setIsValidJSON: (isValid: boolean) => void;
+  setEscapeLevel: (level: number) => void;
+  
+  resetSettings: () => void;
+  resetAll: () => void;
+}
+```
+
+**B. Settings Panel Tabs for Utility Tools**
+
+Use "Mode" instead of "Format" for the first tab:
+
+```tsx
+// Utility tools use "Mode" tab
+<button className={`sidebar-tab ${active}`}>
+  <i className="fas fa-shield-alt"></i> Mode    {/* NOT "Format" */}
+</button>
+
+// Converters use "Format" tab
+<button className={`sidebar-tab ${active}`}>
+  <i className="fas fa-sliders-h"></i> Format   {/* For converters */}
+</button>
+```
+
+**C. EditorToolbar Configuration**
+
+Utility tools accepting escaped/encoded input should NOT have autoCorrect:
+
+```tsx
+// For Escaper (accepts JSON input) - Include autoCorrect
+<EditorToolbar
+  label="Input (JSON or Text)"
+  onUpload={handleUpload}
+  onPaste={handlePaste}
+  onClear={handleClear}
+  onAutoCorrect={handleAutoCorrect}   // ✅ Include - accepts JSON
+  sampleTemplates={ESCAPER_SAMPLES}
+  onLoadTemplate={handleLoadSample}
+/>
+
+// For Unescaper (accepts escaped strings) - NO autoCorrect
+<EditorToolbar
+  label="Escaped Input"
+  onUpload={handleUpload}
+  onPaste={handlePaste}
+  onClear={handleClear}
+  // ❌ NO onAutoCorrect - input is escaped strings, not JSON
+  sampleTemplates={UNESCAPER_SAMPLES}
+  onLoadTemplate={handleLoadSample}
+/>
+```
+
+**D. Paired Tools Cross-Linking**
+
+Escaper/Unescaper and Encoder/Decoder should always link to each other:
+
+```typescript
+// In json-escaper-seo.ts relatedTools
+relatedTools: [
+  {
+    title: 'JSON Unescaper',        // ✅ Link to paired tool FIRST
+    description: 'Unescape JSON strings with auto-detection',
+    icon: 'fas fa-unlock-alt',
+    link: '/json-unescaper'
+  },
+  // ... other tools
+]
+
+// In json-unescaper-seo.ts relatedTools
+relatedTools: [
+  {
+    title: 'JSON Escaper',          // ✅ Link to paired tool FIRST
+    description: 'Escape JSON strings for JavaScript, HTML, URLs',
+    icon: 'fas fa-shield-alt',
+    link: '/json-escaper'
+  },
+  // ... other tools
+]
+```
+
+**E. HowToStep Cross-References**
+
+In step 5 (final step), always link to the reverse operation:
+
+```typescript
+// json-escaper-seo.ts howToSteps[4]
+{
+  number: 5,
+  title: 'Copy or Download',
+  description: 'Click Copy to clipboard for quick use, or Download to save as a text file. Use our <a href="/json-unescaper">JSON Unescaper</a> to reverse the process.'
+}
+
+// json-unescaper-seo.ts howToSteps[4]
+{
+  number: 5,
+  title: 'Copy or Download',
+  description: 'Click Copy to clipboard for quick use, or Download to save as a JSON file. Use our <a href="/json-escaper">JSON Escaper</a> to reverse the process.'
+}
+```
 
 ---
 
@@ -3861,9 +4058,12 @@ Quick reminders:
 □ Tool-specific use cases
 □ SEO data file has unique title and subtitle properties
 □ SEO data file has custom trustBadges array (last 2-3 badges tool-specific)
-□ SEOContent component receives dynamic title/subtitle/trustBadges props
+□ SEO data file has section titles (howToSectionTitle, featuresSectionTitle, etc.)
+□ SEO data file has whyChoose array and comparisonTable object
+□ SEOContent component receives ALL dynamic props including section titles
 □ Hero section displays correct tool-specific content and badges (not hardcoded)
 □ No "wrong tool" badges appearing (e.g., "YAML & JSON" on CSV page)
+□ Paired tools cross-linked (escaper↔unescaper, encoder↔decoder)
 □ Content sounds natural when read aloud - READ ALOUD TEST REQUIRED
 □ Storytelling format used (problem → journey → solution)
 □ Uses contractions frequently and naturally (we've, it's, don't)

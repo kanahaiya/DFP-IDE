@@ -1,9 +1,9 @@
 /**
  * Google Analytics utility functions
- * Measurement ID: G-B47GC8FSFT
+ * Measurement ID: G-XXXXXXXXX
  */
 
-export const GA_MEASUREMENT_ID = 'G-B47GC8FSFT';
+export const GA_MEASUREMENT_ID = 'G-XXXXXXXXX';
 
 interface WindowWithAnalytics extends Window {
   gtag?: (

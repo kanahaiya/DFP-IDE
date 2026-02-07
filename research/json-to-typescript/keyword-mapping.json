@@ -1,0 +1,42 @@
+{
+  "tool_page": {
+    "primary_keywords": [
+      "json to typescript",
+      "json to typescript converter",
+      "json to typescript interface",
+      "convert json to typescript",
+      "json to ts"
+    ],
+    "secondary_keywords": [
+      "json to typescript online",
+      "json to typescript types",
+      "json to typescript generator",
+      "json to interface typescript",
+      "typescript interface generator"
+    ],
+    "long_tail_keywords": [
+      "how to convert json to typescript interface",
+      "generate typescript types from json",
+      "json to typescript converter online free",
+      "create typescript interface from json",
+      "json schema to typescript"
+    ],
+    "search_volume": "high",
+    "search_volume_count": "8000/month",
+    "keyword_difficulty": "3/10",
+    "competition": "medium",
+    "priority": "critical",
+    "target_url": "/json-to-typescript/",
+    "h1_keyword": "JSON to TypeScript Converter - Generate Types & Interfaces",
+    "meta_title": "JSON to TypeScript Converter Online Free - Generate Interfaces",
+    "meta_description": "Convert JSON to TypeScript interfaces instantly. Free online tool generates types, interfaces with optional properties, union types, and JSDoc comments.",
+    "content_focus": "TypeScript interface generation, type inference, optional properties"
+  },
+  "metadata": {
+    "research_date": "2026-01-16",
+    "tools_used": ["Google Keyword Planner", "Ahrefs", "Google Search Console"],
+    "total_keywords": 15,
+    "high_priority_count": 5,
+    "notes": "TypeScript is extremely popular - high search volume and developer demand"
+  }
+}

@@ -19,7 +19,7 @@ interface UseTabsProps {
   storageKey: string;
 }
 
-export function useTabs({ toolName, storageKey }: UseTabsProps = { toolName: 'JSON to OpenAPI', storageKey: 'openapi-tabs' }) {
+export function useTabs({ toolName, storageKey }: UseTabsProps) {
   // Initialize with empty state to avoid hydration mismatch
   const [tabs, setTabs] = useState<Tab[]>([]);
   const [activeTabId, setActiveTabId] = useState<string | null>(null);

@@ -1,0 +1,55 @@
+{
+  "primary_keywords": [
+    "json to java",
+    "json to pojo",
+    "json to java class",
+    "convert json to java",
+    "json to java converter"
+  ],
+  "secondary_keywords": [
+    "json to java online",
+    "json to pojo converter",
+    "json to java class generator",
+    "json to java object",
+    "json to java bean",
+    "json to jackson",
+    "json to gson",
+    "json to lombok"
+  ],
+  "long_tail_keywords": [
+    "convert json to java class online free",
+    "json to java pojo converter with lombok",
+    "generate java class from json",
+    "json to java with jackson annotations",
+    "json string to java object converter",
+    "json to java class generator with getters setters",
+    "online json to java pojo converter",
+    "json to java bean converter online"
+  ],
+  "related_terms": [
+    "java pojo generator",
+    "jackson json",
+    "gson json",
+    "lombok data class",
+    "java bean",
+    "java model class",
+    "rest api java",
+    "spring boot json"
+  ],
+  "search_intent": {
+    "informational": [
+      "how to convert json to java class",
+      "json to pojo java example",
+      "what is json to java conversion"
+    ],
+    "transactional": [
+      "json to java converter online",
+      "convert json to java class free",
+      "json to pojo generator tool"
+    ],
+    "navigational": [
+      "best json to java converter",
+      "json to java online tool"
+    ]
+  }
+}

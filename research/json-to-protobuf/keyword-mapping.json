@@ -1,0 +1,50 @@
+{
+  "tool_pages": {
+    "json-to-protobuf": {
+      "primary_keywords": [
+        "json to protobuf converter",
+        "json to proto online",
+        "convert json to protobuf",
+        "json to protocol buffers",
+        "json to proto schema"
+      ],
+      "secondary_keywords": [
+        "protobuf generator online",
+        "json to proto3 converter",
+        "generate proto from json",
+        "protobuf schema generator",
+        "json to .proto file"
+      ],
+      "long_tail_keywords": [
+        "how to convert json to protobuf online free",
+        "generate protobuf schema from json example",
+        "json to protocol buffer schema generator",
+        "convert json object to proto message",
+        "online json to proto3 schema converter"
+      ],
+      "search_volume": "medium",
+      "search_volume_count": "800/month",
+      "keyword_difficulty": "3/10",
+      "competition": "low",
+      "priority": "critical",
+      "target_url": "/json-to-protobuf/",
+      "h1_keyword": "JSON to Protobuf Converter - Generate Proto Schemas Online",
+      "meta_title": "JSON to Protobuf Converter Online Free - Generate .proto Files",
+      "meta_description": "Convert JSON to Protocol Buffer schemas instantly. Free online JSON to Protobuf converter with proto2/proto3 support. Generate .proto files from JSON data.",
+      "content_focus": "Schema generation, type inference, proto syntax versions",
+      "serp_features": ["people_also_ask", "how_to"],
+      "competitors": [
+        "json-to-proto.github.io",
+        "transform.tools",
+        "codebeautify.org"
+      ]
+    }
+  },
+  "metadata": {
+    "research_date": "2026-01-17",
+    "tools_used": ["Google Keyword Planner", "Google Search Console"],
+    "total_keywords": 15,
+    "high_priority_count": 5,
+    "notes": "Focus on 'converter' and 'generator' keywords - good search intent"
+  }
+}

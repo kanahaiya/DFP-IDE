@@ -1,0 +1,42 @@
+{
+  "tool_page": {
+    "primary_keywords": [
+      "json to javascript",
+      "json to javascript converter",
+      "json to js",
+      "convert json to javascript object",
+      "json to js object"
+    ],
+    "secondary_keywords": [
+      "json to javascript online",
+      "json to javascript code",
+      "json to es6 module",
+      "json to javascript variable",
+      "json to commonjs"
+    ],
+    "long_tail_keywords": [
+      "how to convert json to javascript object",
+      "json to javascript object literal",
+      "json to javascript const variable",
+      "convert json string to javascript object online",
+      "json to javascript export default"
+    ],
+    "search_volume": "high",
+    "search_volume_count": "5000/month",
+    "keyword_difficulty": "3/10",
+    "competition": "medium",
+    "priority": "high",
+    "target_url": "/json-to-javascript/",
+    "h1_keyword": "JSON to JavaScript Converter - Generate Object Literals & Modules",
+    "meta_title": "JSON to JavaScript Converter Online Free - Object Literals & ES6",
+    "meta_description": "Convert JSON to JavaScript object literals instantly. Free online tool generates const/let/var declarations, ES6 modules, CommonJS exports. No signup.",
+    "content_focus": "JavaScript object literal generation, ES6 modules, CommonJS exports"
+  },
+  "metadata": {
+    "research_date": "2026-01-16",
+    "tools_used": ["Google Keyword Planner", "Ahrefs", "Google Search Console"],
+    "total_keywords": 15,
+    "high_priority_count": 5,
+    "notes": "JavaScript is universal - high search volume for quick conversions"
+  }
+}

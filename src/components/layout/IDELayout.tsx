@@ -20,20 +20,30 @@ interface IDELayoutProps {
  */
 export function IDELayout({ toolName, children, settingsSidebar, onHelpClick }: IDELayoutProps) {
   const { theme } = useTheme();
-  
-  // Initialize with null to avoid hydration mismatch (server doesn't have localStorage)
-  const [activeView, setActiveView] = useState<ActivityView>(null);
+
+  // Always start with the same default on both server and client to avoid hydration mismatch
+  const [activeView, setActiveView] = useState<ActivityView>('explorer');
   const [isSettingsSidebarOpen, setIsSettingsSidebarOpen] = useState(true);
   const [hasMounted, setHasMounted] = useState(false);
   const [isWorkspaceSettingsOpen, setIsWorkspaceSettingsOpen] = useState(false);
 
-  // Load activeView from localStorage after mount (client-only)
+  // Set mounted flag and load from localStorage after initial render
   useEffect(() => {
-    const saved = localStorage.getItem('ide-active-view');
-    if (saved) {
-      setActiveView(saved as ActivityView);
-    }
     setHasMounted(true);
+    
+    // Load activeView from localStorage after mount
+    const savedView = localStorage.getItem('ide-active-view');
+    if (savedView === 'explorer' || savedView === 'search') {
+      setActiveView(savedView as ActivityView);
+    } else if (savedView === 'null' || savedView === '') {
+      setActiveView(null);
+    }
+    
+    // Load settings sidebar state from localStorage after mount
+    const savedSidebar = localStorage.getItem('ide-settings-sidebar-open');
+    if (savedSidebar !== null) {
+      setIsSettingsSidebarOpen(savedSidebar === 'true');
+    }
   }, []);
 
   useEffect(() => {
@@ -41,15 +51,23 @@ export function IDELayout({ toolName, children, settingsSidebar, onHelpClick }: 
   }, [theme]);
   
   // Persist activeView to localStorage when it changes (only after initial mount)
+  // Always save the state so it persists across tool switches
   useEffect(() => {
     if (!hasMounted) return;
     
+    // Save the current state (including null if user explicitly closed it)
     if (activeView === null) {
-      localStorage.removeItem('ide-active-view');
+      localStorage.setItem('ide-active-view', 'null');
     } else {
       localStorage.setItem('ide-active-view', activeView);
     }
   }, [activeView, hasMounted]);
+
+  // Persist settings sidebar state
+  useEffect(() => {
+    if (!hasMounted) return;
+    localStorage.setItem('ide-settings-sidebar-open', String(isSettingsSidebarOpen));
+  }, [isSettingsSidebarOpen, hasMounted]);
 
   const handleSidebarToggle = () => {
     setIsSettingsSidebarOpen(!isSettingsSidebarOpen);

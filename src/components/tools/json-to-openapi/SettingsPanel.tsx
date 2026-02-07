@@ -13,7 +13,7 @@ export function SettingsPanel() {
   };
 
   return (
-    <div className="settings-panel-content">
+    <div className="settings-panel">
       {/* API Information */}
       <div className="settings-group">
         <h3><i className="fas fa-info-circle"></i> API Information</h3>

@@ -1,0 +1,98 @@
+{
+  "tool_pages": {
+    "json-merge": {
+      "primary_keywords": [
+        "json merge online free",
+        "merge json online",
+        "combine json objects",
+        "json merge tool",
+        "merge multiple json files"
+      ],
+      "secondary_keywords": [
+        "json combiner online",
+        "merge json objects javascript",
+        "deep merge json",
+        "json concat online",
+        "combine json arrays online"
+      ],
+      "long_tail_keywords": [
+        "how to merge two json objects online",
+        "best free json merge tool",
+        "merge nested json objects online",
+        "combine multiple json files into one",
+        "json merge tool with deep merge support"
+      ],
+      "search_volume": "high",
+      "search_volume_count": "3000-12000/month",
+      "keyword_difficulty": "4/10",
+      "competition": "medium",
+      "priority": "critical",
+      "target_url": "/json-merge/",
+      "h1_keyword": "JSON Merge Tool - Combine JSON Objects Online Free",
+      "meta_title": "JSON Merge Online Free - Combine & Merge JSON Objects",
+      "meta_description": "Merge multiple JSON objects and arrays online instantly. Free JSON merge tool with deep merge, array union, and conflict resolution. 100% client-side, no signup required.",
+      "content_focus": "Merge strategies, multiple input handling, conflict resolution, privacy",
+      "serp_features": ["featured_snippet", "people_also_ask", "how_to"],
+      "competitors": [
+        "codebeautify.org",
+        "jsonlint.com",
+        "json-merger.com"
+      ]
+    }
+  },
+  "blog_content": {
+    "educational": [
+      {
+        "keyword": "what is json merge",
+        "search_volume": "600/month",
+        "difficulty": "2/10",
+        "priority": "medium",
+        "target_url": "/blog/what-is-json-merge/",
+        "content_type": "educational_guide"
+      },
+      {
+        "keyword": "json merge vs json concat",
+        "search_volume": "400/month",
+        "difficulty": "2/10",
+        "priority": "medium",
+        "target_url": "/blog/json-merge-vs-concat/",
+        "content_type": "comparison_article"
+      }
+    ],
+    "how_to": [
+      {
+        "keyword": "how to merge json objects",
+        "search_volume": "1500/month",
+        "difficulty": "3/10",
+        "priority": "high",
+        "target_url": "/blog/how-to-merge-json-objects/",
+        "content_type": "tutorial"
+      },
+      {
+        "keyword": "how to deep merge json",
+        "search_volume": "800/month",
+        "difficulty": "3/10",
+        "priority": "high",
+        "target_url": "/blog/deep-merge-json/",
+        "content_type": "tutorial"
+      }
+    ]
+  },
+  "comparison_queries": [
+    {
+      "keyword": "best json merge tools 2026",
+      "search_volume": "500/month",
+      "difficulty": "4/10",
+      "priority": "medium",
+      "target_url": "/blog/best-json-merge-tools/",
+      "content_type": "comparison_roundup"
+    }
+  ],
+  "metadata": {
+    "research_date": "2026-01-16",
+    "tools_used": ["Google Keyword Planner", "Ahrefs", "Google Search Console"],
+    "total_keywords": 40,
+    "high_priority_count": 12,
+    "notes": "Focus on 'merge', 'combine', 'online', 'free' modifiers. Deep merge and array operations are differentiators."
+  }
+}

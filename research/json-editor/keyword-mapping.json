@@ -1,0 +1,90 @@
+{
+  "tool_pages": {
+    "json-editor": {
+      "primary_keywords": [
+        "json editor online",
+        "json editor free",
+        "visual json editor",
+        "json tree editor",
+        "online json editor"
+      ],
+      "secondary_keywords": [
+        "json editing tool",
+        "edit json online",
+        "json structure editor",
+        "json key value editor",
+        "json data editor"
+      ],
+      "long_tail_keywords": [
+        "how to edit json file online",
+        "best free json editor online",
+        "edit json without coding",
+        "visual json editor no signup",
+        "json editor with tree view"
+      ],
+      "search_volume": "high",
+      "search_volume_count": "2400/month",
+      "keyword_difficulty": "4/10",
+      "competition": "medium",
+      "priority": "critical",
+      "target_url": "/json-editor/",
+      "h1_keyword": "JSON Editor - Visual Tree Editor for JSON Data",
+      "meta_title": "JSON Editor Online Free - Visual Tree Editor & Code View",
+      "meta_description": "Edit JSON visually with our free online JSON editor. Tree view, in-place editing, undo/redo, and code view. 100% client-side processing, no signup required.",
+      "content_focus": "Visual editing, tree navigation, real-time validation, privacy",
+      "serp_features": ["featured_snippet", "people_also_ask"],
+      "competitors": [
+        "jsoneditoronline.org",
+        "codebeautify.org/jsonviewer",
+        "jsonformatter.org/json-editor"
+      ]
+    }
+  },
+  "blog_content": {
+    "educational": [
+      {
+        "keyword": "how to edit json files",
+        "search_volume": "1800/month",
+        "difficulty": "3/10",
+        "priority": "high",
+        "target_url": "/blog/how-to-edit-json-files/",
+        "content_type": "tutorial"
+      },
+      {
+        "keyword": "json structure explained",
+        "search_volume": "900/month",
+        "difficulty": "2/10",
+        "priority": "medium",
+        "target_url": "/blog/json-structure-explained/",
+        "content_type": "educational_guide"
+      }
+    ],
+    "how_to": [
+      {
+        "keyword": "how to add key to json",
+        "search_volume": "720/month",
+        "difficulty": "2/10",
+        "priority": "high",
+        "target_url": "/blog/add-key-to-json/",
+        "content_type": "tutorial"
+      }
+    ]
+  },
+  "comparison_queries": [
+    {
+      "keyword": "best json editor 2026",
+      "search_volume": "480/month",
+      "difficulty": "4/10",
+      "priority": "medium",
+      "target_url": "/blog/best-json-editors/",
+      "content_type": "comparison_roundup"
+    }
+  ],
+  "metadata": {
+    "research_date": "2026-01-17",
+    "tools_used": ["Google Keyword Planner", "Google Search Console", "chatgpt", "perplexity"],
+    "total_keywords": 35,
+    "high_priority_count": 8,
+    "notes": "Focus on 'visual', 'tree', and 'free' modifiers - high search volume, lower difficulty. Privacy angle is strong differentiator."
+  }
+}

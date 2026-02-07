@@ -1,0 +1,48 @@
+{
+  "tool_pages": {
+    "json-to-swift": {
+      "primary_keywords": [
+        "json to swift",
+        "json to swift struct",
+        "convert json to swift",
+        "json to swift codable",
+        "json to swift converter"
+      ],
+      "secondary_keywords": [
+        "swift model generator",
+        "json to swift class",
+        "swift codable generator",
+        "json swift parser",
+        "swift struct from json"
+      ],
+      "long_tail_keywords": [
+        "convert json to swift struct online free",
+        "generate swift codable from json",
+        "json to swift model class online",
+        "swift struct generator from api response",
+        "json to swift with coding keys"
+      ],
+      "search_volume": "high",
+      "search_volume_count": "4200/month",
+      "keyword_difficulty": "4/10",
+      "competition": "medium",
+      "priority": "critical",
+      "target_url": "/json-to-swift/",
+      "h1_keyword": "JSON to Swift Converter - Generate Codable Structs",
+      "meta_title": "JSON to Swift Converter Online Free - Generate Codable Structs & Classes",
+      "meta_description": "Convert JSON to Swift structs and classes instantly. Generate Codable-compliant Swift code with CodingKeys, optionals support, and SwiftUI ready. 100% client-side processing.",
+      "content_focus": "Swift struct generation, Codable protocol, CodingKeys, iOS development, SwiftUI",
+      "serp_features": ["featured_snippet", "people_also_ask"],
+      "competitors": [
+        "app.quicktype.io",
+        "json4swift.com",
+        "transform.tools/json-to-swift"
+      ]
+    }
+  },
+  "metadata": {
+    "last_updated": "2026-01-16",
+    "researcher": "AI Assistant",
+    "tool_category": "converter"
+  }
+}

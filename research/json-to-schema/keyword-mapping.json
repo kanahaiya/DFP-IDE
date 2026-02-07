@@ -1,0 +1,40 @@
+{
+  "tool_page": {
+    "json-to-schema": {
+      "primary_keywords": [
+        "json to schema",
+        "json to json schema",
+        "generate json schema",
+        "json schema generator",
+        "create json schema from json"
+      ],
+      "secondary_keywords": [
+        "json to typescript",
+        "json to zod",
+        "json to graphql",
+        "json schema from example",
+        "infer json schema"
+      ],
+      "long_tail_keywords": [
+        "generate json schema from json example",
+        "json to typescript interface generator",
+        "convert json to zod schema online",
+        "json schema generator draft 2020",
+        "json to mongoose schema converter"
+      ],
+      "search_volume": "medium",
+      "search_volume_count": "3800/month",
+      "keyword_difficulty": "5/10",
+      "priority": "high",
+      "target_url": "/json-to-schema/",
+      "h1_keyword": "JSON to Schema Generator - Generate Multiple Schema Formats",
+      "meta_title": "JSON to Schema Generator Online - TypeScript, Zod, GraphQL & More",
+      "meta_description": "Generate schemas from JSON in 10+ formats: JSON Schema, TypeScript, Zod, Yup, GraphQL, Mongoose, Go, Rust, and more. Free online tool with smart type inference."
+    }
+  },
+  "metadata": {
+    "research_date": "2026-01-16",
+    "tools_used": ["Google Keyword Planner", "Ahrefs"],
+    "total_keywords": 15
+  }
+}

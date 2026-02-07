@@ -1,0 +1,40 @@
+{
+  "tool_page": {
+    "json-validator": {
+      "primary_keywords": [
+        "json validator online",
+        "validate json",
+        "json syntax checker",
+        "json lint online",
+        "json validator free"
+      ],
+      "secondary_keywords": [
+        "json error checker",
+        "json format validator",
+        "check json syntax",
+        "json verification tool",
+        "json structure validator"
+      ],
+      "long_tail_keywords": [
+        "validate json online free",
+        "json syntax validator with error messages",
+        "fix json errors online",
+        "json validator with line numbers",
+        "rfc 8259 json validator"
+      ],
+      "search_volume": "high",
+      "search_volume_count": "8000/month",
+      "keyword_difficulty": "4/10",
+      "priority": "critical",
+      "target_url": "/json-validator/",
+      "h1_keyword": "JSON Validator - Validate & Fix JSON Syntax Online",
+      "meta_title": "JSON Validator Online Free - Syntax Checker & Auto-Fix",
+      "meta_description": "Validate JSON syntax instantly with detailed error messages. Free online JSON validator with auto-fix, line numbers, and RFC 8259 compliance. No signup required."
+    }
+  },
+  "metadata": {
+    "research_date": "2026-01-16",
+    "tools_used": ["Google Keyword Planner", "Ahrefs"],
+    "total_keywords": 15
+  }
+}
